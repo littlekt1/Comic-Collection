@@ -1,7 +1,12 @@
 <template>
 <div>
   <div id="login">
-    <div class="image"> </div>
+    <div class="image"> 
+      <div class="word-bubble">
+          <p class="bubble-text">No Guest User Can Defeat Doom!</p> 
+
+      </div>
+    </div>
     <form @submit.prevent="login">
       <h1 >Please Sign In</h1>
       <div role="alert" v-if="invalidCredentials">
@@ -75,6 +80,7 @@ export default {
 }
 input {
   font-size: 15px;
+ 
 }
 label {
   margin-right: 0.5rem;
@@ -93,7 +99,8 @@ form{
   border: 2px solid gray; /* Add border */
   border-radius: 10px; /* Optional: Add border radius for rounded corners */
   padding: 10px;
-  background-color: rgba(150, 150, 150, 0.37);
+  background-color: rgba(150, 150, 150, 0.568);
+  z-index: 1;
 }
 #login {
   display: flex;
@@ -117,6 +124,26 @@ form{
   background-repeat: no-repeat;
     background-position: top center;
     background-size: 50%;
+     position: relative;
+}
+.word-bubble {
+  position: absolute;
+  top:-10%; 
+  left: 60%; 
+  background-image: url('../wordbubble.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 200px; 
+  height: 150px; 
+}
+.bubble-text {
+  font-size: 18px; 
+  text-align: center;
+  margin: 0;
+  padding: 40px; 
+  color: black; 
+  
 }
 .image2 {
   background-image: url('../ultron.png');
@@ -143,6 +170,12 @@ form{
     }
     .bottom-image {
       background-size: contain;
+    }
+    input {
+       width: 90%;
+    }
+    .signin{
+      width: 50%;
     }
   }
 
