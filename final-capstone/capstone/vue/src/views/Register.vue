@@ -37,6 +37,26 @@
             <option value="credit_card">Credit Card</option>
           </select>
         </div>
+        <div class="form-input-group">
+          <label for="cardNumber">Card Number</label>
+          <input type="text" id="cardNumber" v-model="user.cardNumber" required />
+        </div>
+        <div class="form-input-group">
+          <label for="securityNumber">Security Number (CVV)</label>
+          <input type="text" id="securityNumber" v-model="user.securityNumber" required />
+        </div>
+        <div class="form-input-group">
+          <label for="billingAddress">Billing Address</label>
+          <input type="text" id="billingAddress" v-model="user.billingAddress" required />
+        </div>
+        <div class="form-input-group">
+          <label for="zipCode">Zip Code</label>
+          <input type="text" id="zipCode" v-model="user.zipCode" required />
+        </div>
+        <div class="form-input-group">
+          <label for="cost">Cost</label>
+          <input type="text" id="cost" v-model="user.cost" :readonly="true" value="$4.99" />
+        </div>
       </div>
       <button type="submit">Create Account</button>
       <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
@@ -56,6 +76,13 @@ export default {
         password: '',
         confirmPassword: '',
         role: 'user',
+        tier: 'standard',
+        paymentMethod: 'credit_card',
+        cardNumber: '',
+        securityNumber: '',
+        billingAddress: '',
+        zipCode: '',
+        cost: '$4.99', 
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
@@ -95,10 +122,25 @@ export default {
 </script>
 
 <style scoped>
+
+#register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+  height: 100vh;
+  }
+
 .form-input-group {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem; 
 }
+
 label {
   margin-right: 0.5rem;
 }
+
+h1 {
+  font-family: 'Bangers', cursive; 
+}
+
 </style>
