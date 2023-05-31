@@ -13,14 +13,8 @@ export default {
   name: "home"
 };
 </script>
-<<<<<<< HEAD
 
 <style scoped>
 
 
 </style>
-=======
-<style scoped>
-
-</style>
->>>>>>> main
