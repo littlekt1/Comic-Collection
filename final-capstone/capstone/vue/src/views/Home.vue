@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+
       <h1>Home</h1>
       <p v-if="isAuthenticated">You are authenticated and can see this content.</p>
       <p v-else>You must be authenticated to see this.</p>
@@ -42,6 +43,7 @@
     </div>
 
   
+
 </template>
 
 <script>
@@ -61,6 +63,7 @@ export default {
   },
   mounted() {
     this.isAuthenticated = true; 
+
   },
 
 };
