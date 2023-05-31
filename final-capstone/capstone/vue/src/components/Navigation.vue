@@ -2,27 +2,26 @@
   <div id="navbar">
     <img src="../../public/Comic_Haven_Logo_01.png" id="logo" />
 
-    <h1 id='title'>Comic Haven</h1>
-    
+    <h1 id="title">Comic Haven</h1>
+
     <div class="navbuttons">
-      <router-link v-bind:to="{name: 'home'}">
+      <router-link :to="{ name: 'home' }">
         <button class="navbtn">Home</button>
       </router-link>
 
-      <router-link v-bind:to="{name: 'collections'}">
+      <router-link :to="{ name: 'collections' }">
         <button class="navbtn">My Collections</button>
       </router-link>
 
-      <router-link v-bind:to="{name: 'explore'}">
+      <router-link :to="{ name: 'explore' }">
         <button class="navbtn">Explore Comics</button>
       </router-link>
 
-      
-      <router-link v-if='loginCheck()' v-bind:to="{name: 'logout'}">
+      <router-link v-if="loginCheck" :to="{ name: 'logout' }">
         <button class="navbtn">Log out</button>
       </router-link>
 
-      <router-link v-else v-bind:to="{name: 'login'}">
+      <router-link v-else :to="{ name: 'login' }">
         <button class="navbtn">Log In</button>
       </router-link>
     </div>
@@ -31,16 +30,12 @@
 
 <script>
 export default {
-  methods: {
+  computed: {
     loginCheck() {
-      if (this.$store.state.token === '') {
-        return false;
-      } else {
-      return true;
-      }
-    }
-  }
-}
+      return !!this.$store.state.token; 
+    },
+  },
+};
 </script>
 
 <style scoped>
