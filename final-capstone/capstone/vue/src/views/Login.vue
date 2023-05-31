@@ -116,21 +116,23 @@ form{
   width: 33%;
   background-repeat: no-repeat;
     background-position: top center;
+    background-size: 50%;
 }
 .image2 {
-  background-image: url('../darkseidfinal.png');
+  background-image: url('../ultron.png');
   height: 100%;
   width: 33%;
   background-repeat: no-repeat;
   background-position: top center;
+  background-size: 40%;
 }
 .bottom-image {
-  background-image: url('../thejokababy.png');
+  background-image: url('../crimsondynamo.png');
   height: 50vh;
   width: 100%;
   background-repeat: no-repeat;
   background-position: bottom center;
-  background-size: 35%;
+  background-size: 25%;
 }
   @media only screen and (max-width: 600px) {
     .image {
