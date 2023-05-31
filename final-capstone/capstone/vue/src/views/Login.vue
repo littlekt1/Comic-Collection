@@ -85,6 +85,8 @@ input {
 label {
   margin-right: 0.5rem;
 }
+<<<<<<< HEAD
+=======
 a.register-link {
   color: gold;
 }
@@ -95,7 +97,7 @@ a.register-link {
 }
 form{
   font-size: 30px;
-  width: 35%;
+  width: 31%;
   border: 2px solid gray; /* Add border */
   border-radius: 10px; /* Optional: Add border radius for rounded corners */
   padding: 10px;
@@ -110,13 +112,7 @@ form{
   font-family: 'Bangers', cursive;
   height: 50vh;
   width: 100%;
- 
-
 }
-/* .container { 
-  border: gray transparent background;
-} */
-
 .image {
   background-image: url('../../public/doom.png');
   height: 100%;
@@ -143,7 +139,7 @@ form{
   margin: 0;
   padding: 40px; 
   color: black; 
-  
+
 }
 .image2 {
   background-image: url('../../public/ultron.png');
@@ -179,5 +175,6 @@ form{
     }
   }
 
+>>>>>>> main
 
 </style>

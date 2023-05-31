@@ -1,5 +1,6 @@
 <template>
   <div id="register" class="text-center">
+        
     <form @submit.prevent="register">
       <h1>Create Account</h1>
       <div role="alert" v-if="registrationErrors">
@@ -58,9 +59,16 @@
           <input type="text" id="cost" v-model="user.cost" :readonly="true" value="$4.99" />
         </div>
       </div>
-      <button type="submit">Create Account</button>
-      <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
+      <button type="submit" class="button">Create Account</button>
+      <p><router-link :to="{ name: 'login' }" class="register-link">Already have an account? Log in.</router-link></p>
     </form>
+          <div class="image2"> 
+</div>
+    <div class="image" :class="{'image-premium': user.tier === 'premium'}">
+  <div class="word-bubble">
+    <p class="bubble-text">Check out my collection after signing up. You trust me with your credit card, surely.</p> 
+  </div>
+</div>
   </div>
 </template>
 
@@ -128,19 +136,110 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start; 
-  height: 100vh;
-  }
+  height: 90vh;
+  font-family: 'Bangers', cursive;
+  text-align: center;
+  position: relative;
 
+  }
+a.register-link {
+  color: gold;
+}
 .form-input-group {
   margin-bottom: 0.5rem; 
+}
+form{
+  font-size: 30px;
+  width: 25%;
+  border: 2px solid gray; /* Add border */
+  border-radius: 10px; /* Optional: Add border radius for rounded corners */
+  padding: 10px;
+  background-color: rgba(150, 150, 150, 0.568);
+  z-index: 1;
 }
 
 label {
   margin-right: 0.5rem;
 }
+.button {
+  width: 100%;
+  font-family: 'Bangers', cursive;
+  font-size: 25px;
+}
+.image {
+  background-image: url('../galactus.png');
+  height: 100%;
+  width: 33%;
+  bottom: 110px;
+  left: -80px;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: 50%;
+  position: relative;
+  scale: 2;
+}
+.image-premium {
+  background-image: url('../galactus.png');
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: contain;
+  position: relative;
+}
+.word-bubble {
+  position: absolute;
+  top:-10%; 
+  left: -10%; 
+  background-image: url('../wordbubble2.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 200px; 
+  height: 150px; 
+}
+.bubble-text {
+  font-size: 14px; 
+  text-align: center;
+  margin: 0;
+  padding: 35px; 
+  color: black; 
+  
+}
+.image2 {
+  background-image: url('../galactuspanel.jpg');
+  height: 100%;
+  width: 33%;
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-size: 100%;
+  position: absolute;
+  top: 60%;
+  right: 20%;
+  
+  transform: translate(50%, -50%);
+  scale: 1.1;
+}
 
-h1 {
-  font-family: 'Bangers', cursive; 
+@media only screen and (max-width: 600px) {
+    .image {
+      background-size: contain;
+    }
+    input {
+       width: 90%;
+    }
+    .signin{
+      width: 50%;
+  }
+    form{
+  width: 80%;
+    }
+  .image2 {
+    width: 50%;
+    background-size: contain;
+    position: relative;
+    top: 0;
+    transform: none;
+    margin-top: 1rem;
+  }
 }
 
 </style>
