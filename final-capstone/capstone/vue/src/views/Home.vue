@@ -41,10 +41,12 @@
         <p>Data from GameSpot © 2023 GAMESPOT</p>
       </footer>
     </div>
+
   </div>
 </template>
 
 <script>
+
 
 import TrendingComics from '../components/TrendingComics.vue';
 
@@ -61,6 +63,7 @@ export default {
   mounted() {
     this.isAuthenticated = true; 
   },
+
 };
 </script>
 

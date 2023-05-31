@@ -2,7 +2,9 @@
   <div id="navbar">
     <img src="../../public/logo.png" id="logo" />
 
+
     <h1 id="title">Comic Haven</h1>
+
 
     <div class="navbuttons">
       <router-link :to="{ name: 'home' }">
