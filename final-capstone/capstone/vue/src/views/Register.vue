@@ -17,6 +17,27 @@
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
+         <div class="form-input-group">
+        <label for="tier">Tier</label>
+        <div>
+          <label>
+            <input type="radio" v-model="user.tier" value="standard" required /> Standard
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" v-model="user.tier" value="premium" /> Premium
+          </label>
+        </div>
+      </div>
+      <div v-if="user.tier === 'premium'">
+        <div class="form-input-group">
+          <label for="paymentMethod">Payment Method</label>
+          <select id="paymentMethod" v-model="user.paymentMethod" required>
+            <option value="credit_card">Credit Card</option>
+          </select>
+        </div>
+      </div>
       <button type="submit">Create Account</button>
       <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
