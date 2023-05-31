@@ -181,7 +181,7 @@ label {
 }
 .image-premium {
   background-image: url('../../public/galactus.png');
-  background-position: bottom center;
+  background-position: fixed;
   background-size: contain;
 }
 .word-bubble {
