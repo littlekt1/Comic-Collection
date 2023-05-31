@@ -7,3 +7,12 @@
     <router-view />
   </div>
 </template>
+<style>
+html{
+  background-color: #24231E;
+  color: #AEAA46;
+  background-image: url('golddots.jpg');
+  background-position: center;
+  background-size: 100%;
+}
+</style>
