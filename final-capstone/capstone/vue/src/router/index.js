@@ -1,10 +1,12 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import Logout from '../views/Logout.vue'
-import Register from '../views/Register.vue'
-import store from '../store/index'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from '../views/Home.vue';
+import Collections from '../views/Collections.vue';
+import CollectionDetail from '../views/CollectionDetail.vue';
+import Login from '../views/Login.vue';
+import Logout from '../views/Logout.vue';
+import Register from '../views/Register.vue';
+import store from '../store/index';
 
 Vue.use(Router)
 
@@ -28,6 +30,22 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
+    },
+    {
+      path: '/collections',
+      name: 'collections',
+      component: Collections,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/collections/:id',
+      name: 'collection-detail',
+      component: CollectionDetail,
+      meta: {
+        requiresAuth: false,
+      },
     },
     {
       path: "/login",

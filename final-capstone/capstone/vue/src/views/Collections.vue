@@ -10,7 +10,9 @@
       <h2>Your Collections:</h2>
       <ul>
         <li v-for="collection in collections" :key="collection.id">
+          <router-link :to="`/collections/${collection.id}`">
           {{ collection.name }}
+          </router-link>
         </li>
       </ul>
     </div>
@@ -25,11 +27,7 @@ export default {
   data() {
     return {
       newCollectionName: '',
-      collections: [
-            { id: '1', name: 'Collection 1' },
-      { id: '2', name: 'Collection 2' },
-      { id: '3', name: 'Collection 3' },
-      ],
+      collections: [],
     };
   },
   methods: {
@@ -49,8 +47,15 @@ export default {
 
 <style scoped>
 .collections {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+h1 {
+  margin-bottom: 1rem;
 }
 </style>
