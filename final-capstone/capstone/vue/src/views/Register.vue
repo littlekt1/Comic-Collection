@@ -64,12 +64,11 @@
     </form>
           <div class="image2"> 
 </div>
-    <div class="image"> 
-<div class="word-bubble">
-          <p class="bubble-text">Check out my collection after signing up. You trust me with your credit card, surely.</p> 
-
-      </div>
-          </div>
+    <div class="image" :class="{'image-premium': user.tier === 'premium'}">
+  <div class="word-bubble">
+    <p class="bubble-text">Check out my collection after signing up. You trust me with your credit card, surely.</p> 
+  </div>
+</div>
   </div>
 </template>
 
@@ -174,10 +173,17 @@ label {
   bottom: 110px;
   left: -80px;
   background-repeat: no-repeat;
-    background-position: bottom left;
-    background-size: 50%;
-     position: relative;
-     scale: 2;
+  background-position: bottom left;
+  background-size: 50%;
+  position: relative;
+  scale: 2;
+}
+.image-premium {
+  background-image: url('../galactus.png');
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: contain;
+  position: relative;
 }
 .word-bubble {
   position: absolute;
