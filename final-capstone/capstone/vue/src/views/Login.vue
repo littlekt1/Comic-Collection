@@ -103,7 +103,8 @@ form{
   font-family: 'Bangers', cursive;
   height: 50vh;
   width: 100%;
-  
+ 
+
 }
 /* .container { 
   border: gray transparent background;
