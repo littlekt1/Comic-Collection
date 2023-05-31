@@ -1,6 +1,6 @@
 <template>
   <div id="navbar">
-    <img src="../../public/Comic_Haven_Logo_01.png" id="logo" />
+    <img src="../../public/logo.png" id="logo" />
 
     <h1 id="title">Comic Haven</h1>
 
