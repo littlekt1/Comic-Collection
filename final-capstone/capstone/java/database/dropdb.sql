@@ -7,6 +7,7 @@ SELECT pg_terminate_backend(pid)
 FROM pg_stat_activity
 WHERE datname = 'comic-collection-db';
 
+
 DROP DATABASE comic-collection-db;
 
 DROP USER final_capstone_owner;
