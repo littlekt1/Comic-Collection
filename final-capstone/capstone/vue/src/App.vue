@@ -22,7 +22,6 @@ html{
   background-image: url('../public/golddots.jpg');
   background-position: center;
   background-size: 100%;
-  margin: none;
   cursor: url('../public/avengers.png') 10 10, pointer;
 }
 </style>
