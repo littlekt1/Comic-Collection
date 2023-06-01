@@ -1,54 +1,47 @@
 <template>
   <div class="home">
-
-      <h1>Home</h1>
-      <p v-if="isAuthenticated">You are authenticated and can see this content.</p>
-      <p v-else>You must be authenticated to see this.</p>
-      <div class="main-content">
-        <div class="section trending-comics">
-          <h2>Trending Comics</h2>
-          <div class="section-content"> 
+    <h1>Home</h1>
+    <p v-if="isAuthenticated">You are authenticated and can see this content.</p>
+    <p v-else>You must be authenticated to see this.</p>
+    <div class="main-content">
+      <div class="section trending-comics">
+        <h2>Trending Comics</h2>
+        <div class="section-content">
+          <div class="carousel-container">
             <TrendingComics />
-            <div class="comic-item" v-for="comic in trendingComics" :key="comic.id">
-              <img :src="comic.image" :alt="comic.title" />
-              <p>{{ comic.description }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="section my-collections">
-          <h2>My Top 5 Collections</h2>
-          <div class="section-content">
-            <div class="collection-item">
-              <img src="collection1.jpg" alt="Collection 1" />
-              <p>Collection 1 description</p>
-            </div>
-            <div class="collection-item">
-              <img src="collection2.jpg" alt="Collection 2" />
-              <p>Collection 2 description</p>
-            </div>
-          </div>
-        </div>
-        <div class="section aggregate-stats">
-          <h2>Aggregate Stats</h2>
-          <div class="section-content">
-            <p>Total number of comics: 1000</p>
-            <p>Total number of collections: 50</p>
-            <p>Average rating: 4.5</p>
           </div>
         </div>
       </div>
-      <footer class="footer">
-        <p>Data from GameSpot © 2023 GAMESPOT</p>
-      </footer>
+      <div class="section my-collections">
+        <h2>My Top 5 Collections</h2>
+        <div class="section-content">
+          <div class="collection-item">
+            <img src="collection1.jpg" alt="Collection 1" />
+            <p>Collection 1 description</p>
+          </div>
+          <div class="collection-item">
+            <img src="collection2.jpg" alt="Collection 2" />
+            <p>Collection 2 description</p>
+          </div>
+        </div>
+      </div>
+      <div class="section aggregate-stats">
+        <h2>Aggregate Stats</h2>
+        <div class="section-content">
+          <p>Total number of comics:</p>
+          <p>Your number of collections:</p>
+          <p>Superhero appearances:</p>
+        </div>
+      </div>
     </div>
-
-  
-
+    <footer class="footer">
+      <p>Data from GameSpot © 2023 GAMESPOT</p>
+    </footer>
+  </div>
 </template>
 
+
 <script>
-
-
 import TrendingComics from '../components/TrendingComics.vue';
 
 export default {
@@ -62,10 +55,8 @@ export default {
     };
   },
   mounted() {
-    this.isAuthenticated = true; 
-
+    this.isAuthenticated = true;
   },
-
 };
 </script>
 
@@ -109,11 +100,19 @@ export default {
   background-color: rgba(0, 0, 0, 0.568);
   z-index: 1;
 }
-.tending-comics {
-  flex-basis: 48%
-  
+.trending-comics {
+  text-align: center;
 }
-
+.trending-comics .section-content {
+  display: flex;
+  justify-content: center;
+}
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
 .my-collections {
   flex-basis: 37%;
 }
