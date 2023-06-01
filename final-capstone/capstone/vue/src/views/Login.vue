@@ -86,7 +86,7 @@ label {
   margin-right: 0.5rem;
 }
 a.register-link {
-  color: gold;
+  rucolor: gold;
 }
 .signin {
   width: 30%;
