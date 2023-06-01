@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
-import Collections from ',,/view/Collections.vue'
+import Collections from '../views/Collections.vue'
 import CollectionDetail from '../views/CollectionDetail.vue';
 import Register from '../views/Register.vue'
 import store from '../store/index'
