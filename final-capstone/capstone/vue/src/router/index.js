@@ -1,12 +1,13 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import Home from '../views/Home.vue';
-import Collections from '../views/Collections.vue';
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from '../views/Home.vue'
+import Login from '../views/Login.vue'
+import Logout from '../views/Logout.vue'
+import Collections from ',,/view/Collections.vue'
 import CollectionDetail from '../views/CollectionDetail.vue';
-import Login from '../views/Login.vue';
-import Logout from '../views/Logout.vue';
-import Register from '../views/Register.vue';
-import store from '../store/index';
+import Register from '../views/Register.vue'
+import store from '../store/index'
+import Comic from '../views/Comic.vue'
 
 Vue.use(Router)
 
@@ -67,6 +68,15 @@ const router = new Router({
       path: "/register",
       name: "register",
       component: Register,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    // Setting up a single page for each comic based on it's id?
+    {
+      path: '/comic/:id',
+      name: 'comic',
+      component: Comic,
       meta: {
         requiresAuth: false
       }
