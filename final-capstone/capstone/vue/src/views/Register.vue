@@ -1,6 +1,10 @@
 <template>
   <div id="register" class="text-center">
-        
+        <div class="image" :class="{'image-premium': user.tier === 'premium'}">
+  <div class="word-bubble">
+    <p class="bubble-text">Check out my collection after signing up. You trust me with your credit card, surely.</p> 
+  </div>
+</div>
     <form @submit.prevent="register">
       <h1>Create Account</h1>
       <div role="alert" v-if="registrationErrors">
@@ -63,11 +67,6 @@
       <p><router-link :to="{ name: 'login' }" class="register-link">Already have an account? Log in.</router-link></p>
     </form>
           <div class="image2"> 
-</div>
-    <div class="image" :class="{'image-premium': user.tier === 'premium'}">
-  <div class="word-bubble">
-    <p class="bubble-text">Check out my collection after signing up. You trust me with your credit card, surely.</p> 
-  </div>
 </div>
   </div>
 </template>
@@ -133,7 +132,6 @@ export default {
 
 #register {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: flex-start; 
   height: 90vh;
@@ -170,31 +168,29 @@ label {
   background-image: url('../../public/galactus.png');
   height: 100%;
   width: 33%;
-  bottom: 110px;
-  left: -80px;
+  background-size: contain;
+  background-position: bottom;
   background-repeat: no-repeat;
-  background-position: bottom left;
-  background-size: 50%;
-  position: relative;
-  scale: 2;
+  scale: 1;
 }
-.image-premium {
+/*  .image-premium {
   background-image: url('../../public/galactus.png');
   background-repeat: no-repeat;
   background-position: bottom left;
   background-size: contain;
-  position: relative;
-}
+  position: relative; 
+} */
 .word-bubble {
   position: absolute;
-  top:-10%; 
-  left: -10%; 
+  top:170px; 
+  left: 80px; 
   background-image: url('../../public/wordbubble2.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   width: 200px; 
   height: 150px; 
+  scale: 1.3;
 }
 .bubble-text {
   font-size: 14px; 
@@ -208,15 +204,12 @@ label {
   background-image: url('../../public/galactuspanel.jpg');
   height: 100%;
   width: 33%;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: top right;
-  background-size: 100%;
-  position: absolute;
-  top: 60%;
-  right: 20%;
-  
-  transform: translate(50%, -50%);
-  scale: 1.1;
+  margin: 20px;
+
+  scale: 1;
 }
 
 @media only screen and (max-width: 600px) {
