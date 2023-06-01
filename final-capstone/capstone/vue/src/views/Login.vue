@@ -85,8 +85,6 @@ input {
 label {
   margin-right: 0.5rem;
 }
-<<<<<<< HEAD
-=======
 a.register-link {
   color: gold;
 }
@@ -175,6 +173,5 @@ form{
     }
   }
 
->>>>>>> main
 
 </style>
