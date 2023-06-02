@@ -141,6 +141,7 @@ img {
   width: 200px;
   height: 300px;
   object-fit: cover;
+  margin: 3px;
 }
 
 .comic-item p {
