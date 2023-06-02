@@ -46,7 +46,7 @@ export default {
           name: this.newCollectionName.trim(),
           isPublic: this.isPublic, // Set the isPublic property based on the checkbox
           comics: [], // Initialize an empty array for comics
-          collectionImage: 'https://via.placeholder.com/200x200', // Initialize an empty string for collection image
+          collectionImage: 'https://via.placeholder.com/150x200', // Initialize an empty string for collection image
        };
 
         // Check user role and limit the number of comics based on it

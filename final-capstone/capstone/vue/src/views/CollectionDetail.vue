@@ -1,7 +1,16 @@
 <template>
   <div class="collection-detail">
     <h1>{{ collection.name }}</h1>
-    <p>{{ collection.description }}</p>
+    <form @submit.prevent="addComic" class="add-comic-form">
+      <input type="text" v-model="newComicName" placeholder="Enter comic name" required />
+      <button type="submit">Add Comic</button>
+    </form>
+    <div class="comic-grid">
+      <div v-for="comic in collection.comics" :key="comic.id" class="comic-item">
+        <img src="https://via.placeholder.com/200" alt="Placeholder Image" />
+        <p>Comic Name</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -9,13 +18,24 @@
 export default {
   data() {
     return {
-      collection: null,
+      collection: {
+        name: 'Sample Collection',
+        comics: [],
+      },
+      newComicName: '',
     };
   },
-  created() {
-    // Fetch the collection data using an API or store
-    // For now, let's assume we receive the collection data as a prop
-    this.collection = this.$props.collection;
+  methods: {
+    addComic() {
+      if (this.newComicName.trim() !== '') {
+        const newComic = {
+          id: Math.random().toString(36).substr(2, 9), // Generate a random ID for the comic
+          name: this.newComicName.trim(),
+        };
+        this.collection.comics.push(newComic);
+        this.newComicName = ''; // Clear the input field after adding a comic
+      }
+    },
   },
 };
 </script>
@@ -23,6 +43,29 @@ export default {
 <style scoped>
 .collection-detail {
   text-align: center;
-  margin-top: 2rem;
+}
+
+.add-comic-form {
+  margin-bottom: 20px;
+}
+
+.comic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.comic-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.comic-item img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
 }
 </style>
