@@ -31,32 +31,34 @@
         </div>
         <div>
           <label>
-            <input type="radio" v-model="user.tier" value="premium" /> Premium
+            <input type="radio" v-model="user.tier" value="premium" required /> Premium 
           </label>
         </div>
       </div>
       <div v-if="user.tier === 'premium'">
         <div class="form-input-group">
           <label for="paymentMethod">Payment Method</label>
-          <select id="paymentMethod" v-model="user.paymentMethod" required>
+          <select id="paymentMethod" v-model="user.paymentMethod" >
             <option value="credit_card">Credit Card</option>
           </select>
         </div>
         <div class="form-input-group">
           <label for="cardNumber">Card Number</label>
-          <input type="text" id="cardNumber" v-model="user.cardNumber" required />
+          
+          <input type="text" id="cardNumber" v-model="user.cardNumber" />
         </div>
+        <h7>*-All Donations Go Towards Comics!-* </h7>
         <div class="form-input-group">
           <label for="securityNumber">Security Number (CVV)</label>
-          <input type="text" id="securityNumber" v-model="user.securityNumber" required />
+          <input type="text" id="securityNumber" v-model="user.securityNumber" />
         </div>
         <div class="form-input-group">
           <label for="billingAddress">Billing Address</label>
-          <input type="text" id="billingAddress" v-model="user.billingAddress" required />
+          <input type="text" id="billingAddress" v-model="user.billingAddress"  />
         </div>
         <div class="form-input-group">
           <label for="zipCode">Zip Code</label>
-          <input type="text" id="zipCode" v-model="user.zipCode" required />
+          <input type="text" id="zipCode" v-model="user.zipCode" />
         </div>
         <div class="form-input-group">
           <label for="cost">Cost</label>

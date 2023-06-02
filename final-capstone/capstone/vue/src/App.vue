@@ -24,4 +24,4 @@ html{
   background-size: 100%;
   cursor: url('../public/avengers.png') 10 10, pointer;
 }
-</style>
+</style> 
