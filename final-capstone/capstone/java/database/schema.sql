@@ -18,7 +18,8 @@ CREATE TABLE collections (
     comics_in_collection INT[] NOT NULL,
     owner_id INT NOT NULL,
     visible BOOLEAN NOT NULL,
-    CONSTRAINT PK_collection PRIMARY KEY (collection_id)
+    CONSTRAINT PK_collection PRIMARY KEY (collection_id),
+    CONSTRAINT FK_user_id FOREIGN KEY (owner_id) REFERENCES users(user_id)
 );
 
 COMMIT TRANSACTION;

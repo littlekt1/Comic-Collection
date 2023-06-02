@@ -14,10 +14,13 @@ public interface CollectionDao {
 
     public Collection getCollectionById(int collectionId);
 
-    public void addCollection(Collection collectionToAdd);
+    public int addCollection(Collection collectionToAdd);
 
-    public void editCollection(Collection collectionToUpdate);
+    public int editCollection(Collection collectionToUpdate);
 
-    public void deleteCollection(int id);
+    public int deleteCollection(int id);
 
+    public int addComic(int comicId, int collectionId);
+
+    public int removeComic(int comicId, int collectionId);
 }

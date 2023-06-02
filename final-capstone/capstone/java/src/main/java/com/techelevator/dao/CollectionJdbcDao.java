@@ -16,6 +16,8 @@ public class CollectionJdbcDao implements CollectionDao {
         template = new JdbcTemplate((dataSource));
     }
 
+    //Start Collection Modification or collecting
+
     @Override
     public List<Collection> getPublicCollections() {
         String sql = "SELECT * FROM collections WHERE isPublic = true";
@@ -54,29 +56,49 @@ public class CollectionJdbcDao implements CollectionDao {
     }
 
     @Override
-    public void addCollection(Collection collectionToAdd) {
+    public int addCollection(Collection collectionToAdd) {
         String name = collectionToAdd.getCollectionName();
         int ownerId = collectionToAdd.getOwnerId();
         boolean isPublic = collectionToAdd.isPublic();
         List<Integer> comicIds = collectionToAdd.getComicsInCollection();
 
-        String sql = "INSERT INTO collection(collection_name, owner_id, comics_in_collection, visible) VALUES ?, ?, ?, ?)";
-        template.update(sql, name, ownerId, comicIds, isPublic);
+        String sql = "INSERT INTO collection(collection_name, owner_id, comics_in_collection, visible) VALUES ?, ?, ?, ? RETURNING collection_id)";
+        return template.update(sql, name, ownerId, comicIds, isPublic);
     }
 
     @Override
-    public void editCollection(Collection collectionToUpdate) {
-        String sql = "UPDATE collections SET collection_name = ?, owner_id = ?, comics_in_collection = ?,  visible = ? WHERE collection_id = ?";
-        template.update(sql, collectionToUpdate.getCollectionName(), collectionToUpdate.getOwnerId(), collectionToUpdate.getComicsInCollection(), collectionToUpdate.isPublic(),
+    public int editCollection(Collection collectionToUpdate) {
+        String sql = "UPDATE collections SET collection_name = ?, owner_id = ?, comics_in_collection = ?,  visible = ? WHERE collection_id = ? RETURNING collection_id";
+        return template.update(sql, collectionToUpdate.getCollectionName(), collectionToUpdate.getOwnerId(), collectionToUpdate.getComicsInCollection(), collectionToUpdate.isPublic(),
                 collectionToUpdate.getCollectionId());
 
     }
 
     @Override
-    public void deleteCollection(int collectionId) {
+    public int deleteCollection(int collectionId) {
         String sql = "DELETE * FROM collections WHERE collection_id = ?";
-        template.update(sql, collectionId);
+        return template.update(sql, collectionId);
     }
+
+
+    //END
+
+    //START comic-id-list mod
+
+    @Override
+    public int addComic(int comicId, int collectionId) {
+            String sql = "UPDATE collections SET comics_in_collection = ARRAY_APPEND(comics_in_collection, ?)  WHERE collection_id = ?";
+        return template.update(sql, comicId, collectionId);
+    }
+
+    @Override
+    public int removeComic(int comicId, int collectionId) {
+        String sql = "UPDATE collections SET comics_in_collection = ARRAY_REMOVE(comics_in_collection, ?)  WHERE collection_id = ?";
+        return template.update(sql, comicId, collectionId);
+    }
+
+
+    //END
 
     private Collection mapRowToCollection(SqlRowSet rowSet) {
         Collection collection = new Collection();
