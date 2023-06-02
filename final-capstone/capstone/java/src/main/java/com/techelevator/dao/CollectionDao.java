@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface CollectionDao {
 
-    public List<Collection> getCollections();
+    public List<Collection> getPublicCollections();
 
-    public Collection getCollection(int id);
+    public List<Collection> getUserCollections(int userId);
+
+    public Collection getCollectionById(int collectionId);
 
     public void addCollection(Collection collectionToAdd);
 

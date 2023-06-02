@@ -15,14 +15,16 @@ public class User {
    @JsonIgnore
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
+   private String tier;
 
    public User() { }
 
-   public User(int id, String username, String password, String authorities) {
+   public User(int id, String username, String password, String authorities, String tier) {
       this.id = id;
       this.username = username;
       this.password = password;
       if(authorities != null) this.setAuthorities(authorities);
+      this.tier = tier;
       this.activated = true;
    }
 
