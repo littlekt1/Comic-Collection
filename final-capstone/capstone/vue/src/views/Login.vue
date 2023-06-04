@@ -104,6 +104,7 @@ form{
 }
 #login {
   display: flex;
+  top: 50px;
   flex-direction: space-between;
   position: relative;
   text-align: center;
