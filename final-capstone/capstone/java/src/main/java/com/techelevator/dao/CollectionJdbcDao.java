@@ -3,11 +3,17 @@ package com.techelevator.dao;
 import com.techelevator.model.Collection;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import javax.sql.rowset.serial.SerialArray;
+import javax.sql.rowset.serial.SerialException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CollectionJdbcDao implements CollectionDao {
 
     private final JdbcTemplate template;
@@ -60,16 +66,16 @@ public class CollectionJdbcDao implements CollectionDao {
         String name = collectionToAdd.getCollectionName();
         int ownerId = collectionToAdd.getOwnerId();
         boolean isPublic = collectionToAdd.isPublic();
-        List<Integer> comicIds = collectionToAdd.getComicsInCollection();
+        Integer[] comicIds = collectionToAdd.getComicsInCollection();
 
-        String sql = "INSERT INTO collection(collection_name, owner_id, comics_in_collection, visible) VALUES ?, ?, ?, ? RETURNING collection_id)";
-        return template.update(sql, name, ownerId, comicIds, isPublic);
+        String sql = "INSERT INTO collections (collection_name, owner_id, comics_in_collection, visible) VALUES (?, ?, ?, ?) RETURNING collection_id";
+        return template.queryForObject(sql, int.class, name, ownerId, comicIds, isPublic);
     }
 
     @Override
     public int editCollection(Collection collectionToUpdate) {
         String sql = "UPDATE collections SET collection_name = ?, owner_id = ?, comics_in_collection = ?,  visible = ? WHERE collection_id = ? RETURNING collection_id";
-        return template.update(sql, collectionToUpdate.getCollectionName(), collectionToUpdate.getOwnerId(), collectionToUpdate.getComicsInCollection(), collectionToUpdate.isPublic(),
+        return template.queryForObject(sql, Integer.class, collectionToUpdate.getCollectionName(), collectionToUpdate.getOwnerId(), collectionToUpdate.getComicsInCollection(), collectionToUpdate.isPublic(),
                 collectionToUpdate.getCollectionId());
 
     }
@@ -82,6 +88,8 @@ public class CollectionJdbcDao implements CollectionDao {
 
 
     //END
+
+
 
     //START comic-id-list mod
 
@@ -106,7 +114,21 @@ public class CollectionJdbcDao implements CollectionDao {
         collection.setOwnerId(rowSet.getInt("owner_id"));
         collection.setPublic(rowSet.getBoolean("visible"));
         collection.setCollectionName(rowSet.getString("collection_name"));
-        collection.setComicsInCollection((List<Integer>) rowSet.getObject("comics_in_collection"));
+//        collection.setComicsInCollection(rowSet.getObject("comics_in_collection"));
+        Object comics = rowSet.getObject("comics_in_collection");
+        try {
+            collection.setComicsInCollection(mapComicsToArray(((SerialArray)comics).getResultSet()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return collection;
+    }
+
+    private Integer[] mapComicsToArray(ResultSet resultSet) throws SQLException {
+        List<Integer> listComics = new ArrayList<>();
+        while (resultSet.next()) {
+            listComics.add(resultSet.getInt("comicsInCollection"));
+        }
+        return listComics.toArray(new Integer[listComics.size()]);
     }
 }
