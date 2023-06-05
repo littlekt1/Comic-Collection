@@ -66,10 +66,10 @@ public class CollectionJdbcDao implements CollectionDao {
         String name = collectionToAdd.getCollectionName();
         int ownerId = collectionToAdd.getOwnerId();
         boolean isPublic = collectionToAdd.isPublic();
-        Integer[] comicIds = collectionToAdd.getComicsInCollection();
+        int[] comicIds = collectionToAdd.getComicsInCollection();
 
         String sql = "INSERT INTO collections (collection_name, owner_id, comics_in_collection, visible) VALUES (?, ?, ?, ?) RETURNING collection_id";
-        return template.queryForObject(sql, int.class, name, ownerId, comicIds, isPublic);
+        return template.queryForObject(sql, Integer.class, name, ownerId, comicIds, isPublic);
     }
 
     @Override
@@ -114,21 +114,26 @@ public class CollectionJdbcDao implements CollectionDao {
         collection.setOwnerId(rowSet.getInt("owner_id"));
         collection.setPublic(rowSet.getBoolean("visible"));
         collection.setCollectionName(rowSet.getString("collection_name"));
-//        collection.setComicsInCollection(rowSet.getObject("comics_in_collection"));
         Object comics = rowSet.getObject("comics_in_collection");
         try {
-            collection.setComicsInCollection(mapComicsToArray(((SerialArray)comics).getResultSet()));
+            collection.setComicsInCollection(mapComicsToArray((Object[]) ((SerialArray)comics).getArray()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return collection;
     }
 
-    private Integer[] mapComicsToArray(ResultSet resultSet) throws SQLException {
+    private int[] mapComicsToArray(Object[] objArray) throws SQLException {
         List<Integer> listComics = new ArrayList<>();
-        while (resultSet.next()) {
-            listComics.add(resultSet.getInt("comicsInCollection"));
+        for(Object o : objArray) {
+            listComics.add((Integer)o);
         }
-        return listComics.toArray(new Integer[listComics.size()]);
+
+        Integer[] integerArray = listComics.toArray(new Integer[listComics.size()]);
+        int[] array = new int[integerArray.length];
+        for (int i = 0; i < integerArray.length; i++) {
+            array[i] = integerArray[i];
+        }
+        return array;
     }
 }
