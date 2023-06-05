@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import marvelService from '../services/MarvelService.js'
+import marvelService from '../services/MetronService.js'
 export default {
   data() {
     return {
