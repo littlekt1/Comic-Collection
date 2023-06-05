@@ -161,4 +161,20 @@ ul {
 .larger-text {
   font-size: 25px; /* Set the font size to 20 pixels */
 }
+
+@media (max-width: 767px) {
+  .static-image.left-image,
+  .static-image.right-image {
+    display: none;
+  }
+  .collections-container {
+    min-height: 40vh;
+  }
+
+  .collections {
+    flex-basis: 80%;
+  }
+
+}
+
 </style>
