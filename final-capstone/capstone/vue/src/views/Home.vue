@@ -63,26 +63,25 @@ export default {
 <style scoped>
 .custom-cursor {
   cursor: url('../../public/avengers.png') 10 10, pointer;
- 
 }
 .home {
   display: flex;
   flex-direction: column;
   text-align: center;
   min-height: 100vh;
-
 }
+
 .main-content {
   flex: 1;
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  
 }
+
 .footer {
   text-align: center;
-  border: 2px solid gray; 
-  border-radius: 10px; 
+  border: 2px solid gray;
+  border-radius: 10px;
   margin: 10px;
   background-color: rgba(150, 150, 150, 0.568);
   z-index: 1;
@@ -94,25 +93,29 @@ export default {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
-  border: 2px solid gray; 
-  border-radius: 10px; 
+  border: 2px solid gray;
+  border-radius: 10px;
   margin: 10px;
   background-color: rgba(0, 0, 0, 0.568);
   z-index: 1;
 }
+
 .trending-comics {
   text-align: center;
 }
+
 .trending-comics .section-content {
   display: flex;
   justify-content: center;
 }
+
 .carousel-container {
   display: flex;
   justify-content: center;
   max-width: 800px;
   margin: 0 auto;
 }
+
 .my-collections {
   flex-basis: 37%;
 }
@@ -120,6 +123,7 @@ export default {
 .aggregate-stats {
   flex-basis: 15%;
 }
+
 .section-content {
   margin-top: 10px;
 }
@@ -138,5 +142,47 @@ export default {
   margin-right: 10px;
 }
 
+@media (max-width: 767px) {
+  .main-content {
+    flex-direction: column;
+  }
 
+  .section {
+    flex-basis: 100%;
+  }
+
+  .my-collections {
+    margin-top: 20px;
+  }
+
+  .comic-item img,
+  .collection-item img {
+    width: 100%;
+    height: auto;
+    margin-right: 10px;
+  }
+
+  .carousel-container {
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    margin: 20px 0;
+  }
+
+  .carousel-container::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .carousel-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+  }
+
+  .carousel-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 3px;
+  }
+}
 </style>

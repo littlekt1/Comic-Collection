@@ -34,11 +34,11 @@ export default {
         },
         {
           image: 'comic1.jpg',
-          description: 'Daredevil (1964) Add Comic Button',
+          description: 'Power Girl Special (2023) Add Comic Button',
         },
         {
           image: 'comic2.jpg',
-          description: 'The Sensational She-Hulk (1989) Add Comic Button',
+          description: 'Star Wars (1977) Add Comic Button',
         },
         {
           image: 'comic3.jpg',
@@ -54,19 +54,19 @@ export default {
         },
         {
           image: 'comic6.jpg',
-          description: 'Fantastic Four (2018) Add Comic Button',
+          description: 'Peter Parker: The Spectacular Spider-Man (1976) Add Comic Butto',
         },
         {
           image: 'comic7.jpg',
-          description: 'Thor (2020) Add Comic Button',
+          description: 'The Uncanny X-Men (1978) Add Comic Button',
         },
         {
           image: 'comic8.jpg',
-          description: 'The Invincible Iron Man (1968) Add Comic Button',
+          description: 'Gargoyles (2022) Add Comic Button',
         },
         {
           image: 'comic9.jpg',
-          description: 'Captain America (1968) Add Comic Button',
+          description: 'Action Comics (1938) Add Comic Button',
         },
         {
           image: 'comic10.jpg',
@@ -78,7 +78,7 @@ export default {
         },
         {
           image: 'comic12.jpg',
-          description: 'Wolverine (2020) Add Comic Button',
+          description: 'Something Is Killing The Children (2019) Add Comic Button',
         },
         {
           image: 'comic13.jpg',
@@ -90,7 +90,7 @@ export default {
         },
         {
           image: 'comic15.jpg',
-          description: 'Spider-Man 2099: Dark Genesis (2023) Add Comic Button',
+          description: 'Grimm Fairy Tales (2016) Add Comic Button',
         },
        ],
     };
