@@ -2,28 +2,41 @@
   <div class="collection-detail">
     <div class="content-container">
       <h1>{{ collection.name }}</h1>
+      
+      <!-- Add Comic Form -->
       <form @submit.prevent="addComic" class="add-comic-form">
         <input type="text" v-model="newComicName" placeholder="Enter comic name" required />
         <button type="submit">Add Comic</button>
       </form>
+      
+      <!-- Share Collection URL -->
+      <div class="share-collection">
+        <button @click="importComics">Import Comics</button>
+
+        <p>Share this collection:</p>
+        <input type="text" :value="collectionURL" readonly />
+      </div>
+      
+      <!-- Comic Grid -->
       <div class="comic-grid">
         <div v-for="comic in collection.comics" :key="comic.id" class="comic-item">
-          <img src="https://via.placeholder.com/150x200" alt="Placeholder Image" />
+          <img src="https://via.placeholder.com/200" alt="Placeholder Image" />
           <p>{{ comic.name }}</p>
         </div>
       </div>
-    </div>
-    <div class="image-container">
-      <div class="static-image image">
-        <div class="grievous-image"></div>
-        <div class="word-bubble">
-          <p class="bubble-text">These comics will make a fine addition to my collection.</p>
+
+      <!-- Grievous Image -->
+      <div class="image-container">
+        <div class="static-image image">
+          <div class="grievous-image"></div>
+          <div class="word-bubble">
+            <p class="bubble-text">These comics will make a fine addition to my collection.</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -36,6 +49,14 @@ export default {
       newComicName: '',
     };
   },
+  computed: {
+    collectionURL() {
+      // Get the current route and build the collection URL
+      const currentRoute = this.$route.fullPath;
+      const collectionID = this.collection.id; // Replace with the actual collection ID
+      return `${window.location.origin}${currentRoute}?collectionId=${collectionID}`;
+    },
+  },
   methods: {
     addComic() {
       if (this.newComicName.trim() !== '') {
@@ -47,9 +68,14 @@ export default {
         this.newComicName = ''; // Clear the input field after adding a comic
       }
     },
+    importComics() {
+      // Logic to import comics
+      // Add your implementation here
+    },
   },
 };
 </script>
+
 
 <style scoped>
 .image-container {
@@ -189,6 +215,10 @@ export default {
     height: 200px;
     object-fit: cover;
   }
+}
+
+.share-collection {
+  margin-bottom: 20px; /* Add some bottom margin for spacing */
 }
 
 </style>

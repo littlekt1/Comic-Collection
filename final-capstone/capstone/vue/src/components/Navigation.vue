@@ -10,7 +10,7 @@
         <router-link :to="{ name: 'collections' }">
           <button class="navbtn">My Collections</button>
         </router-link>
-        <router-link :to="{ name: 'explore' }">
+        <router-link :to="{ name: 'Explore' }">
           <button class="navbtn">Explore Comics</button>
         </router-link>
         <router-link v-if="loginCheck" :to="{ name: 'logout' }">
