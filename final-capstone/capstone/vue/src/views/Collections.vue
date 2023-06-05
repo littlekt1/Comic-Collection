@@ -4,6 +4,9 @@
 
     <div class="collections">
       <h1>Collections</h1>
+      <router-link to="/import-comics">
+        <button class="navbtn">Import Comics</button>
+      </router-link>
       <form @submit.prevent="createCollection">
         <input type="text" v-model="newCollectionName" placeholder="Enter collection name" required />
         <label>
@@ -12,10 +15,12 @@
         </label>
         <button type="submit">Create Collection</button>
         <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+        
       </form>
 
       <div v-if="collections.length > 0">
         <h2>Your Collections:</h2>
+        
         <ul>
           <li v-for="collection in collections" :key="collection.id">
             <router-link :to="`/collections/${collection.id}`" class="gold-link">
