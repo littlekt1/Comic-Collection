@@ -8,7 +8,7 @@
         <button class="navbtn">Import Comics</button>
       </router-link>
       <form @submit.prevent="createCollection">
-        <input type="text" v-model="newCollectionName" placeholder="Enter collection name" required />
+        <input type="text" v-model="newCollectionName" placeholder="Enter collection name" required class='name'/>
         <label>
           Public:
           <input type="checkbox" v-model="isPublic" />
@@ -79,6 +79,16 @@ export default {
 </script>
 
 <style scoped>
+.name{
+  font-family: 'Bangers', cursive;
+  font-size: 15px;
+}
+.navbtn {
+  font-family: 'Bangers', cursive;
+  font-size: 18px;
+  width:25%;
+  margin-bottom: 6px;
+}
 .static-image {
   position: fixed;
   top: 160px;
@@ -117,7 +127,7 @@ button[type="submit"] {
 
 .collections {
   text-align: center;
-  flex-basis: 30%;
+  flex-basis: 35%;
   padding: 10px;
   border: 2px solid gray;
   margin: 10px;

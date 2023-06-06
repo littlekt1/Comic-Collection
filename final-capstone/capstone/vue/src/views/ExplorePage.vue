@@ -1,107 +1,90 @@
 <template>
   <div class="explore-page">
-    <h1>Explore Comics</h1>
-
-    <!-- Search Bar -->
-    <div class="search-bar">
-      <input type="text" v-model="searchQuery" placeholder="Search by name, author, or character" />
-      <button @click="searchComics">Search</button>
-    </div>
-
-    <!-- Comic Grid -->
-    <div class="comic-grid">
-      <div v-for="comic in searchResults" :key="comic.id" class="comic-item">
-        <img src="https://via.placeholder.com/200" alt="Placeholder Image" />
-        <p>{{ comic.name }}</p>
-        <p>Author: {{ comic.author }}</p>
-        <p>Characters: {{ comic.characters.join(', ') }}</p>
+    <h1 class="flashy-text">Explore Comics</h1>
+    <router-link to="/bulk-add-comics" class="gold-link">Bulk Add Comics</router-link>
+    <div class="image-container">
+      <img src="../../public/thing.png" alt="Comic Image" class="bottom-left-image">
+      <div class="word-bubble">
+        <p class="bubble-text">It's Clobberin' Time!</p>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      searchQuery: '',
-      searchResults: [],
-      comics: [
-        { id: 1, name: 'Comic A', author: 'Author A', characters: ['Superman', 'Spider-Man'] },
-        { id: 2, name: 'Comic B', author: 'Author B', characters: ['Batman', 'Superman'] },
-        { id: 3, name: 'Comic C', author: 'Author C', characters: ['Spider-Man', 'Wonder Woman'] },
-        // Add more comics as needed
-      ],
-    };
-  },
-  methods: {
-   searchComics() {
-  const query = this.searchQuery.trim().toLowerCase();
-
-  if (query === '') {
-    this.searchResults = [];
-    return;
-  }
-
-  // Filter the comics based on the search query
-  this.searchResults = this.comics.filter((comic) => {
-    const comicName = comic.name.toLowerCase();
-    const author = comic.author.toLowerCase();
-    const characters = comic.characters.map((character) => character.toLowerCase());
-
-    // Check if the search query matches the comic name, author, or any character
-    return (
-      comicName.includes(query) ||
-      author.includes(query) ||
-      characters.some((character) => character.includes(query))
-    );
-  });
-    },
-  },
-};
-</script>
-
 <style scoped>
 .explore-page {
+  position: relative;
   text-align: center;
+  min-height: 100vh;
 }
 
-.search-bar {
-  margin: 20px 0;
+.explore-page h1 {
+  margin-bottom: 20px;
+  font-size: 50px;
 }
 
-.search-bar input[type="text"] {
-  border: 2px solid black;
-  padding: 8px;
-  font-size: 16px;
+.flashy-text {
+  background-image: linear-gradient(to right, gold, silver);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: flashyAnimation 1s linear infinite;
 }
 
-.search-bar button {
-  font-size: 16px;
-  padding: 8px 16px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  cursor: pointer;
+.gold-link {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 30px;
+  color: gold;
+  width: 75%;
+margin: 0 auto;
 }
 
-.comic-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
+.bottom-left-image {
+  position: fixed;
+  bottom: 100px;
+  left: 100px;
+  max-width: 200px;
+  scale: 3;
 }
 
-.comic-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.word-bubble {
+  position: fixed;
+  top: 68%; /* Adjust the value to lower the word bubble */
+  left: 20%;
+  transform: translate(-50%, -50%);
+  background-image: url('../../public/wordbubble.png');
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+  width: 250px;
+  height: 200px;
 }
 
-.comic-item img {
-  width: 150px;
-  max-height: 200px;
-  object-fit: cover;
+.bubble-text {
+  font-size: 32px;
+  text-align: center;
+  padding: 20px;
+  color: black; /* Change the text color to black */
+}
+
+@keyframes flashyAnimation {
+  0% {
+    color: gold;
+  }
+  50% {
+    color: silver;
+  }
+  100% {
+    color: gold;
+  }
+}
+
+/* Add a media query to hide the images on mobile */
+@media (max-width: 600px) {
+.bottom-left-image,
+  .word-bubble {
+    display: none;
+  }
 }
 </style>

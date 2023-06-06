@@ -16,9 +16,9 @@ public class CollectionController {
 
     @Autowired
     CollectionDao collectionDao;
-
     @Autowired
     UserDao userDao;
+
 
     public CollectionController(CollectionDao collectionDao, UserDao userDao) {
         this.collectionDao = collectionDao;
@@ -62,13 +62,12 @@ public class CollectionController {
 
     @RequestMapping(path = "/edit-collection", method = RequestMethod.PUT)
     public Collection editCollection(@RequestBody Collection editCollection) {
-        int collectionID = editCollection.getCollectionId();
         int returnedCollectionId = collectionDao.editCollection(editCollection);
         return collectionDao.getCollectionById(returnedCollectionId);
     }
 
     @RequestMapping(path = "/remove-collection/{id}", method = RequestMethod.DELETE)
-    public boolean deleteCollection(@PathVariable int id) {
+    public boolean deleteCollection(@PathVariable  int id) {
         int deletedRows = collectionDao.deleteCollection(id);
         return (deletedRows == 1);
     }
