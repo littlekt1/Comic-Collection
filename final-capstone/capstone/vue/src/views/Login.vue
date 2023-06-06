@@ -104,6 +104,7 @@ form{
 }
 #login {
   display: flex;
+  top: 50px;
   flex-direction: space-between;
   position: relative;
   text-align: center;
@@ -153,23 +154,25 @@ form{
   width: 100%;
   background-repeat: no-repeat;
   background-position: bottom center;
-  background-size: 25%;
+  background-size: contain;
+  scale: 1;
 }
   @media only screen and (max-width: 600px) {
-    .image {
-      background-size: contain;
-    }
-    .image2 {
-      background-size: contain;
-    }
-    .bottom-image {
-      background-size: contain;
-    }
+  .image,
+  .image2,
+  .bottom-image {
+    display: none;
+  }
+  form {
+    width: 90%;
+    margin: 0 auto;
+  }
+
     input {
        width: 90%;
     }
     .signin{
-      width: 50%;
+      width: 70%;
     }
   }
 

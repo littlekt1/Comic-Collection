@@ -215,25 +215,19 @@ label {
 }
 
 @media only screen and (max-width: 600px) {
-    .image {
-      background-size: contain;
-    }
     input {
        width: 90%;
     }
     .signin{
       width: 50%;
   }
-    form{
-  width: 80%;
-    }
+    form {
+    width: 90%;
+    margin: 0 auto;
+  }
+    .image,
   .image2 {
-    width: 50%;
-    background-size: contain;
-    position: relative;
-    top: 0;
-    transform: none;
-    margin-top: 1rem;
+    display: none;
   }
 }
 

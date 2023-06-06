@@ -1,21 +1,23 @@
 package com.techelevator.model;
 
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Collection {
 
     private int collectionId;
     private String collectionName;
     private int ownerId;
-    private List<Integer> comicIdInCollection;
+    private int[] comicIdInCollection;
     private boolean isPublic = true;
 
     public Collection() {
 
     }
 
-    public Collection(int collectionId, String collectionName, int ownerId, List<Integer> comicsInCollection, boolean isPublic) {
+    public Collection(int collectionId, String collectionName, int ownerId, int[] comicsInCollection, boolean isPublic) {
         this.collectionId = collectionId;
         this.collectionName = collectionName;
         this.ownerId = ownerId;
@@ -47,29 +49,34 @@ public class Collection {
         this.ownerId = ownerId;
     }
 
-    public List<Integer> getComicsInCollection() {
+    public int[] getComicsInCollection() {
         return comicIdInCollection;
     }
 
-    public void setComicsInCollection(List<Integer> comicsInCollection) {
+    public void setComicsInCollection(int[] comicsInCollection) {
         this.comicIdInCollection = comicsInCollection;
     }
 
     public void addComicToCollection(int comicId) {
-        this.comicIdInCollection.add(comicId);
+        int[] extendedArray = Arrays.copyOf(comicIdInCollection, comicIdInCollection.length+1);
+        extendedArray[extendedArray.length-1] = comicId;
+        this.comicIdInCollection = extendedArray;
     }
 
     public void removeComicFromCollection(int comicId) {
-        if (this.comicIdInCollection.contains(comicId)) {
-            //this works! better ways to do it, but it works as is
-            for(int i=0; i<this.comicIdInCollection.size(); i++) {
-                if (this.comicIdInCollection.get(i) == comicId) {
-                    this.comicIdInCollection.remove(i);
-                }
+        int[] newArray = new int[this.comicIdInCollection.length-1];
+        for (int i = 0, k=0; i < this.comicIdInCollection.length; i++) {
+            if (this.comicIdInCollection[i] != comicId) {
+                newArray[k] = this.comicIdInCollection[i];
+                k++;
+//                int finalI = i;
+//                this.comicIdInCollection = IntStream.range(0, this.comicIdInCollection.length)
+//                        .filter(k -> k != finalI)
+//                        .map(k -> this.comicIdInCollection[k])
+//                        .toArray(Integer[]::new);
             }
-        } else {
-            System.out.println("Comic not found, something went wrong");
         }
+        this.comicIdInCollection = newArray;
     }
 
     public boolean isPublic() {

@@ -8,6 +8,10 @@ import CollectionDetail from '../views/CollectionDetail.vue';
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import Comic from '../views/Comic.vue'
+import ExplorePage from '../views/ExplorePage.vue';
+import BulkAddComics from '../components/BulkAdd.vue';
+import ImportComics from '../components/ImportComics.vue';
+
 
 Vue.use(Router)
 
@@ -80,7 +84,25 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
-    }
+    },
+    {
+      path: '/',
+      name: 'Explore',
+      component: ExplorePage,
+    },
+    {
+      path: '/bulk-add-comics',
+      name: 'BulkAddComics',
+      component: BulkAddComics,
+    },
+    {
+      path: '/import-comics',
+      name: 'ImportComics',
+      component: ImportComics,
+      meta: {
+        requiresAuth: false
+      }
+    },
   ]
 })
 

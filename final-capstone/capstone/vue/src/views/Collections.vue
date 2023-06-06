@@ -1,31 +1,42 @@
 <template>
-  <div class="collections">
-    <h1>Collections</h1>
-    <form @submit.prevent="createCollection">
-      <input type="text" v-model="newCollectionName" placeholder="Enter collection name" required />
-      <label>
-        Public:
-        <input type="checkbox" v-model="isPublic" />
-      </label>
-      <button type="submit">Create Collection</button>
-    </form>
+  <div class="collections-container">
+    <div class="static-image left-image"></div>
 
-    <div v-if="collections.length > 0">
-      <h2>Your Collections:</h2>
-      <ul>
-        <li v-for="collection in collections" :key="collection.id">
-  <router-link :to="`/collections/${collection.id}`">
-    <div class="collection-card">
-      <img :src="collection.collectionImage" alt="Collection Image" />
-      <p class="collection-name">{{ collection.name }}</p>
+    <div class="collections">
+      <h1>Collections</h1>
+      <router-link to="/import-comics">
+        <button class="navbtn">Import Comics</button>
+      </router-link>
+      <form @submit.prevent="createCollection">
+        <input type="text" v-model="newCollectionName" placeholder="Enter collection name" required />
+        <label>
+          Public:
+          <input type="checkbox" v-model="isPublic" />
+        </label>
+        <button type="submit">Create Collection</button>
+        <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+        
+      </form>
+
+      <div v-if="collections.length > 0">
+        <h2>Your Collections:</h2>
+        
+        <ul>
+          <li v-for="collection in collections" :key="collection.id">
+            <router-link :to="`/collections/${collection.id}`" class="gold-link">
+              <div class="collection-card">
+                <img :src="collection.collectionImage" alt="Collection Image" />
+                <p class="collection-name larger-text">{{ collection.name }}</p>
+              </div>
+            </router-link>
+          </li>
+        </ul>
+      </div>
+      <div v-else>
+        <p>No collections found.</p>
+      </div>
     </div>
-  </router-link>
-</li>
-      </ul>
-    </div>
-    <div v-else>
-      <p>No collections found.</p>
-    </div>
+    <div class="static-image right-image"></div>
   </div>
 </template>
 
@@ -68,13 +79,57 @@ export default {
 </script>
 
 <style scoped>
-.collections {
+.static-image {
+  position: fixed;
+  top: 160px;
+  bottom: 0;
+  width: 30%; /* Adjust the width as needed */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.left-image {
+  left: 0;
+  background-image: url('../../public/starwarspanel.jpg');
+  top: 90px;
+}
+
+.right-image {
+  right: 0;
+  background-image: url('../../public/batmancomicpanel.jpg');
+  top: 90px;
+}
+
+.collections-container {
+  top: 10px;
+  position: relative;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: flex-start;
+  min-height: 22vh;
+}
+
+button[type="submit"] {
+  font-family: 'Bangers', cursive;
+  font-size: 18px;
+}
+
+.collections {
   text-align: center;
-  margin-top: 2rem;
+  flex-basis: 30%;
+  padding: 10px;
+  border: 2px solid gray;
+  margin: 10px;
+  background-color: rgba(0, 0, 0, 0.568);
+  z-index: 1;
+}
+
+.collections-container {
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  min-height: 22vh;
 }
 
 h1 {
@@ -97,6 +152,34 @@ h1 {
 
 ul {
   list-style: none;
+}
+
+.gold-link {
+  color: gold; /* Set the hyperlink color to gold */
+  text-decoration: none; /* Remove underline from the hyperlink */
+}
+
+.gold-link:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+.larger-text {
+  font-size: 25px; /* Set the font size to 20 pixels */
+}
+
+@media (max-width: 767px) {
+  .static-image.left-image,
+  .static-image.right-image {
+    display: none;
+  }
+  .collections-container {
+    min-height: 40vh;
+  }
+
+  .collections {
+    flex-basis: 80%;
+  }
+
 }
 
 </style>
