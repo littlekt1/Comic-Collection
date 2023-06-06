@@ -11,7 +11,7 @@ public class Collection {
     private String collectionName;
     private int ownerId;
     private int[] comicIdInCollection;
-    private boolean isPublic = true;
+    private boolean isPublic;
 
     public Collection() {
 
