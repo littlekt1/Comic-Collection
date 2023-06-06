@@ -2,7 +2,7 @@
   <div class="collections-container">
     <div class="static-image left-image"></div>
     <div v-if="this.isLoading" class="loading">
-
+<!-- LOADING GIF HERE -->
     </div>
     <div v-if="!!this.$store.state.token" v-show="!this.isLoading" class="collections">
       <h1>User Collections</h1>

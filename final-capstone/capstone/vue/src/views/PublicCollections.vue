@@ -4,11 +4,7 @@
     <div v-if="this.isLoading" class="loading">
 
     </div>
-<<<<<<< HEAD
     <div v-show="!this.isLoading" class="collections">
-=======
-    <div v-if="!!this.$store.state.token" v-show="!this.isLoading" class="collections">
->>>>>>> main
       <h1>Public Collections</h1>
 
       <div v-if="collections.length > 0">
@@ -28,12 +24,6 @@
         <p>No collections found.</p>
       </div>
     </div>
-<<<<<<< HEAD
-=======
-    <div v-else class="collections">
-      <h1>Please Sign or Register to create and view your own Collections</h1>
-    </div>
->>>>>>> main
     <div class="static-image right-image"></div>
   </div>
 </template>
@@ -41,10 +31,7 @@
 <script>
 import collectionService from '../services/CollectionService.js'
 export default {
-<<<<<<< HEAD
     name: "PublicCollections",
-=======
->>>>>>> main
   data() {
     return {
       newCollectionName: '',
@@ -57,11 +44,7 @@ export default {
   },
   methods: {
     updateCollections() {
-<<<<<<< HEAD
       collectionService.getPublicCollections().then(response => {
-=======
-      collectionService.getUserCollections().then(response => {
->>>>>>> main
       this.collections = response.data;
       this.isLoading = false;
     })

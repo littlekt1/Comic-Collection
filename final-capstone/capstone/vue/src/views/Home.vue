@@ -1,8 +1,11 @@
 <template>
   <div class="home">
     <h1 class="header-gradient">Home</h1>
-    <p v-if="isAuthenticated">You are authenticated and can see this content.</p>
-    <p v-else>You must be authenticated to see this.</p>
+    <p v-if="isAuthenticated">Public Collections can be viewed below, and are automatically added when you create your own public collection.</p>
+    <p v-else>Public Collections can be viewed below, you must be signed in to create a collection.</p>
+    <router-link :to="{name:'PublicCollections'}">
+      <button class="button">Public Collections</button>
+    </router-link>
     <div class="main-content">
       <div class="section trending-comics">
         <h2>Trending Comics</h2>
@@ -141,6 +144,17 @@ export default {
   width: 50px;
   height: 50px;
   margin-right: 10px;
+}
+
+.button {
+  font-family: inherit;
+  color: #AEAA46;
+  font-size: 1.2rem;
+  background-color: #605C49;
+  border-radius: 10px;
+  height: 5rem;
+  margin: 1rem;
+  padding: 20px;
 }
 
 @media (max-width: 767px) {

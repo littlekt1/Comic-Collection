@@ -17,15 +17,6 @@ public class APIRequestController {
     @Autowired
     MetronCloud comicAPIRequest;
 
-<<<<<<< HEAD
-=======
-    @RequestMapping(path="/woof", method=RequestMethod.GET)
-    public void test() {
-        System.out.println("u thar?");
-    }
-
-
->>>>>>> main
     @RequestMapping(path="/comic-character", method= RequestMethod.GET)
     public List<CharacterComicData> comics(@RequestParam String comicSearch) throws JsonMappingException, JsonProcessingException {
 
