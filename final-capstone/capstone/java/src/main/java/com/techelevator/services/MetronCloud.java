@@ -26,6 +26,8 @@ public class MetronCloud {
     @Value("${metron.cloud.api.search.url}")
     String searchURL;
 
+
+    //character search
     public List<CharacterComicData> getComicResults(String comicSearchEntry) throws JsonMappingException, JsonProcessingException {
 
 
@@ -53,6 +55,7 @@ public class MetronCloud {
             ResponseEntity<String> comicResponse = restTemplate.exchange(urlComicSearch, HttpMethod.GET, httpEntity, String.class);
             CharacterData characterData = objectMapper.readValue(comicResponse.getBody(), CharacterData.class);
             return characterData.getResults();
+<<<<<<< HEAD
         }
         return null;
     }
@@ -78,6 +81,8 @@ public class MetronCloud {
             if (mth.getCoverDate().substring(0, 8).equals(searchDate)) {
                 resultsByDate.add(mth);
             }
+=======
+>>>>>>> main
         }
         return resultsByDate;
     }

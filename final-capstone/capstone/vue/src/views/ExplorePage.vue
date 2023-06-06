@@ -12,7 +12,9 @@
     <!-- Comic Grid -->
     <div class="comic-grid">
       <div v-for="comic in results" :key="comic.id" class="comic-item">
-        <img :src="comic.image" alt="Comic Image">
+        <router-link :to="{name: 'comic', params: {id: comic.id}}">
+          <img :src="comic.image" alt="Comic Image">
+        </router-link>
         <p>{{ comic.issue }}</p>
       </div>
     </div>
@@ -76,7 +78,12 @@ export default {
   position: relative;
   text-align: center;
   min-height: 100vh;
+  background-image: url('../../public/comicbackground.jpg') scale;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
+
 
 .explore-page h1 {
   margin-bottom: 20px;
@@ -97,7 +104,7 @@ export default {
   font-size: 30px;
   color: gold;
   width: 75%;
-margin: 0 auto;
+  margin: 0 auto;
 }
 
 .bottom-left-image {
@@ -110,14 +117,14 @@ margin: 0 auto;
 
 .word-bubble {
   position: fixed;
-  top: 68%; /* Adjust the value to lower the word bubble */
+  top: 68%;
   left: 20%;
   transform: translate(-50%, -50%);
   background-image: url('../assets/wordbubble.png');
   background-repeat: no-repeat;
   background-position: left;
   background-size: contain;
-  width: 250px;
+  width: 225px;
   height: 200px;
 }
 
@@ -125,7 +132,7 @@ margin: 0 auto;
   font-size: 32px;
   text-align: center;
   padding: 20px;
-  color: black; /* Change the text color to black */
+  color: black;
 }
 
 @keyframes flashyAnimation {
@@ -142,8 +149,10 @@ margin: 0 auto;
 
 /* Add a media query to hide the images on mobile */
 @media (max-width: 600px) {
-.bottom-left-image,
-  .word-bubble {
+  .bottom-left-image,
+  .word-bubble,
+  .top-left-image,
+  .top-right-image {
     display: none;
   }
 }

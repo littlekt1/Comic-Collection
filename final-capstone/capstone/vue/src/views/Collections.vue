@@ -2,7 +2,7 @@
   <div class="collections-container">
     <div class="static-image left-image"></div>
     <div v-if="this.isLoading" class="loading">
-
+<!-- LOADING GIF HERE -->
     </div>
     <div v-if="!!this.$store.state.token" v-show="!this.isLoading" class="collections">
       <h1>User Collections</h1>
@@ -83,15 +83,6 @@ export default {
           comicsInCollection: [], // Initialize an empty array for comics
        };
 
-//We will check for this elsewhere.
-        // // Check user role and limit the number of comics based on it
-        // if (this.$store.state.userRole === 'standard') {
-        //   // Standard user can have up to 100 comics in a collection
-        //   if (newCollection.comics.length >= 100) {
-        //     alert('You have reached the maximum limit for comics in a collection.');
-        //     return;
-        //   }
-        // }
 
         collectionService.createCollection(newCollection);
         this.newCollectionName = ''; // Clear the input field after creating a collection
@@ -151,7 +142,7 @@ button[type="submit"] {
 
 .collections {
   text-align: center;
-  flex-basis: 35%;
+  flex-basis: 25%;
   padding: 10px;
   border: 2px solid gray;
   margin: 10px;

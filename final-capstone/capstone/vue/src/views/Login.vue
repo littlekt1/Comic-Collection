@@ -111,6 +111,7 @@ form{
   font-family: 'Bangers', cursive;
   height: 50vh;
   width: 100%;
+  margin-bottom: 50px ;
 }
 .image {
   background-image: url('../assets/doom.png');
