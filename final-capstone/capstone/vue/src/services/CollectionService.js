@@ -30,6 +30,6 @@ export default {
     },
 
     removeComic(collectionId, comicId) {
-        return axios.put(`/add-comic/${collectionId}/${comicId}`);
+        return axios.put(`/remove-comic/${collectionId}/${comicId}`);
     },
 }

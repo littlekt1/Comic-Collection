@@ -18,7 +18,7 @@
     </div>
 
     <div class="image-container">
-      <img src="../../public/thing.png" alt="Comic Image" class="bottom-left-image">
+      <img src="../assets/thing.png" alt="Comic Image" class="bottom-left-image">
       <div class="word-bubble">
         <p class="bubble-text">It's Clobberin' Time!</p>
       </div>
@@ -106,7 +106,7 @@ margin: 0 auto;
   top: 68%; /* Adjust the value to lower the word bubble */
   left: 20%;
   transform: translate(-50%, -50%);
-  background-image: url('../../public/wordbubble.png');
+  background-image: url('../assets/wordbubble.png');
   background-repeat: no-repeat;
   background-position: left;
   background-size: contain;

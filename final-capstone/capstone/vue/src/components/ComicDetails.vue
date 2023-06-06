@@ -2,7 +2,7 @@
   <div class="comic">
 
       <div id="cover">
-        <img src="../../public/galactuspanel.jpg" />
+        <img src="../assets/galactuspanel.jpg" />
       </div>
       <div id="info">
         <h1 id="title">Test Title <!-- {{comic.title}}--></h1>
