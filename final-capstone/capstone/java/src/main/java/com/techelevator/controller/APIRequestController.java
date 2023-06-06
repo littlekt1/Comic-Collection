@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.techelevator.dao.CollectionJdbcDao;
 import com.techelevator.model.Comic;
 import com.techelevator.services.MetronCloud;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class APIRequestController {
     @RequestMapping(path="/comics", method= RequestMethod.GET)
     public List<Comic> comics(@RequestParam String comicSearch) throws JsonMappingException, JsonProcessingException {
 
-        String token = comicAPIRequest.getToken();
-        return comicAPIRequest.getComicResults(token, comicSearch);
+        return comicAPIRequest.getComicResults(comicSearch);
+
     }
 }
 
