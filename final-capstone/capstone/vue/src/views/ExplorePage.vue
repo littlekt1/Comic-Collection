@@ -11,9 +11,9 @@
 
     <!-- Comic Grid -->
     <div class="comic-grid">
-      <div v-for="comic in filteredComics" :key="comic.id" class="comic-item">
+      <div v-for="comic in results" :key="comic.id" class="comic-item">
         <img :src="comic.image" alt="Comic Image">
-        <p>{{ comic.name }}</p>
+        <p>{{ comic.issue }}</p>
       </div>
     </div>
 
@@ -27,10 +27,12 @@
 </template>
 
 <script>
+import MetronService from '../services/MetronService';
 export default {
   data() {
     return {
-      comics: [
+      
+      results: [
         // Array of comics objects
       ],
       searchQuery: '',
@@ -53,6 +55,11 @@ export default {
   },
   methods: {
     search() {
+      MetronService.get(this.searchQuery).then(response => {
+        this.results = response.data
+                console.log(response.data);
+
+      })
       // Perform search logic here
       console.log('Search query:', this.searchQuery);
       // You can implement the actual search functionality here,
