@@ -10,7 +10,7 @@
       <router-link to="/import-comics">
         <button class="navbtn">Import Comics</button>
       </router-link>
-      <form @submit.prevent="createCollection">
+      <form @submit="createCollection()">
         <input type="text" v-model="newCollectionName" placeholder="Enter collection name" required class='name'/>
         <label>
           Public:
@@ -28,7 +28,7 @@
           <li v-for="collection in collections" :key="collection.collectionId">
             <router-link :to="`/collections/${collection.collectionId}`" class="gold-link">
               <div class="collection-card">
-                <img :src="collection.collectionImage" alt="Collection Image" />
+                <img :src="getCollectionImage(collection)" alt="Collection Image" />
                 <p class="collection-name larger-text">{{ collection.collectionName }}</p>
               </div>
             </router-link>
@@ -61,20 +61,26 @@ export default {
     this.updateCollections();
   },
   methods: {
+    getCollectionImage(collection) {
+      if (collection.comicsInCollection.length == 0) {
+        return "https://via.placeholder.com/150x200";
+      }
+      return "https://via.placeholder.com/150x200";//collection.comicsInCollection[0]//image of first comic call here
+    },
     updateCollections() {
+      this.isLoading = true;
       collectionService.getUserCollections().then(response => {
       this.collections = response.data;
       this.isLoading = false;
-    })
+      })
     },
     createCollection() {
-      this.isLoading = true;
+      
       if (this.newCollectionName.trim() !== '') {
         const newCollection = {
           collectionName: this.newCollectionName.trim(),
           public: this.isPublic, // Set the isPublic property based on the checkbox
           comicsInCollection: [], // Initialize an empty array for comics
-          collectionImage: 'https://via.placeholder.com/150x200', // Initialize an empty string for collection image
        };
 
 //We will check for this elsewhere.
@@ -88,11 +94,8 @@ export default {
         // }
 
         collectionService.createCollection(newCollection);
-        this.updateCollections();
         this.newCollectionName = ''; // Clear the input field after creating a collection
         this.isPublic = false; // Reset the isPublic checkbox
-
-
       }
     },
   },
