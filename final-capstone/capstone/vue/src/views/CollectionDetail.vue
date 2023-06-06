@@ -57,6 +57,7 @@ export default {
   methods: {
     getComicsFromCollection(collectionId)  {
       CollectionService.getCollection(collectionId).then(response => {
+
         this.collection = response.data;
       })
     },
