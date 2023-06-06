@@ -28,41 +28,15 @@ public class MetronCloud {
     @Value("${metron.cloud.api.search.url}")
     String searchURL;
 
-    public String getToken() throws JsonMappingException, JsonProcessingException {
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setBasicAuth(this.username, this.password);
-        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-
-//        TODO *** I UNDERSTAND HOW THIS WORKS WITH REDDIT, NOT METRONCLOUD
-//        httpHeaders.set("User-Agent", "reddit-parser");
-//        String body = "grant_type=client_credentials";
-//        HttpEntity<String> request = new HttpEntity<>(body, httpHeaders);
-//        ResponseEntity<String> response = restTemplate.exchange(this.oauthURL, HttpMethod.POST, request, String.class);
-
-//        ObjectMapper objectMapper = new ObjectMapper();
-//       JsonNode jsonNode = objectMapper.readTree(response.getBody());
-//        String token = jsonNode.path("access_token").asText();
-
-//        return token;
-        return null; //just to kill redline
-    }
-
-    public List<Comic> getComicResults(String token, String comicSearchEntry) throws JsonMappingException, JsonProcessingException {
+    public List<Comic> getComicResults(String comicSearchEntry) throws JsonMappingException, JsonProcessingException {
 
 
         //TODO NEEDS DISCUSSED HOW WE WANT TO PULL THINGS
-        String url = this.searchURL + comicSearchEntry + "/hot";
-        token = "Bearer " + token;
+        String url = this.searchURL + "characters/?name=" + comicSearchEntry;
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        //TODO NEED TO UNDERSTAND THE SET HEADERS PORTION
-        headers.set("User-Agent", "reddit-parser");
-        headers.set("Authorization", token);
+        headers.setBasicAuth(this.username, this.password);
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
@@ -72,21 +46,14 @@ public class MetronCloud {
 
         List<Comic> listOfComics = new ArrayList<Comic>();
 
-        for (int i=0; i < 10; i++) {
-
-            String title = jsonNode.path("data").path("children").path(i).path("data").path("title").asText();
-            String ups = jsonNode.path("data").path("children").path(i).path("data").path("ups").asText();
-            String image = jsonNode.path("data").path("children").path(i).path("data").path("url").asText();
-
-            // TODO getting things aren't 100% straight forward. I think we may need to make a few calls to get back what we
-            // specifically asking for
-            Comic comics = new Comic(); //TODO need to define what we want back for a comic
-            listOfComics.add(comics);
-
+        for (int i = 0; i < 3; i++) {
+            String id = jsonNode.path("results").asText();
+            Comic comic = new Comic(Integer.parseInt(id));
+            listOfComics.add(comic);
         }
-
         return listOfComics;
+        }
     }
 
 
-}
+

@@ -13,6 +13,11 @@ public class Comic {
 
     //TODO CONSTRUCTOR ONCE ALL VARIABLES ARE DETERMINED
 
+    public Comic(int characterId) {
+        this.characterId = characterId;
+    }
+
+
     //TODO GETTERS/SETTERS ONCE VARIABLES DETERMINED
 
 

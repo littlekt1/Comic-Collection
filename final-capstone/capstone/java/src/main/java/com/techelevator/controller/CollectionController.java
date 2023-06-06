@@ -16,9 +16,9 @@ public class CollectionController {
 
     @Autowired
     CollectionDao collectionDao;
-
     @Autowired
     UserDao userDao;
+
 
     public CollectionController(CollectionDao collectionDao, UserDao userDao) {
         this.collectionDao = collectionDao;
