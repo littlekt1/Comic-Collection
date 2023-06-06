@@ -19,9 +19,9 @@ html{
   font-family: 'Bangers', cursive;
   background-color: #24231E;
   color: #AEAA46;
-  background-image: url('../public/golddots.jpg');
+  background-image: url('assets/golddots.jpg');
   background-position: center;
   background-size: 120%;
-  cursor: url('../public/avengers.png') 10 10, pointer;
+  cursor: url('assets/avengers.png') 10 10, pointer;
 }
 </style> 

@@ -167,7 +167,7 @@ label {
   font-size: 25px;
 }
 .image {
-  background-image: url('../../public/galactus.png');
+  background-image: url('../assets/galactus.png');
   height: 100%;
   width: 33%;
   background-size: contain;
@@ -176,7 +176,7 @@ label {
   scale: 1;
 }
 /*  .image-premium {
-  background-image: url('../../public/galactus.png');
+  background-image: url('../assets/galactus.png');
   background-repeat: no-repeat;
   background-position: bottom left;
   background-size: contain;
@@ -186,7 +186,7 @@ label {
   position: absolute;
   top:170px; 
   left: 80px; 
-  background-image: url('../../public/wordbubble2.png');
+  background-image: url('../assets/wordbubble2.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -203,7 +203,7 @@ label {
   
 }
 .image2 {
-  background-image: url('../../public/galactuspanel.jpg');
+  background-image: url('../assets/galactuspanel.jpg');
   height: 100%;
   width: 33%;
   background-size: contain;

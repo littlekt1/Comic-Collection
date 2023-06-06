@@ -6,7 +6,7 @@
         <vue-carousel-slide v-for="(slide, index) in comicSlides" :key="index">
           <div class="comic-row">
             <div v-for="(comic, comicIndex) in slide" :key="comicIndex" class="comic-item">
-              <img :src="require(`@/components/${comic.image}`)" :alt="'Comic ' + (comicIndex + 1)" />
+              <img :src="require(`@/assets/${comic.image}`)" :alt="'Comic ' + (comicIndex + 1)" />
               <p>{{ comic.description }}</p>
             </div>
           </div>

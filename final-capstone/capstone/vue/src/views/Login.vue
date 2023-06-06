@@ -114,7 +114,7 @@ form{
   margin-bottom: 50px ;
 }
 .image {
-  background-image: url('../../public/doom.png');
+  background-image: url('../assets/doom.png');
   height: 100%;
   width: 33%;
   background-repeat: no-repeat;
@@ -126,7 +126,7 @@ form{
   position: absolute;
   top:-10%; 
   left: 60%; 
-  background-image: url('../../public/wordbubble.png');
+  background-image: url('../assets/wordbubble.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -142,7 +142,7 @@ form{
 
 }
 .image2 {
-  background-image: url('../../public/ultron.png');
+  background-image: url('../assets/ultron.png');
   height: 100%;
   width: 33%;
   background-repeat: no-repeat;
@@ -150,7 +150,7 @@ form{
   background-size: 40%;
 }
 .bottom-image {
-  background-image: url('../../public/crimsondynamo.png');
+  background-image: url('../assets/crimsondynamo.png');
   height: 50vh;
   width: 100%;
   background-repeat: no-repeat;

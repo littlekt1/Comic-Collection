@@ -3,7 +3,7 @@
     <h1 class="flashy-text">Explore Comics</h1>
     <router-link to="/bulk-add-comics" class="gold-link">Bulk Add Comics</router-link>
     <div class="image-container">
-      <img src="../../public/thing.png" alt="Comic Image" class="bottom-left-image">
+      <img src="../assets/thing.png" alt="Comic Image" class="bottom-left-image">
       <div class="word-bubble">
         <p class="bubble-text">It's Clobberin' Time!</p>
       </div>
@@ -58,7 +58,7 @@
   top: 68%;
   left: 20%;
   transform: translate(-50%, -50%);
-  background-image: url('../../public/wordbubble.png');
+  background-image: url('../assets/wordbubble.png');
   background-repeat: no-repeat;
   background-position: left;
   background-size: contain;

@@ -1,9 +1,12 @@
 <template>
   <div class="collections-container">
     <div class="static-image left-image"></div>
+    <div v-if="this.isLoading" class="loading">
 
-    <div class="collections">
-      <h1>Collections</h1>
+    </div>
+    <div v-if="!!this.$store.state.token" v-show="!this.isLoading" class="collections">
+      <h1>User Collections</h1>
+      
       <router-link to="/import-comics">
         <button class="navbtn">Import Comics</button>
       </router-link>
@@ -22,11 +25,11 @@
         <h2>Your Collections:</h2>
         
         <ul>
-          <li v-for="collection in collections" :key="collection.id">
-            <router-link :to="`/collections/${collection.id}`" class="gold-link">
+          <li v-for="collection in collections" :key="collection.collectionId">
+            <router-link :to="`/collections/${collection.collectionId}`" class="gold-link">
               <div class="collection-card">
                 <img :src="collection.collectionImage" alt="Collection Image" />
-                <p class="collection-name larger-text">{{ collection.name }}</p>
+                <p class="collection-name larger-text">{{ collection.collectionName }}</p>
               </div>
             </router-link>
           </li>
@@ -36,42 +39,60 @@
         <p>No collections found.</p>
       </div>
     </div>
+    <div v-else class="collections">
+      <h1>Please Sign In to create and view your own Collections</h1>
+    </div>
     <div class="static-image right-image"></div>
   </div>
 </template>
 
 <script>
+import collectionService from '../services/CollectionService.js'
 export default {
   data() {
     return {
       newCollectionName: '',
       isPublic: false, // Default to private
       collections: [],
+      isLoading: true,
     };
   },
+  created() {
+    this.updateCollections();
+  },
   methods: {
+    updateCollections() {
+      collectionService.getUserCollections().then(response => {
+      this.collections = response.data;
+      this.isLoading = false;
+    })
+    },
     createCollection() {
+      this.isLoading = true;
       if (this.newCollectionName.trim() !== '') {
         const newCollection = {
-          id: Math.random().toString(36).substr(2, 9), // Generate a random ID for the collection
-          name: this.newCollectionName.trim(),
-          isPublic: this.isPublic, // Set the isPublic property based on the checkbox
-          comics: [], // Initialize an empty array for comics
+          collectionName: this.newCollectionName.trim(),
+          public: this.isPublic, // Set the isPublic property based on the checkbox
+          comicsInCollection: [], // Initialize an empty array for comics
           collectionImage: 'https://via.placeholder.com/150x200', // Initialize an empty string for collection image
        };
 
-        // Check user role and limit the number of comics based on it
-        if (this.$store.state.userRole === 'standard') {
-          // Standard user can have up to 100 comics in a collection
-          if (newCollection.comics.length >= 100) {
-            alert('You have reached the maximum limit for comics in a collection.');
-            return;
-          }
-        }
+//We will check for this elsewhere.
+        // // Check user role and limit the number of comics based on it
+        // if (this.$store.state.userRole === 'standard') {
+        //   // Standard user can have up to 100 comics in a collection
+        //   if (newCollection.comics.length >= 100) {
+        //     alert('You have reached the maximum limit for comics in a collection.');
+        //     return;
+        //   }
+        // }
 
-        this.collections.push(newCollection);
+        collectionService.createCollection(newCollection);
+        this.updateCollections();
         this.newCollectionName = ''; // Clear the input field after creating a collection
         this.isPublic = false; // Reset the isPublic checkbox
+
+
       }
     },
   },
@@ -101,13 +122,13 @@ export default {
 
 .left-image {
   left: 0;
-  background-image: url('../../public/starwarspanel.jpg');
+  background-image: url('../assets/starwarspanel.jpg');
   top: 90px;
 }
 
 .right-image {
   right: 0;
-  background-image: url('../../public/batmancomicpanel.jpg');
+  background-image: url('../assets/batmancomicpanel.jpg');
   top: 90px;
 }
 
