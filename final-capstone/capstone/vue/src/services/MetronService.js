@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 export default {
-    get(comicID) {
-        return axios.get(`/comic/${comicID}`)
+    get(characterName) {
+        //localhost:9000/comic-character?comicSearch=hulk
+        console.log(characterName);
+        return axios.get(`/comic-character?comicSearch=${characterName}`)
     }
 }
