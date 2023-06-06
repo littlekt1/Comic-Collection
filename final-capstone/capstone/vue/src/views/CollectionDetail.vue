@@ -25,6 +25,19 @@
         </div>
       </div>
 
+      <!-- Collection Statistics -->
+      <div class="collection-statistics">
+        <div class="stat-count">
+          <h2>Collection Statistics</h2>
+          <p>Total Comics: {{ collection.comics.length }}</p>
+          <p>Superhero Appearances: {{ getSuperheroAppearances() }}</p>
+          <p>Marvel Comics: {{ getComicCount('Marvel') }}</p>
+          <p>DC Comics: {{ getComicCount('DC') }}</p>
+          <p>Other Comics: {{ getComicCount('Other') }}</p>
+        </div>
+      </div>
+
+
       <!-- Grievous Image -->
       <div class="image-container">
         <div class="static-image image">
@@ -72,10 +85,19 @@ export default {
       // Logic to import comics
       // Add your implementation here
     },
+    getSuperheroAppearances() {
+      let count = 0;
+      for (const comic of this.collection.comics) {
+        count += comic.superheroes.length;
+      }
+      return count;
+    },
+    getComicCount(publisher) {
+      return this.collection.comics.filter(comic => comic.publisher === publisher).length;
+    },
   },
 };
 </script>
-
 
 <style scoped>
 .image-container {
@@ -114,8 +136,7 @@ export default {
   background-position: bottom left;
   z-index: 0;
   background-repeat: no-repeat;
-  scale: 1.2
-;
+  scale: 1.2;
 }
 
 .word-bubble {
@@ -151,13 +172,12 @@ export default {
   font-size: 16px;
   margin-bottom: 10px;
 }
+
 .add-comic-form button {
   font-family: "Bangers", sans-serif;
   font-size: 20px;
   height: 36px;
-
 }
-
 
 .comic-grid {
   display: grid;
@@ -179,6 +199,22 @@ export default {
   object-fit: cover;
 }
 
+.collection-statistics {
+  margin-top: 40px;
+  padding: 10px;
+  width: 15%;
+  border: 2px solid gray;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.7678);
+  z-index: 1;
+  float: right; /* Add this line to float the statistics to the right */
+  margin-left: 20px; /* Add this line to provide some space between the statistics and the comic grid */
+}
+
+.collection-statistics .stat-count {
+  padding: 20px;
+}
+
 @media (max-width: 768px) {
   .image-container {
     display: none;
@@ -187,12 +223,14 @@ export default {
   .add-comic-form input[type="text"] {
     width: 90%;
   }
+
   .add-comic-form button {
-  font-family: "Bangers", sans-serif;
-  font-size: 20px;
-  height: 36px;
-  margin: 20px
-}
+    font-family: "Bangers", sans-serif;
+    font-size: 20px;
+    height: 36px;
+    margin: 20px;
+  }
+
   .comic-grid {
     /* Add the following styles to center the content */
     display: flex;
@@ -201,7 +239,7 @@ export default {
     align-items: center;
   }
 
-   .comic-item {
+  .comic-item {
     /* Update styles to display text under each comic */
     display: flex;
     flex-direction: column;
@@ -220,5 +258,4 @@ export default {
 .share-collection {
   margin-bottom: 20px; /* Add some bottom margin for spacing */
 }
-
 </style>
