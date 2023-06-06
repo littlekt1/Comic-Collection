@@ -1,7 +1,13 @@
 <template>
   <div class="collection-detail">
     <div class="content-container">
-      <h1>{{ collection.collectionName }}</h1>
+      <h1>{{ collection.name }}</h1>
+      
+      <!-- Add Comic Form -->
+      <form @submit.prevent="addComic" class="add-comic-form">
+        <input type="text" v-model="newComicName" placeholder="Enter comic name" required />
+        <button type="submit">Add Comic</button>
+      </form>
       
       <!-- Share Collection URL -->
       <div class="share-collection">
@@ -13,13 +19,19 @@
       
       <!-- Comic Grid -->
       <div class="comic-grid">
-        <div v-for="comicId in collection.comicsInCollection" :key="comicId" class="comic-item">
+        <div v-for="comic in collection.comics" :key="comic.id" class="comic-item">
           <img src="https://via.placeholder.com/200" alt="Placeholder Image" />
-          <!-- <p>{{ comic.name }}</p> -->
+          <p>{{ comic.name }}</p>
         </div>
       </div>
 
-      <!-- Grievous Image -->
+   <!-- Collection Statistics -->
+      <div class="collection-statistics top-right">
+        <h2>Collection Statistics</h2>
+        <p>Total Comics: {{ collection.comics.length }}</p>
+      </div>
+
+     <!-- Grievous Image -->
       <div class="image-container">
         <div class="static-image image">
           <div class="grievous-image"></div>
@@ -33,38 +45,42 @@
 </template>
 
 <script>
-import CollectionService from '../services/CollectionService';
+import CollectionService from '../services/CollectionService.js'
+
 export default {
   data() {
     return {
       collection: {
-        collectionName: '',
-        collectionId: this.$route.params.id,
-        comicsInCollection: [],
+        name: 'Sample Collection',
+        comics: [],
       },
+      newComicName: '',
     };
-  },
-  created() {
-    this.getComicsFromCollection(this.collection.collectionId);
   },
   computed: {
     collectionURL() {
       // Get the current route and build the collection URL
       const currentRoute = this.$route.fullPath;
-      return `${window.location.origin}${currentRoute}?`;
+      const collectionID = this.collection.id; // Replace with the actual collection ID
+      return `${window.location.origin}${currentRoute}?collectionId=${collectionID}`;
     },
   },
   methods: {
+
     getComicsFromCollection(collectionId)  {
       CollectionService.getCollection(collectionId).then(response => {
 
         this.collection = response.data;
       })
+
     },
     importComics() {
       // Logic to import comics
       // Add your implementation here
     },
+    countComicsByBrand(brand) {
+    return this.collection.comics.filter(comic => comic.brand === brand).length;
+  },
   },
 };
 </script>
@@ -148,7 +164,6 @@ export default {
   font-family: "Bangers", sans-serif;
   font-size: 20px;
   height: 36px;
-
 }
 
 
@@ -168,8 +183,30 @@ export default {
 
 .comic-item img {
   width: 150px;
-  max-height: 200px;
+  height: 200px;
   object-fit: cover;
+}
+.collection-statistics {
+  margin-top: 40px;
+  padding: 10px;
+  width: 18%;
+  border: 2px solid gray;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.868);
+  z-index: 1;
+   position: fixed;
+  top: 120px;
+  right: 20px;
+  margin-top: 0;
+}
+
+.collection-statistics h2 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.collection-statistics p {
+  font-size: 16px;
 }
 
 @media (max-width: 768px) {
