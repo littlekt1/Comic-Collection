@@ -62,7 +62,7 @@ export default {
 
 <style scoped>
 .custom-cursor {
-  cursor: url('../../public/avengers.png') 10 10, pointer;
+  cursor: url('../assets/avengers.png') 10 10, pointer;
 }
 .home {
   display: flex;

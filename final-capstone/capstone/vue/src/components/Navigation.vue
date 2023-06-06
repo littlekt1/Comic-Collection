@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="navbar" class="navbar-static">
-      <img src="../../public/logo.png" id="logo" />
+      <img src="../assets/logo.png" id="logo" />
       <h1 id="title">Comic Haven</h1>
       <div class="navbuttons">
         <router-link :to="{ name: 'home' }">

@@ -109,7 +109,7 @@ export default {
   
   left: -25px;
   bottom:-12px;
-  background-image: url('../../public/grievouscomics.png');
+  background-image: url('../assets/grievouscomics.png');
   background-size: contain;
   background-position: bottom left;
   z-index: 0;
@@ -123,7 +123,7 @@ export default {
   top: 55%;
   left: 79%;
   transform: translate(-50%, -50%);
-  background-image: url('../../public/wordbubble.png');
+  background-image: url('../assets/wordbubble.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
