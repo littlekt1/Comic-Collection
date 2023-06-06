@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
+    <h1 class="header-gradient">Home</h1>
     <p v-if="isAuthenticated">You are authenticated and can see this content.</p>
     <p v-else>You must be authenticated to see this.</p>
     <div class="main-content">
@@ -69,6 +69,7 @@ export default {
   flex-direction: column;
   text-align: center;
   min-height: 100vh;
+  font-display: bold;
 }
 
 .main-content {

@@ -29,7 +29,7 @@ public class CollectionJdbcDao implements CollectionDao {
 
     @Override
     public List<Collection> getPublicCollections() {
-        String sql = "SELECT * FROM collections WHERE isPublic = true";
+        String sql = "SELECT * FROM collections WHERE visible = true";
         List<Collection> collectionList = new ArrayList<>();
         SqlRowSet results = template.queryForRowSet(sql);
 
@@ -77,15 +77,19 @@ public class CollectionJdbcDao implements CollectionDao {
 
     @Override
     public int editCollection(Collection collectionToUpdate) {
+        String name = collectionToUpdate.getCollectionName();
+        int ownerId = collectionToUpdate.getOwnerId();
+        boolean isPublic = collectionToUpdate.isPublic();
+        int[] comicIds = collectionToUpdate.getComicsInCollection();
+        int collectionId = collectionToUpdate.getCollectionId();
         String sql = "UPDATE collections SET collection_name = ?, owner_id = ?, comics_in_collection = ?,  visible = ? WHERE collection_id = ? RETURNING collection_id";
-        return template.queryForObject(sql, Integer.class, collectionToUpdate.getCollectionName(), collectionToUpdate.getOwnerId(), collectionToUpdate.getComicsInCollection(), collectionToUpdate.isPublic(),
-                collectionToUpdate.getCollectionId());
+        return template.queryForObject(sql, Integer.class, name, ownerId, comicIds, isPublic, collectionId);
 
     }
 
     @Override
     public int deleteCollection(int collectionId) {
-        String sql = "DELETE * FROM collections WHERE collection_id = ?";
+        String sql = "DELETE FROM collections WHERE collection_id = ?";
         return template.update(sql, collectionId);
     }
 
