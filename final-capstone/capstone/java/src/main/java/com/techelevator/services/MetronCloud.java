@@ -28,6 +28,8 @@ public class MetronCloud {
     @Value("${metron.cloud.api.search.url}")
     String searchURL;
 
+
+    //character search
     public List<CharacterComicData> getComicResults(String comicSearchEntry) throws JsonMappingException, JsonProcessingException {
 
 
@@ -57,8 +59,6 @@ public class MetronCloud {
             ResponseEntity<String> comicResponse = restTemplate.exchange(urlComicSearch, HttpMethod.GET, httpEntity, String.class);
             CharacterData characterData = objectMapper.readValue(comicResponse.getBody(), CharacterData.class);
             return characterData.getResults();
-
-
         }
 
 
