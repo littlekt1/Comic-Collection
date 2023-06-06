@@ -1,13 +1,7 @@
 <template>
   <div class="collection-detail">
     <div class="content-container">
-      <h1>{{ collection.name }}</h1>
-      
-      <!-- Add Comic Form -->
-      <form @submit.prevent="addComic" class="add-comic-form">
-        <input type="text" v-model="newComicName" placeholder="Enter comic name" required />
-        <button type="submit">Add Comic</button>
-      </form>
+      <h1>{{ collection.collectionName }}</h1>
       
       <!-- Share Collection URL -->
       <div class="share-collection">
@@ -19,9 +13,9 @@
       
       <!-- Comic Grid -->
       <div class="comic-grid">
-        <div v-for="comic in collection.comics" :key="comic.id" class="comic-item">
+        <div v-for="comicId in collection.comicsInCollection" :key="comicId" class="comic-item">
           <img src="https://via.placeholder.com/200" alt="Placeholder Image" />
-          <p>{{ comic.name }}</p>
+          <!-- <p>{{ comic.name }}</p> -->
         </div>
       </div>
 
@@ -52,34 +46,32 @@
 </template>
 
 <script>
+import CollectionService from '../services/CollectionService';
 export default {
   data() {
     return {
       collection: {
-        name: 'Sample Collection',
-        comics: [],
+        collectionName: '',
+        collectionId: this.$route.params.id,
+        comicsInCollection: [],
       },
-      newComicName: '',
     };
+  },
+  created() {
+    this.getComicsFromCollection(this.collection.collectionId);
   },
   computed: {
     collectionURL() {
       // Get the current route and build the collection URL
       const currentRoute = this.$route.fullPath;
-      const collectionID = this.collection.id; // Replace with the actual collection ID
-      return `${window.location.origin}${currentRoute}?collectionId=${collectionID}`;
+      return `${window.location.origin}${currentRoute}?`;
     },
   },
   methods: {
-    addComic() {
-      if (this.newComicName.trim() !== '') {
-        const newComic = {
-          id: Math.random().toString(36).substr(2, 9), // Generate a random ID for the comic
-          name: this.newComicName.trim(),
-        };
-        this.collection.comics.push(newComic);
-        this.newComicName = ''; // Clear the input field after adding a comic
-      }
+    getComicsFromCollection(collectionId)  {
+      CollectionService.getCollection(collectionId).then(response => {
+        this.collection = response.data;
+      })
     },
     importComics() {
       // Logic to import comics
