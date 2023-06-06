@@ -2,6 +2,21 @@
   <div class="explore-page">
     <h1 class="flashy-text">Explore Comics</h1>
     <router-link to="/bulk-add-comics" class="gold-link">Bulk Add Comics</router-link>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" v-model="searchQuery" placeholder="Search by comic name, author, or characters">
+      <button @click="search">Search</button>
+    </div>
+
+    <!-- Comic Grid -->
+    <div class="comic-grid">
+      <div v-for="comic in filteredComics" :key="comic.id" class="comic-item">
+        <img :src="comic.image" alt="Comic Image">
+        <p>{{ comic.name }}</p>
+      </div>
+    </div>
+
     <div class="image-container">
       <img src="../assets/thing.png" alt="Comic Image" class="bottom-left-image">
       <div class="word-bubble">
@@ -10,6 +25,44 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      comics: [
+        // Array of comics objects
+      ],
+      searchQuery: '',
+    };
+  },
+  computed: {
+    filteredComics() {
+      const query = this.searchQuery.toLowerCase().trim();
+      if (!query) {
+        return this.comics;
+      }
+      return this.comics.filter((comic) => {
+        return (
+          comic.name.toLowerCase().includes(query) ||
+          comic.author.toLowerCase().includes(query) ||
+          comic.characters.some((character) => character.toLowerCase().includes(query))
+        );
+      });
+    },
+  },
+  methods: {
+    search() {
+      // Perform search logic here
+      console.log('Search query:', this.searchQuery);
+      // You can implement the actual search functionality here,
+      // such as making an API request or filtering the data locally.
+      // Modify the `comics` array based on the search query or make an API call.
+    },
+  },
+};
+</script>
+
 
 <style scoped>
 .explore-page {
@@ -86,5 +139,44 @@ margin: 0 auto;
   .word-bubble {
     display: none;
   }
+}
+
+.search-bar {
+  margin: 20px 0;
+}
+
+.search-bar input[type="text"] {
+  border: 2px solid black;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.search-bar button {
+  font-size: 16px;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.comic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.comic-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.comic-item img {
+  width: 150px;
+  max-height: 200px;
+  object-fit: cover;
 }
 </style>
