@@ -1,7 +1,13 @@
 <template>
   <div class="collection-detail">
     <div class="content-container">
-      <h1>{{ collection.collectionName }}</h1>
+      <h1>{{ collection.name }}</h1>
+      
+      <!-- Add Comic Form -->
+      <form @submit.prevent="addComic" class="add-comic-form">
+        <input type="text" v-model="newComicName" placeholder="Enter comic name" required />
+        <button type="submit">Add Comic</button>
+      </form>
       
       <!-- Share Collection URL -->
       <div class="share-collection">
@@ -13,26 +19,19 @@
       
       <!-- Comic Grid -->
       <div class="comic-grid">
-        <div v-for="comicId in collection.comicsInCollection" :key="comicId" class="comic-item">
+        <div v-for="comic in collection.comics" :key="comic.id" class="comic-item">
           <img src="https://via.placeholder.com/200" alt="Placeholder Image" />
-          <!-- <p>{{ comic.name }}</p> -->
+          <p>{{ comic.name }}</p>
         </div>
       </div>
 
-      <!-- Collection Statistics -->
-      <div class="collection-statistics">
-        <div class="stat-count">
-          <h2>Collection Statistics</h2>
-          <p>Total Comics: {{ collection.comics.length }}</p>
-          <p>Superhero Appearances: {{ getSuperheroAppearances() }}</p>
-          <p>Marvel Comics: {{ getComicCount('Marvel') }}</p>
-          <p>DC Comics: {{ getComicCount('DC') }}</p>
-          <p>Other Comics: {{ getComicCount('Other') }}</p>
-        </div>
+   <!-- Collection Statistics -->
+      <div class="collection-statistics top-right">
+        <h2>Collection Statistics</h2>
+        <p>Total Comics: {{ collection.comics.length }}</p>
       </div>
 
-
-      <!-- Grievous Image -->
+     <!-- Grievous Image -->
       <div class="image-container">
         <div class="static-image image">
           <div class="grievous-image"></div>
@@ -46,50 +45,46 @@
 </template>
 
 <script>
-import CollectionService from '../services/CollectionService';
 export default {
   data() {
     return {
       collection: {
-        collectionName: '',
-        collectionId: this.$route.params.id,
-        comicsInCollection: [],
+        name: 'Sample Collection',
+        comics: [],
       },
+      newComicName: '',
     };
-  },
-  created() {
-    this.getComicsFromCollection(this.collection.collectionId);
   },
   computed: {
     collectionURL() {
       // Get the current route and build the collection URL
       const currentRoute = this.$route.fullPath;
-      return `${window.location.origin}${currentRoute}?`;
+      const collectionID = this.collection.id; // Replace with the actual collection ID
+      return `${window.location.origin}${currentRoute}?collectionId=${collectionID}`;
     },
   },
   methods: {
-    getComicsFromCollection(collectionId)  {
-      CollectionService.getCollection(collectionId).then(response => {
-        this.collection = response.data;
-      })
+    addComic() {
+      if (this.newComicName.trim() !== '') {
+        const newComic = {
+          id: Math.random().toString(36).substr(2, 9), // Generate a random ID for the comic
+          name: this.newComicName.trim(),
+        };
+        this.collection.comics.push(newComic);
+        this.newComicName = ''; // Clear the input field after adding a comic
+      }
     },
     importComics() {
       // Logic to import comics
       // Add your implementation here
     },
-    getSuperheroAppearances() {
-      let count = 0;
-      for (const comic of this.collection.comics) {
-        count += comic.superheroes.length;
-      }
-      return count;
-    },
-    getComicCount(publisher) {
-      return this.collection.comics.filter(comic => comic.publisher === publisher).length;
-    },
+    countComicsByBrand(brand) {
+    return this.collection.comics.filter(comic => comic.brand === brand).length;
+  },
   },
 };
 </script>
+
 
 <style scoped>
 .image-container {
@@ -128,7 +123,8 @@ export default {
   background-position: bottom left;
   z-index: 0;
   background-repeat: no-repeat;
-  scale: 1.2;
+  scale: 1.2
+;
 }
 
 .word-bubble {
@@ -164,12 +160,12 @@ export default {
   font-size: 16px;
   margin-bottom: 10px;
 }
-
 .add-comic-form button {
   font-family: "Bangers", sans-serif;
   font-size: 20px;
   height: 36px;
 }
+
 
 .comic-grid {
   display: grid;
@@ -190,21 +186,27 @@ export default {
   height: 200px;
   object-fit: cover;
 }
-
 .collection-statistics {
   margin-top: 40px;
   padding: 10px;
-  width: 15%;
+  width: 18%;
   border: 2px solid gray;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.7678);
+  background-color: rgba(0, 0, 0, 0.868);
   z-index: 1;
-  float: right; /* Add this line to float the statistics to the right */
-  margin-left: 20px; /* Add this line to provide some space between the statistics and the comic grid */
+   position: fixed;
+  top: 120px;
+  right: 20px;
+  margin-top: 0;
 }
 
-.collection-statistics .stat-count {
-  padding: 20px;
+.collection-statistics h2 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.collection-statistics p {
+  font-size: 16px;
 }
 
 @media (max-width: 768px) {
@@ -215,14 +217,12 @@ export default {
   .add-comic-form input[type="text"] {
     width: 90%;
   }
-
   .add-comic-form button {
-    font-family: "Bangers", sans-serif;
-    font-size: 20px;
-    height: 36px;
-    margin: 20px;
-  }
-
+  font-family: "Bangers", sans-serif;
+  font-size: 20px;
+  height: 36px;
+  margin: 20px
+}
   .comic-grid {
     /* Add the following styles to center the content */
     display: flex;
@@ -231,7 +231,7 @@ export default {
     align-items: center;
   }
 
-  .comic-item {
+   .comic-item {
     /* Update styles to display text under each comic */
     display: flex;
     flex-direction: column;
@@ -250,4 +250,5 @@ export default {
 .share-collection {
   margin-bottom: 20px; /* Add some bottom margin for spacing */
 }
+
 </style>
