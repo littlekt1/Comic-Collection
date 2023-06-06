@@ -5,7 +5,7 @@ public class Comic {
     // TODO NEED TO DEFINE WHAT WE WANT FROM THE API WHEN WE PULL. IDEAS BELOW
 
     private int comicId; //store in DB for direct call to API
-    private int characterId; //will likely need this to pull comics just for the character based on the API doc
+    private String characterId; //will likely need this to pull comics just for the character based on the API doc
     private String comicTitle; //under issue
     private String comicDescription; //under issue
     private String comicImage; //under issue
@@ -13,7 +13,7 @@ public class Comic {
 
     //TODO CONSTRUCTOR ONCE ALL VARIABLES ARE DETERMINED
 
-    public Comic(int characterId) {
+    public Comic(String characterId) {
         this.characterId = characterId;
     }
 

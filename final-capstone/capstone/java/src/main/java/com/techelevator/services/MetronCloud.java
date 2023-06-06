@@ -32,7 +32,7 @@ public class MetronCloud {
 
 
         //TODO NEEDS DISCUSSED HOW WE WANT TO PULL THINGS
-        String url = this.searchURL + "characters/?name=" + comicSearchEntry;
+        String url = this.searchURL + "character/?name=" + comicSearchEntry;
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -44,14 +44,14 @@ public class MetronCloud {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(response.getBody());
 
-        List<Comic> listOfComics = new ArrayList<Comic>();
+        List<Comic> listOfCharacterId = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
             String id = jsonNode.path("results").asText();
-            Comic comic = new Comic(Integer.parseInt(id));
-            listOfComics.add(comic);
+            Comic characterId = new Comic(id);
+            listOfCharacterId.add(characterId);
         }
-        return listOfComics;
+        return listOfCharacterId;
         }
     }
 
