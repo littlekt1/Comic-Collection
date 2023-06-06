@@ -175,7 +175,7 @@ export default {
 
 .comic-item img {
   width: 150px;
-  max-height: 200px;
+  height: 200px;
   object-fit: cover;
 }
 

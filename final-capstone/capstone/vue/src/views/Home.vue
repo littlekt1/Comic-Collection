@@ -71,6 +71,17 @@ export default {
   min-height: 100vh;
   font-display: bold;
 }
+.header-gradient {
+  background-image: linear-gradient(to right, gold, silver);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: flashyAnimation 1s linear infinite;
+  font-size: 90px; /* Increase the font size */
+  margin-bottom: 0; /* Remove the bottom margin */
+    margin-top: 15px; /* Remove the top margin */
+
+}
 
 .main-content {
   flex: 1;
