@@ -95,7 +95,15 @@ public class CollectionJdbcDao implements CollectionDao {
 
 
     //END
-
+    public int getCharacterStatsCount(String characterName, int userId) {
+        String lowerCaseCharacterName = characterName.toLowerCase(); // Convert the character name to lowercase
+        String sql = "SELECT COUNT(*) FROM collections " +
+                "WHERE owner_id = ? " +
+                "AND LOWER(comics_in_collection::text) LIKE '%' || LOWER(?::text) || '%'";
+        return template.queryForObject(sql, Integer.class, userId, lowerCaseCharacterName);
+    }
+    //should take in character name
+    // loop through the collection data to get character name, get comic detail data by character name of each, if character name is already in the array, increase count
 
 
     //START comic-id-list mod

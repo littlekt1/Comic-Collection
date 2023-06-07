@@ -59,12 +59,14 @@ export default {
   },
   created() {
     this.updateCollections();
+    
   },
   methods: {
     getCollectionImage(collection) {
-      if (collection.comicsInCollection.length == 0) {
-        return "collectioncover.jpg";
-      }
+       if (collection.comicsInCollection.length > 0) {
+    const firstComic = collection.comicsInCollection[0];
+    return firstComic.image; // Assuming the comic object has an 'image' property containing the URL of the image
+  }
       return "collectioncover.jpg";//collection.comicsInCollection[0]//image of first comic call here
     },
     updateCollections() {
