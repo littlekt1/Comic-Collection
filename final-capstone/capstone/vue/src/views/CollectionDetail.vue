@@ -45,8 +45,6 @@
 </template>
 
 <script>
-import CollectionService from '../services/CollectionService.js'
-
 export default {
   data() {
     return {
@@ -66,13 +64,15 @@ export default {
     },
   },
   methods: {
-
-    getComicsFromCollection(collectionId)  {
-      CollectionService.getCollection(collectionId).then(response => {
-
-        this.collection = response.data;
-      })
-
+    addComic() {
+      if (this.newComicName.trim() !== '') {
+        const newComic = {
+          id: Math.random().toString(36).substr(2, 9), // Generate a random ID for the comic
+          name: this.newComicName.trim(),
+        };
+        this.collection.comics.push(newComic);
+        this.newComicName = ''; // Clear the input field after adding a comic
+      }
     },
     importComics() {
       // Logic to import comics

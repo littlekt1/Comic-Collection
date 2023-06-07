@@ -2,7 +2,7 @@
   <div class="collections-container">
     <div class="static-image left-image"></div>
     <div v-if="this.isLoading" class="loading">
-<!-- LOADING GIF HERE -->
+
     </div>
     <div v-if="!!this.$store.state.token" v-show="!this.isLoading" class="collections">
       <h1>User Collections</h1>
@@ -63,9 +63,9 @@ export default {
   methods: {
     getCollectionImage(collection) {
       if (collection.comicsInCollection.length == 0) {
-        return "../../public/collectioncover.jpg";
+        return "https://via.placeholder.com/150x200";
       }
-      return "../../public/collectioncover.jpg";
+      return "https://via.placeholder.com/150x200";//collection.comicsInCollection[0]//image of first comic call here
     },
     updateCollections() {
       this.isLoading = true;
