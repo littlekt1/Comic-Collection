@@ -1,7 +1,7 @@
 <template>
   <div class="collection-detail">
     <div class="content-container">
-      <h1>{{ collection.name }}</h1>
+      <h1>{{ collection.collectionName }}</h1>
       
       <!-- Add Comic Form -->
       <form @submit.prevent="addComic" class="add-comic-form">
@@ -19,10 +19,11 @@
       
       <!-- Comic Grid -->
       <div class="comic-grid">
-        <div v-for="comic in collection.comics" :key="comic.id" class="comic-item">
-          <img src="collectioncover.jpg" alt="Placeholder Image" />
-          <p>{{ comic.name }}</p>
-          <input type="checkbox" v-model="comic.inCollection" @change="updateComicCollection(comic)" />
+
+        <div v-for="comicId in collection.comics" :key="comicId" class="comic-item">
+          <router-link :to="{name: 'comic', params: {id:comicId}}">
+            <comicCard :id="comicId"/>
+          </router-link>
         </div>
       </div>
 
@@ -47,15 +48,23 @@
 
 <script>
 import CollectionService from '../services/CollectionService.js'
+import ComicCard from '../components/ComicCard.vue'
 
 export default {
+  components: {
+    ComicCard
+  },
   data() {
     return {
       collection: {
-        name: 'Sample Collection',
+        id: '',
+        ownerId: '',
+        collectionName: '',
         comics: [],
+        public: ''
       },
       newComicName: '',
+      imgSrc: '',
     };
   },
   computed: {
@@ -66,10 +75,20 @@ export default {
       return `${window.location.origin}${currentRoute}?collectionId=${collectionID}`;
     },
   },
+  created() {
+    this.getCollection(this.$route.params.id);
+    console.log(this.collection.comics);
+  },
   methods: {
-    getComicsFromCollection(collectionId) {
+
+
+    getCollection(collectionId)  {
       CollectionService.getCollection(collectionId).then(response => {
-        this.collection = response.data;
+        this.collection.id = response.data.collectionId;
+        this.collection.collectionName = response.data.collectionName;
+        this.collection.comics = response.data.comicsInCollection;
+        this.collection.public = response.data.public;
+
       })
     },
     importComics() {

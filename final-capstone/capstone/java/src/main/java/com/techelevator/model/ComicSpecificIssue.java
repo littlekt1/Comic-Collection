@@ -2,6 +2,8 @@ package com.techelevator.model; ;
 
 import java.util.List;
 import javax.annotation.Generated;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -10,7 +12,6 @@ import com.techelevator.model.Series;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "id",
-        "publisher",
         "series",
         "number",
         "title",
@@ -26,16 +27,15 @@ import com.techelevator.model.Series;
         "desc",
         "image",
         "arcs",
-        "credits",
         "characters",
         "teams",
         "reprints",
-        "variants",
         "cv_id",
         "resource_url",
         "modified"
 })
 @Generated("jsonschema2pojo")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ComicSpecificIssue {
 
     @JsonProperty("id")
@@ -68,12 +68,10 @@ public class ComicSpecificIssue {
     private String image;
     @JsonProperty("arcs")
     private List<Object> arcs;
-    @JsonProperty("credits")
-    private List<Character> characters;
+    @JsonProperty("characters")
+    private List<ComicCharacter> characters;
     @JsonProperty("teams")
     private List<Object> reprints;
-    @JsonProperty("variants")
-    private Integer cvId;
     @JsonProperty("resource_url")
     private String resourceUrl;
     @JsonProperty("modified")
@@ -231,16 +229,16 @@ public class ComicSpecificIssue {
         this.arcs = arcs;
     }
 
-
     @JsonProperty("characters")
-    public List<Character> getCharacters() {
+    public List<ComicCharacter> getCharacters() {
         return characters;
     }
 
     @JsonProperty("characters")
-    public void setCharacters(List<Character> characters) {
+    public void setCharacters(List<ComicCharacter> characters) {
         this.characters = characters;
     }
+
     @JsonProperty("reprints")
     public List<Object> getReprints() {
         return reprints;
@@ -249,16 +247,6 @@ public class ComicSpecificIssue {
     @JsonProperty("reprints")
     public void setReprints(List<Object> reprints) {
         this.reprints = reprints;
-    }
-
-    @JsonProperty("cv_id")
-    public Integer getCvId() {
-        return cvId;
-    }
-
-    @JsonProperty("cv_id")
-    public void setCvId(Integer cvId) {
-        this.cvId = cvId;
     }
 
     @JsonProperty("resource_url")

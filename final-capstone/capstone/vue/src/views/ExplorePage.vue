@@ -12,7 +12,9 @@
     <!-- Comic Grid -->
     <div class="comic-grid">
       <div v-for="comic in results" :key="comic.id" class="comic-item">
-        <img :src="comic.image" alt="Comic Image">
+        <router-link :to="{name: 'comic', params: {id: comic.id}}">
+          <img :src="comic.image" alt="Comic Image">
+        </router-link>
         <p>{{ comic.issue }}</p>
       </div>
     </div>
@@ -115,7 +117,7 @@ export default {
 
 .word-bubble {
   position: fixed;
-  top: 68%;
+  top: 58%;
   left: 20%;
   transform: translate(-50%, -50%);
   background-image: url('../assets/wordbubble.png');
