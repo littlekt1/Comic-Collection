@@ -63,9 +63,9 @@ export default {
   methods: {
     getCollectionImage(collection) {
       if (collection.comicsInCollection.length == 0) {
-        return "https://via.placeholder.com/150x200";
+        return "collectioncover.jpg";
       }
-      return "https://via.placeholder.com/150x200";//collection.comicsInCollection[0]//image of first comic call here
+      return "collectioncover.jpg";//collection.comicsInCollection[0]//image of first comic call here
     },
     updateCollections() {
       this.isLoading = true;
@@ -94,14 +94,14 @@ export default {
 </script>
 
 <style scoped>
-.name{
+.name {
   font-family: 'Bangers', cursive;
   font-size: 15px;
 }
 .navbtn {
   font-family: 'Bangers', cursive;
   font-size: 18px;
-  width:25%;
+  width: 25%;
   margin-bottom: 6px;
 }
 .static-image {
@@ -165,8 +165,8 @@ h1 {
   text-align: center;
 }
 
-.collection-image {
-  width: 200px; /* Adjust the width as needed */
+.collection-card img {
+  width: 150px; /* Adjust the width as needed */
   height: auto; /* Maintain aspect ratio */
   margin-bottom: 10px;
 }
@@ -204,7 +204,5 @@ ul {
   .collections {
     flex-basis: 80%;
   }
-
 }
-
 </style>
