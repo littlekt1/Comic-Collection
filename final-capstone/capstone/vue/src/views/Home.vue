@@ -8,7 +8,8 @@
         <h2>Trending Comics</h2>
         <div class="section-content">
           <div class="carousel-container">
-             <div class="carousel-container">
+             <div class="carousel-container">npm run serve
+               
         <div class="carousel">
           <div v-for="(collection, index) in collections" :key="collection.collectionId" class="carousel-item">
             <router-link

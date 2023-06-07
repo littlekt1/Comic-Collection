@@ -1,8 +1,16 @@
 <template>
   <div class="comic">
 
-      <div id="cover">
-        <img src="../assets/galactuspanel.jpg" />
+
+      <!-- section for adding the comic to a collection -->
+      <div id="collectionAdd">
+        <h2>Select a Collection to add this Comic to!</h2>
+        <form>
+          <div v-for="collection in collections" :key="collection.collectionId" class="collectionCheckbox">
+            <input type="checkbox" v-on:click="toggleComic(collection)">
+            <label>Add to {{collection.collectionName}}</label>
+          </div>
+        </form>
       </div>
       <div id="info">
         <h1 id="title">Test Title <!-- {{comic.title}}--></h1>
@@ -22,7 +30,8 @@
 </template>
 
 <script>
-import marvelService from '../services/MetronService.js'
+import metronService from '../services/MetronService.js'
+import CollectionService from '../services/CollectionService.js'
 export default {
   data() {
     return {
@@ -41,7 +50,12 @@ export default {
     
   },
   created() {
-    marvelService.get(this.$route.params.id).then(response => {
+
+    CollectionService.getUserCollections().then(response => {
+      this.collections = response.data;
+    }),
+    metronService.getComic(this.$route.params.id).then(response => {
+
       this.comic.id = response.data.id;
       this.comic.title = response.data.title;
       this.comic.description = response.data.description;
@@ -54,10 +68,16 @@ export default {
     })
   },
   methods: {
+    //if the collection contains the comic, we want it to have the checkbox checked.
+    toggleComic(collection) {
+      //this is where we can check for the collection having a limit on number of comics
+      //if the user clicks the checkbox, mark it as checked and add the current comic to the collection marked
+      return collection;
+    }
 
   },
   computed: {
-
+    
   }
 }
 </script>
