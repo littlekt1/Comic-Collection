@@ -42,6 +42,7 @@
           >
             <div class="collection-card">
               <img :src="getCollectionImage(collection)" alt="Collection Image" />
+
               <p class="collection-name larger-text">{{ collection.collectionName }}</p>
             </div>
           </router-link>
@@ -51,14 +52,16 @@
     <div v-else> You need to be logged in to create collections.
       </div>
       </div>
-      <div class="section aggregate-stats">
-        <h2>Aggregate Stats</h2>
-        <div class="section-content">
-          <p>Total number of comics:</p>
-          <p>Your number of collections:</p>
-          <p>Superhero appearances:</p>
-        </div>
+<div class="section aggregate-stats">
+      <h2>Aggregate Stats</h2>
+      <div class="section-content">
+        <p>Total number of comics: {{ totalComics }}</p>
+        <p>Total Marvel comics: {{ marvelComics }}</p>
+        <p>Total Spiderman comics: {{ spidermanComics }}</p>
+        <p>Total number of user collections: {{ totalCollections }}</p>
+
       </div>
+    </div>
     </div>
     <footer class="footer">
       <p>Data from GameSpot © 2023 GAMESPOT</p>
@@ -79,8 +82,13 @@ export default {
     return {
       isAuthenticated: false,
       collections: [],
+      totalComics: 0,
+      marvelComics: 0,
+      spidermanComics: 0,
+      totalCollections: 0,
     };
   },
+
   created() {
     this.isAuthenticated = true;
     this.updateCollections();
@@ -110,8 +118,25 @@ export default {
     updateCollections() {
       collectionService.getUserCollections().then((response) => {
         this.collections = response.data;
+        this.totalComics = 0;
+        this.marvelComics = 0;
+        this.spidermanComics = 0;
+        for (const collection of this.collections) {
+          this.totalComics += collection.comicsInCollection.length;
+          for (const comic of collection.comicsInCollection) {
+            if (comic.publisher === 'Marvel') {
+              this.marvelComics++;
+            }
+            if (comic.character === 'Spiderman') {
+              this.spidermanComics++;
+            }
+          }
+        }
+        this.totalCollections = this.collections.length;
       });
     },
+  
+  
     getCollectionImage(collection) {
       if (collection.comicsInCollection.length === 0) {
         return "collectioncover.jpg";

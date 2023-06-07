@@ -20,18 +20,19 @@
       <!-- Comic Grid -->
       <div class="comic-grid">
         <div v-for="comic in collection.comics" :key="comic.id" class="comic-item">
-          <img src="https://via.placeholder.com/200" alt="Placeholder Image" />
+          <img src="collectioncover.jpg" alt="Placeholder Image" />
           <p>{{ comic.name }}</p>
+          <input type="checkbox" v-model="comic.inCollection" @change="updateComicCollection(comic)" />
         </div>
       </div>
 
-   <!-- Collection Statistics -->
+      <!-- Collection Statistics -->
       <div class="collection-statistics top-right">
         <h2>Collection Statistics</h2>
         <p>Total Comics: {{ collection.comics.length }}</p>
       </div>
 
-     <!-- Grievous Image -->
+      <!-- Grievous Image -->
       <div class="image-container">
         <div class="static-image image">
           <div class="grievous-image"></div>
@@ -66,25 +67,26 @@ export default {
     },
   },
   methods: {
-
-    getComicsFromCollection(collectionId)  {
+    getComicsFromCollection(collectionId) {
       CollectionService.getCollection(collectionId).then(response => {
-
         this.collection = response.data;
       })
-
     },
     importComics() {
       // Logic to import comics
       // Add your implementation here
     },
     countComicsByBrand(brand) {
-    return this.collection.comics.filter(comic => comic.brand === brand).length;
-  },
+      return this.collection.comics.filter(comic => comic.brand === brand).length;
+    },
+    updateComicCollection(comic) {
+      // This method handles the checkbox change event and updates the 'inCollection' property of the comic
+      // You can perform any additional actions based on the checkbox state change here
+      console.log(comic.name, 'is now', comic.inCollection ? 'in the collection' : 'not in the collection');
+    },
   },
 };
 </script>
-
 
 <style scoped>
 .image-container {
