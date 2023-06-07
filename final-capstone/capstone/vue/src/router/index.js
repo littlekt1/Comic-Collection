@@ -11,7 +11,7 @@ import Comic from '../views/Comic.vue'
 import ExplorePage from '../views/ExplorePage.vue';
 import BulkAddComics from '../components/BulkAdd.vue';
 import ImportComics from '../components/ImportComics.vue';
-
+import PublicCollections from '../views/PublicCollections.vue'
 
 Vue.use(Router)
 
@@ -99,6 +99,14 @@ const router = new Router({
       path: '/import-comics',
       name: 'ImportComics',
       component: ImportComics,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/collections-public',
+      name: 'PublicCollections',
+      component: PublicCollections,
       meta: {
         requiresAuth: false
       }
