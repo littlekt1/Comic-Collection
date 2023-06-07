@@ -142,7 +142,7 @@ methods: {
 
 .word-bubble {
   position: fixed;
-  top: 68%;
+  top: 58%;
   left: 20%;
   transform: translate(-50%, -50%);
   background-image: url('../assets/wordbubble.png');
