@@ -12,9 +12,7 @@
     <!-- Comic Grid -->
     <div class="comic-grid">
       <div v-for="comic in results" :key="comic.id" class="comic-item">
-        <router-link :to="{name: 'comic', params: {id: comic.id}}">
-          <img :src="comic.image" alt="Comic Image">
-        </router-link>
+        <img :src="comic.image" alt="Comic Image">
         <p>{{ comic.issue }}</p>
       </div>
     </div>

@@ -6,8 +6,7 @@
         <vue-carousel-slide v-for="(slide, index) in comicSlides" :key="index">
           <div class="comic-row">
             <div v-for="(comic, comicIndex) in slide" :key="comicIndex" class="comic-item">
-              <!-- CHANGE SRC THEN MOVED TO SOMETHING ELSE -->
-              <img :src="comic.image" :alt="'Comic ' + (comicIndex + 1)" />
+              <img :src="require(`@/assets/${comic.image}`)" :alt="'Comic ' + (comicIndex + 1)" />
               <p>{{ comic.description }}</p>
             </div>
           </div>
@@ -18,9 +17,7 @@
 </template>
 
 <script>
-// import MetronService from '../services/MetronService'
 import { Carousel, Slide } from 'vue-carousel';
-
 
 export default {
   name: 'TrendingComics',
@@ -98,16 +95,6 @@ export default {
        ],
     };
   },
-  // methods: {
-  //   search() {
-  //     MetronService.get(get.comicId).then(response => {
-  //       this.results = response.data
-  //               console.log(response.data);
-
-  //     })
-  // }
-  // },
-
  computed: {
     comicSlides() {
       const comicsPerSlide = 4;
