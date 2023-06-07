@@ -114,7 +114,7 @@ export default {
     },
     getCollectionImage(collection) {
       if (collection.comicsInCollection.length === 0) {
-        return "https://via.placeholder.com/150x200";
+        return "collectioncover.jpg";
       }
       // Return the image URL of the first comic in the collection
       return collection.comicsInCollection[0].imageUrl;
