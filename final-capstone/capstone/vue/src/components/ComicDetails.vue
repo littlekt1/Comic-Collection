@@ -18,9 +18,10 @@
 
       <!-- info of comic (title, series, desc, etc) -->
       <div id="info">
-        <h1 id="title">Test Title <!-- {{comic.title}}--></h1>
-        <p id="description">Test Description</p>
-        
+       
+        <h1 v-for="comic in results" :key="comic.id" id="title">{{comic.name}} </h1>
+        <p id="description">{{comic.desc}}</p>
+       
       </div>
 
       <!-- character list! -->
@@ -55,15 +56,16 @@ export default {
         characters: []
       },
       isLoading: true,
-      collections: []
+      collections: [],
+      results: [],
     }
     
   },
   created() {
     metronService.getComic(this.$route.params.id).then(response => {
       this.comic.id = response.data.id;
-      this.comic.title = response.data.title;
-      this.comic.description = response.data.description;
+      this.comic.title = response.data.name;
+      this.comic.desc = response.data.desc;
       this.comic.series = response.data.series;
       this.comic.dates = response.data.dates;
       this.comic.prices = response.data.prices;
@@ -76,10 +78,13 @@ export default {
     })
   },
   methods: {
+       
     // toggleComic(collection) {
 
     // }
+    
   },
+  
   computed: {
 
   }

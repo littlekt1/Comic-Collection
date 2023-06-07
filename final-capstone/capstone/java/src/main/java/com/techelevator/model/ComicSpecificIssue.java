@@ -2,15 +2,18 @@ package com.techelevator.model; ;
 
 import java.util.List;
 import javax.annotation.Generated;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.techelevator.model.Series;
 
+@JsonIgnoreProperties
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "id",
-        "publisher",
+//        "publisher",
         "series",
         "number",
         "title",
@@ -26,11 +29,11 @@ import com.techelevator.model.Series;
         "desc",
         "image",
         "arcs",
-        "credits",
+//        "credits",
         "characters",
         "teams",
         "reprints",
-        "variants",
+//        "variants",
         "cv_id",
         "resource_url",
         "modified"
@@ -68,7 +71,7 @@ public class ComicSpecificIssue {
     private String image;
     @JsonProperty("arcs")
     private List<Object> arcs;
-    @JsonProperty("credits")
+    @JsonProperty("characters")
     private List<Character> characters;
     @JsonProperty("teams")
     private List<Object> reprints;

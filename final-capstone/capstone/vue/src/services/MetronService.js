@@ -6,6 +6,9 @@ export default {
     },
 
     getComicById(comicId) {
-        return axios.get(`/comic-issue/${comicId}`)
+        return axios.get(`/comic-issue?issueSearch=${comicId}`)
+    },
+    getRandomComics() {
+        return axios.get(`/get-random`)
     }
 }
