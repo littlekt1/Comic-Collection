@@ -9,6 +9,12 @@
       <button @click="search">Search</button>
     </div>
 
+    <!-- Date Order -->
+    <div class="sort-buttons">
+       <button @click="sortByDate('ascending')">Sort by Date (Ascending)</button>
+       <button @click="sortByDate('descending')">Sort by Date (Descending)</button>
+    </div>
+
     <!-- Comic Grid -->
     <div class="comic-grid">
       <div v-for="comic in results" :key="comic.id" class="comic-item">
@@ -55,20 +61,39 @@ export default {
       });
     },
   },
-  methods: {
-    search() {
-      MetronService.get(this.searchQuery).then(response => {
-        this.results = response.data
-                console.log(response.data);
 
-      })
-      // Perform search logic here
-      console.log('Search query:', this.searchQuery);
-      // You can implement the actual search functionality here,
-      // such as making an API request or filtering the data locally.
-      // Modify the `comics` array based on the search query or make an API call.
-    },
+methods: {
+  search() {
+    MetronService.get(this.searchQuery).then(response => {
+      let filteredResults = response.data;
+
+      if (this.dateFilter) {
+        const selectedDate = new Date(this.dateFilter).toISOString().split('T')[0];
+        filteredResults = filteredResults.filter(comic => {
+          const comicDate = new Date(comic.dateIssued).toISOString().split('T')[0];
+          return comicDate === selectedDate;
+        });
+      }
+
+      this.results = filteredResults;
+      this.sortResults();
+    });
+
+    console.log('Search query:', this.searchQuery);
   },
+  sortByDate(order) {
+    this.sortOrder = order;
+    this.sortResults();
+  },
+  sortResults() {
+    if (this.sortOrder === 'ascending') {
+      this.results.sort((a, b) => new Date(a.cover_date) - new Date(b.cover_date));
+    } else if (this.sortOrder === 'descending') {
+      this.results.sort((a, b) => new Date(b.cover_date) - new Date(a.cover_date));
+    }
+  }
+}
+
 };
 </script>
 
@@ -195,4 +220,20 @@ export default {
   max-height: 200px;
   object-fit: cover;
 }
+
+.sort-buttons {
+  margin: 20px 0;
+}
+
+.sort-buttons button {
+  font-size: 16px;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+
 </style>
