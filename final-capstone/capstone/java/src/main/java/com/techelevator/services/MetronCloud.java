@@ -80,7 +80,10 @@ public class MetronCloud {
             if (mth.getCoverDate().substring(0, 8).equals(searchDate)) {
                 resultsByDate.add(mth);
             }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 614879b22ed6340f979862ff5db368ea003612de
         }
         return resultsByDate;
     }

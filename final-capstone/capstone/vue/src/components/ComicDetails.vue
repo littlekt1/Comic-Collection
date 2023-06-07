@@ -10,7 +10,7 @@
         <h2>Select a Collection to add this Comic to!</h2>
         <form>
           <div v-for="collection in collections" :key="collection.collectionId" class="collectionCheckbox">
-            <input type="checkbox" v-on:click="toggleComic(collection)"> 
+            <input type="checkbox" v-on:click="toggleComic(collection)">
             <label>Add to {{collection.collectionName}}</label>
           </div>
         </form>
@@ -60,6 +60,9 @@ export default {
     
   },
   created() {
+    CollectionService.getUserCollections().then(response => {
+      this.collections = response.data;
+    }),
     metronService.getComic(this.$route.params.id).then(response => {
       this.comic.id = response.data.id;
       this.comic.title = response.data.title;
@@ -71,17 +74,17 @@ export default {
       this.comic.characters = response.data.characters;
       this.isLoading = false;
     })
-    CollectionService.getUserCollections().then(response => {
-      this.collections = response.data;
-    })
   },
   methods: {
-    // toggleComic(collection) {
-
-    // }
+    //if the collection contains the comic, we want it to have the checkbox checked.
+    toggleComic(collection) {
+      //this is where we can check for the collection having a limit on number of comics
+      //if the user clicks the checkbox, mark it as checked and add the current comic to the collection marked
+      return collection;
+    }
   },
   computed: {
-
+    
   }
 }
 </script>
