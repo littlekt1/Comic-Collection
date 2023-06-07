@@ -22,12 +22,12 @@ public class APIRequestController {
     }
 
     //TODO change path to match vue
-    @RequestMapping(path="/CHANGE ME", method= RequestMethod.GET)
+    @RequestMapping(path="/comic-issue", method= RequestMethod.GET)
     public ComicSpecificIssue comic(@RequestParam int issueSearch) throws JsonMappingException, JsonProcessingException {
         return comicAPIRequest.getComicById(issueSearch);
     }
 
-    @RequestMapping(path="/CHANGE ME", method= RequestMethod.GET)
+    @RequestMapping(path="/CHANGE-ME", method= RequestMethod.GET)
     public List<ResultByDate> comics(@RequestParam Integer month, Integer date) throws JsonMappingException, JsonProcessingException {
         return comicAPIRequest.getComicByDate(month, date);
     }
