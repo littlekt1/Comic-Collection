@@ -31,6 +31,7 @@ import com.techelevator.model.Series;
         "characters",
         "teams",
         "reprints",
+        "cv_id",
 
         "resource_url",
         "modified"
@@ -70,7 +71,8 @@ public class ComicSpecificIssue {
     @JsonProperty("arcs")
     private List<Object> arcs;
     @JsonProperty("characters")
-    private List<Character> characters;
+
+    private List<ComicCharacter> characters;
     @JsonProperty("teams")
     private List<Object> reprints;
 
@@ -229,16 +231,16 @@ public class ComicSpecificIssue {
         this.arcs = arcs;
     }
 
-
     @JsonProperty("characters")
-    public List<Character> getCharacters() {
+    public List<ComicCharacter> getCharacters() {
         return characters;
     }
 
     @JsonProperty("characters")
-    public void setCharacters(List<Character> characters) {
+    public void setCharacters(List<ComicCharacter> characters) {
         this.characters = characters;
     }
+
     @JsonProperty("reprints")
     public List<Object> getReprints() {
         return reprints;
@@ -248,7 +250,6 @@ public class ComicSpecificIssue {
     public void setReprints(List<Object> reprints) {
         this.reprints = reprints;
     }
-
 
 
     @JsonProperty("resource_url")

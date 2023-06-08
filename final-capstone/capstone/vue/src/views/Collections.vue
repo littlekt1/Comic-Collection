@@ -1,35 +1,53 @@
 <template>
   <div class="collections-container">
     <div class="static-image left-image"></div>
-    <div v-if="this.isLoading" class="loading">
-<!-- LOADING GIF HERE -->
-    </div>
-    <div v-if="!!this.$store.state.token" v-show="!this.isLoading" class="collections">
+    <div v-if="this.isLoading" class="loading"></div>
+    <div
+      v-if="!!this.$store.state.token"
+      v-show="!this.isLoading"
+      class="collections"
+    >
       <h1>User Collections</h1>
-      
+
       <router-link to="/import-comics">
         <button class="navbtn">Import Comics</button>
       </router-link>
       <form @submit="createCollection()">
-        <input type="text" v-model="newCollectionName" placeholder="Enter collection name" required class='name'/>
+        <input
+          type="text"
+          v-model="newCollectionName"
+          placeholder="Enter collection name"
+          required
+          class="name"
+        />
         <label>
           Public:
           <input type="checkbox" v-model="isPublic" />
         </label>
         <button type="submit">Create Collection</button>
-        <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-        
+        <link
+          href="https://fonts.googleapis.com/css2?family=Bangers&display=swap"
+          rel="stylesheet"
+        />
       </form>
 
       <div v-if="collections.length > 0">
         <h2>Your Collections:</h2>
-        
+
         <ul>
           <li v-for="collection in collections" :key="collection.collectionId">
-            <router-link :to="`/collections/${collection.collectionId}`" class="gold-link">
+            <router-link
+              :to="`/collections/${collection.collectionId}`"
+              class="gold-link"
+            >
               <div class="collection-card">
-                <img :src="getCollectionImage(collection)" alt="Collection Image" />
-                <p class="collection-name larger-text">{{ collection.collectionName }}</p>
+                <img v-if="doneLoading"
+                  :src="collection.image"
+                  alt="Collection Image"
+                />
+                <p class="collection-name larger-text">
+                  {{ collection.collectionName }}
+                </p>
               </div>
             </router-link>
           </li>
@@ -39,53 +57,67 @@
         <p>No collections found.</p>
       </div>
     </div>
+    
     <div v-else class="collections">
       <h1>Please Sign In to create and view your own Collections</h1>
+    </div>
+    <div v-show="isLoading">
+      <p>Now Loading...</p>
+      <img src="../assets/loading.gif" alt="">
     </div>
     <div class="static-image right-image"></div>
   </div>
 </template>
 
 <script>
-import collectionService from '../services/CollectionService.js'
+import collectionService from "../services/CollectionService.js";
+import MetronService from "../services/MetronService";
+
 export default {
   data() {
     return {
-      newCollectionName: '',
+      newCollectionName: "",
       isPublic: false, // Default to private
       collections: [],
       isLoading: true,
+      imageCount: 0
     };
   },
   created() {
     this.updateCollections();
   },
+  computed: {
+    doneLoading() {
+      return this.collections.length == this.imageCount;
+    }
+  },
   methods: {
-    getCollectionImage(collection) {
-      if (collection.comicsInCollection.length == 0) {
-        return "../../public/collectioncover.jpg";
-      }
-      return "../../public/collectioncover.jpg";
-    },
+    
     updateCollections() {
       this.isLoading = true;
-      collectionService.getUserCollections().then(response => {
-      this.collections = response.data;
-      this.isLoading = false;
-      })
+      collectionService.getUserCollections().then((response) => {
+        this.collections = response.data;
+        
+        this.collections.forEach(collection => {
+          MetronService.getComicById(collection.comicsInCollection[0]).then((response) => {
+          collection.image = response.data.image
+          this.imageCount++;
+          this.isLoading = false;
+        });
+       
+        })
+      });
     },
     createCollection() {
-      
-      if (this.newCollectionName.trim() !== '') {
+      if (this.newCollectionName.trim() !== "") {
         const newCollection = {
           collectionName: this.newCollectionName.trim(),
           public: this.isPublic, // Set the isPublic property based on the checkbox
           comicsInCollection: [], // Initialize an empty array for comics
-       };
-
+        };
 
         collectionService.createCollection(newCollection);
-        this.newCollectionName = ''; // Clear the input field after creating a collection
+        this.newCollectionName = ""; // Clear the input field after creating a collection
         this.isPublic = false; // Reset the isPublic checkbox
       }
     },
@@ -94,14 +126,14 @@ export default {
 </script>
 
 <style scoped>
-.name{
-  font-family: 'Bangers', cursive;
+.name {
+  font-family: "Bangers", cursive;
   font-size: 15px;
 }
 .navbtn {
-  font-family: 'Bangers', cursive;
+  font-family: "Bangers", cursive;
   font-size: 18px;
-  width:25%;
+  width: 25%;
   margin-bottom: 6px;
 }
 .static-image {
@@ -116,13 +148,13 @@ export default {
 
 .left-image {
   left: 0;
-  background-image: url('../assets/starwarspanel.jpg');
+  background-image: url("../assets/starwarspanel.jpg");
   top: 90px;
 }
 
 .right-image {
   right: 0;
-  background-image: url('../assets/batmancomicpanel.jpg');
+  background-image: url("../assets/batmancomicpanel.jpg");
   top: 90px;
 }
 
@@ -136,7 +168,7 @@ export default {
 }
 
 button[type="submit"] {
-  font-family: 'Bangers', cursive;
+  font-family: "Bangers", cursive;
   font-size: 18px;
 }
 
@@ -165,8 +197,8 @@ h1 {
   text-align: center;
 }
 
-.collection-image {
-  width: 200px; /* Adjust the width as needed */
+.collection-card img {
+  width: 150px; /* Adjust the width as needed */
   height: auto; /* Maintain aspect ratio */
   margin-bottom: 10px;
 }
@@ -204,7 +236,5 @@ ul {
   .collections {
     flex-basis: 80%;
   }
-
 }
-
 </style>

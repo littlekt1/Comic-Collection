@@ -20,7 +20,6 @@
 import metronService from '../services/MetronService'
 import { Carousel, Slide } from 'vue-carousel';
 
-
 export default {
   name: 'TrendingComics',
   components: {

@@ -1,7 +1,7 @@
 <template>
   <div class="collection-detail">
     <div class="content-container">
-      <h1>{{ collection.name }}</h1>
+      <h1>{{ collection.collectionName }}</h1>
       
       <!-- Add Comic Form -->
       <form @submit.prevent="addComic" class="add-comic-form">
@@ -18,20 +18,26 @@
       </div>
       
       <!-- Comic Grid -->
-      <div class="comic-grid">
-        <div v-for="comic in collection.comics" :key="comic.id" class="comic-item">
-          <img src="https://via.placeholder.com/200" alt="Placeholder Image" />
-          <p>{{ comic.name }}</p>
+
+      <div class="comic-grid" v-show="!isLoading">
+        <div v-for="comicId in collection.comics" :key="comicId" class="comic-item">
+          <router-link :to="{name: 'comic', params: {id:comicId}}" class="gold-link">
+            <comicCard :id="comicId"/>
+          </router-link>
         </div>
       </div>
+      <div class="loading" v-show="isLoading">
+        <p>Now Loading...</p>
+        <img src="../assets/loading.gif" alt="">
+      </div>
 
-   <!-- Collection Statistics -->
+      <!-- Collection Statistics -->
       <div class="collection-statistics top-right">
         <h2>Collection Statistics</h2>
         <p>Total Comics: {{ collection.comics.length }}</p>
       </div>
 
-     <!-- Grievous Image -->
+      <!-- Grievous Image -->
       <div class="image-container">
         <div class="static-image image">
           <div class="grievous-image"></div>
@@ -45,16 +51,25 @@
 </template>
 
 <script>
-import CollectionService from '../services/CollectionService.js'
+import CollectionService from '../services/CollectionService.js';
+import ComicCard from '../components/ComicCard.vue';
 
 export default {
+  components: {
+    ComicCard
+  },
   data() {
     return {
       collection: {
-        name: 'Sample Collection',
+        id: '',
+        ownerId: '',
+        collectionName: '',
         comics: [],
+        public: ''
       },
       newComicName: '',
+      imgSrc: '',
+      isLoading: false,
     };
   },
   computed: {
@@ -63,28 +78,42 @@ export default {
       const currentRoute = this.$route.fullPath;
       const collectionID = this.collection.id; // Replace with the actual collection ID
       return `${window.location.origin}${currentRoute}?collectionId=${collectionID}`;
-    },
+    }
+  },
+  created() {
+    this.getCollection(this.$route.params.id);
+    console.log(this.collection.comics);
   },
   methods: {
-
-    getComicsFromCollection(collectionId)  {
+    getCollection(collectionId) {
+      this.isLoading = true;
       CollectionService.getCollection(collectionId).then(response => {
-
-        this.collection = response.data;
-      })
-
+        this.collection.id = response.data.collectionId;
+        this.collection.collectionName = response.data.collectionName;
+        this.collection.comics = response.data.comicsInCollection;
+        this.collection.public = response.data.public;
+        this.isLoading = false;
+      });
     },
     importComics() {
       // Logic to import comics
       // Add your implementation here
     },
     countComicsByBrand(brand) {
-    return this.collection.comics.filter(comic => comic.brand === brand).length;
-  },
-  },
+      return this.collection.comics.filter(comic => comic.brand === brand).length;
+    },
+    updateComicCollection(comic) {
+      // This method handles the checkbox change event and updates the 'inCollection' property of the comic
+      // You can perform any additional actions based on the checkbox state change here
+      console.log(comic.name, 'is now', comic.inCollection ? 'in the collection' : 'not in the collection');
+    },
+    addComic() {
+      // Logic to add a new comic to the collection
+      // Add your implementation here
+    }
+  }
 };
 </script>
-
 
 <style scoped>
 .image-container {
@@ -94,6 +123,10 @@ export default {
   right: 0;
   display: flex;
   justify-content: flex-start;
+}
+.gold-link {
+  color: gold;
+  text-decoration: none;
 }
 
 .content-container {

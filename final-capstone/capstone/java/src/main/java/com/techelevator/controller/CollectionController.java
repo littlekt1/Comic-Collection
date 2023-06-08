@@ -1,4 +1,5 @@
 package com.techelevator.controller;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.techelevator.dao.CollectionDao;
@@ -84,7 +85,13 @@ public class CollectionController {
     public boolean removeComic(@PathVariable int collectionId, @PathVariable int comicId) {
         return (collectionDao.removeComic(comicId, collectionId) == 1);
     }
-
+    @RequestMapping(path = "/character-stats-count", method = RequestMethod.GET)
+    public int getCharacterStatsCount(
+            @RequestParam String characterName,
+            @RequestParam int userId
+    ) {
+        return collectionDao.getCharacterStatsCount(characterName, userId);
+    }
 
     private int getUserId(Principal principal) {
         return userDao.findIdByUsername(principal.getName());

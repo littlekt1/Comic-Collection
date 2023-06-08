@@ -9,14 +9,28 @@
       <button @click="search">Search</button>
     </div>
 
+    <!-- Date Order -->
+    <div class="sort-buttons">
+       <button @click="sortByDate('ascending')">Sort by Date (Ascending)</button>
+       <button @click="sortByDate('descending')">Sort by Date (Descending)</button>
+    </div>
+
     <!-- Comic Grid -->
-    <div class="comic-grid">
+    <div v-show="!isLoading" class="comic-grid">
       <div v-for="comic in results" :key="comic.id" class="comic-item">
         <router-link :to="{name: 'comic', params: {id: comic.id}}">
           <img :src="comic.image" alt="Comic Image">
         </router-link>
         <p>{{ comic.issue }}</p>
       </div>
+    </div>
+    <div v-show="isLoading">
+      <p>Now Loading...</p>
+      <img src="../assets/loading.gif" alt="">
+      <h2 id="timeout" class="hide">Please try re-typing your request and checking your spelling.</h2>
+    </div>
+    <div v-show="noResults">
+      <p>No results found, please check your spelling and try again.</p>
     </div>
 
     <div class="image-container">
@@ -29,15 +43,17 @@
 </template>
 
 <script>
+
 import MetronService from '../services/MetronService';
 export default {
   data() {
     return {
-      
+      isLoading: false,
       results: [
         // Array of comics objects
       ],
       searchQuery: '',
+      noResults: false,
     };
   },
   computed: {
@@ -54,21 +70,53 @@ export default {
         );
       });
     },
+    
   },
-  methods: {
-    search() {
-      MetronService.get(this.searchQuery).then(response => {
-        this.results = response.data
-                console.log(response.data);
 
-      })
-      // Perform search logic here
-      console.log('Search query:', this.searchQuery);
-      // You can implement the actual search functionality here,
-      // such as making an API request or filtering the data locally.
-      // Modify the `comics` array based on the search query or make an API call.
-    },
+
+methods: {
+  search() {
+    this.noResults = false;
+    this.isLoading = true;
+    MetronService.get(this.searchQuery).then(response => {
+      let filteredResults = response.data;
+
+      if (this.dateFilter) {
+        const selectedDate = new Date(this.dateFilter).toISOString().split('T')[0];
+        filteredResults = filteredResults.filter(comic => {
+          const comicDate = new Date(comic.dateIssued).toISOString().split('T')[0];
+          return comicDate === selectedDate;
+        });
+      }
+
+      this.results = filteredResults;
+      this.sortResults();
+      if(this.results.length == 0) {
+        this.noResults = true;
+      }
+      this.isLoading = false;
+    });
+
+    console.log('Search query:', this.searchQuery);
   },
+  sortByDate(order) {
+    this.sortOrder = order;
+    this.sortResults();
+  },
+  sortResults() {
+    if (this.sortOrder === 'ascending') {
+      this.results.sort((a, b) => new Date(a.cover_date) - new Date(b.cover_date));
+    } else if (this.sortOrder === 'descending') {
+      this.results.sort((a, b) => new Date(b.cover_date) - new Date(a.cover_date));
+    }
+  },
+  created() {
+    setTimeout(function(){
+      document.getElementById('timout').classList.remove('hide');
+    }, 7000);
+  }
+}
+
 };
 </script>
 
@@ -84,6 +132,9 @@ export default {
   background-position: center;
 }
 
+.hide{
+  display: none;
+}
 
 .explore-page h1 {
   margin-bottom: 20px;
@@ -117,7 +168,7 @@ export default {
 
 .word-bubble {
   position: fixed;
-  top: 68%;
+  top: 58%;
   left: 20%;
   transform: translate(-50%, -50%);
   background-image: url('../assets/wordbubble.png');
@@ -195,4 +246,20 @@ export default {
   max-height: 200px;
   object-fit: cover;
 }
+
+.sort-buttons {
+  margin: 20px 0;
+}
+
+.sort-buttons button {
+  font-size: 16px;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+
 </style>

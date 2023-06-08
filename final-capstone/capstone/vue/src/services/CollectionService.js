@@ -32,4 +32,7 @@ export default {
     removeComic(collectionId, comicId) {
         return axios.put(`/remove-comic/${collectionId}/${comicId}`);
     },
+    getCharacterStatsCount(characterName, userId) {
+        return axios.get(`/character-stats-count?characterName=${characterName}&userId=${userId}`)
+    }
 }

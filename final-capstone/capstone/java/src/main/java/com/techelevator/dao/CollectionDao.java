@@ -23,4 +23,6 @@ public interface CollectionDao {
     public int addComic(int comicId, int collectionId);
 
     public int removeComic(int comicId, int collectionId);
+
+    int getCharacterStatsCount(String characterName, int userId);
 }
