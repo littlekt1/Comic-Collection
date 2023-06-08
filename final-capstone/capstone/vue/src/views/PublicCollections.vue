@@ -1,30 +1,22 @@
 <template>
   <div class="collections-container">
     <div class="static-image left-image"></div>
-    <div v-if="this.isLoading" class="loading"></div>
+  
     <div
       v-show="!this.isLoading"
       class="collections"
     >
       <h1>Public Collections</h1>
 
-      <div v-if="collections.length > 0">
 
+      <div v-if="collections.length > 0">
         <ul>
           <li v-for="collection in collections" :key="collection.collectionId">
             <router-link
               :to="`/collections/${collection.collectionId}`"
               class="gold-link"
             >
-              <div class="collection-card">
-                <img v-if="doneLoading"
-                  :src="collection.image"
-                  alt="Collection Image"
-                />
-                <p class="collection-name larger-text">
-                  {{ collection.collectionName }}
-                </p>
-              </div>
+              <collection-card :id="collection.collectionId" />
             </router-link>
           </li>
         </ul>
@@ -34,6 +26,7 @@
       </div>
     </div>
     
+
     <div v-show="isLoading">
       <p>Now Loading...</p>
       <img src="../assets/loading.gif" alt="">
@@ -43,17 +36,19 @@
 </template>
 
 <script>
+import CollectionCard from '../components/CollectionCard.vue'
 import collectionService from "../services/CollectionService.js";
-import MetronService from "../services/MetronService";
 
 export default {
-  name: "PublicCollections",
+  components: {
+    CollectionCard
+  },
   data() {
     return {
       newCollectionName: "",
       isPublic: false, // Default to private
       collections: [],
-      isLoading: true,
+      isLoading: false,
       imageCount: 0
     };
   },
@@ -69,18 +64,24 @@ export default {
     
     updateCollections() {
       this.isLoading = true;
+      console.log("method called");
       collectionService.getPublicCollections().then((response) => {
         this.collections = response.data;
-        
-        this.collections.forEach(collection => {
-          MetronService.getComicById(collection.comicsInCollection[0]).then((response) => {
-          collection.image = response.data.image
-          this.imageCount++;
-          this.isLoading = false;
-        });
-       
-        })
-      });
+         });
+       this.isLoading = false;
+    },
+    createCollection() {
+      if (this.newCollectionName.trim() !== "") {
+        const newCollection = {
+          collectionName: this.newCollectionName.trim(),
+          public: this.isPublic, // Set the isPublic property based on the checkbox
+          comicsInCollection: [], // Initialize an empty array for comics
+        };
+
+        collectionService.createCollection(newCollection);
+        this.newCollectionName = ""; // Clear the input field after creating a collection
+        this.isPublic = false; // Reset the isPublic checkbox
+      }
     },
   },
 };
@@ -152,20 +153,6 @@ button[type="submit"] {
 
 h1 {
   margin-bottom: 1rem;
-}
-
-.collection-card {
-  text-align: center;
-}
-
-.collection-card img {
-  width: 150px; /* Adjust the width as needed */
-  height: auto; /* Maintain aspect ratio */
-  margin-bottom: 10px;
-}
-
-.collection-name {
-  font-weight: bold;
 }
 
 ul {
