@@ -28,81 +28,96 @@ export default {
   },
   data() {
     return {
-      comics: [],
-      // comics: [
-      //   {
-      //     image: 'comic0.jpg',
-      //     description: 'The Avengers (1963) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic1.jpg',
-      //     description: 'Power Girl Special (2023) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic2.jpg',
-      //     description: 'Star Wars (1977) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic3.jpg',
-      //     description: 'Strange Tales (1951) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic4.jpg',
-      //     description: 'The Amazing Spider-Man (1963) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic5.jpg',
-      //     description: 'The Amazing Spider-Man (2022) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic6.jpg',
-      //     description: 'Peter Parker: The Spectacular Spider-Man (1976) Add Comic Butto',
-      //   },
-      //   {
-      //     image: 'comic7.jpg',
-      //     description: 'The Uncanny X-Men (1978) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic8.jpg',
-      //     description: 'Gargoyles (2022) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic9.jpg',
-      //     description: 'Action Comics (1938) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic10.jpg',
-      //     description: 'The X-Men (1963) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic11.jpg',
-      //     description: 'Venom (2018) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic12.jpg',
-      //     description: 'Something Is Killing The Children (2019) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic13.jpg',
-      //     description: 'Doctor Strange (1968) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic14.jpg',
-      //     description: 'Marvels Greatest Comics (1969) Add Comic Button',
-      //   },
-      //   {
-      //     image: 'comic15.jpg',
-      //     description: 'Grimm Fairy Tales (2016) Add Comic Button',
-      //   },
-      //  ],
+      // comics: [],
+      comics: [
+        {
+          image: 'comic0.jpg',
+          description: 'The Avengers (1963) Add Comic Button',
+        },
+        {
+          image: 'comic1.jpg',
+          description: 'Power Girl Special (2023) Add Comic Button',
+        },
+        {
+          image: 'comic2.jpg',
+          description: 'Star Wars (1977) Add Comic Button',
+        },
+        {
+          image: 'comic3.jpg',
+          description: 'Strange Tales (1951) Add Comic Button',
+        },
+        {
+          image: 'comic4.jpg',
+          description: 'The Amazing Spider-Man (1963) Add Comic Button',
+        },
+        {
+          image: 'comic5.jpg',
+          description: 'The Amazing Spider-Man (2022) Add Comic Button',
+        },
+        {
+          image: 'comic6.jpg',
+          description: 'Peter Parker: The Spectacular Spider-Man (1976) Add Comic Butto',
+        },
+        {
+          image: 'comic7.jpg',
+          description: 'The Uncanny X-Men (1978) Add Comic Button',
+        },
+        {
+          image: 'comic8.jpg',
+          description: 'Gargoyles (2022) Add Comic Button',
+        },
+        {
+          image: 'comic9.jpg',
+          description: 'Action Comics (1938) Add Comic Button',
+        },
+        {
+          image: 'comic10.jpg',
+          description: 'The X-Men (1963) Add Comic Button',
+        },
+        {
+          image: 'comic11.jpg',
+          description: 'Venom (2018) Add Comic Button',
+        },
+        {
+          image: 'comic12.jpg',
+          description: 'Something Is Killing The Children (2019) Add Comic Button',
+        },
+        {
+          image: 'comic13.jpg',
+          description: 'Doctor Strange (1968) Add Comic Button',
+        },
+        {
+          image: 'comic14.jpg',
+          description: 'Marvels Greatest Comics (1969) Add Comic Button',
+        },
+        {
+          image: 'comic15.jpg',
+          description: 'Grimm Fairy Tales (2016) Add Comic Button',
+        },
+       ],
      
     };
   },
  created() {
   
    metronService.getRandomComics().then(response => {
-     this.comics = response.data;
-   })
+
+     if(response.status == 200) {
+     for(let i=0; i < this.response.data.length; i++) {
+        let comicObj = {
+          image: this.comics[i].image,
+          description: this.comics[i].name[0]
+        }
+
+        this.comics.push(comicObj);
+     }
+
+      console.log(this.comics)
+
+     }
+   }
+   
+   )
 
  },
  computed: {

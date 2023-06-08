@@ -1,7 +1,7 @@
 <template>
   <div class="collections-container">
     <div class="static-image left-image"></div>
-    <div v-if="this.isLoading" class="loading"></div>
+  
     <div
       v-if="!!this.$store.state.token"
       v-show="!this.isLoading"
@@ -64,7 +64,6 @@
 <script>
 import CollectionCard from '../components/CollectionCard.vue'
 import collectionService from "../services/CollectionService.js";
-import MetronService from "../services/MetronService.js";
 
 export default {
   components: {
@@ -75,7 +74,7 @@ export default {
       newCollectionName: "",
       isPublic: false, // Default to private
       collections: [],
-      isLoading: true,
+      isLoading: false,
       imageCount: 0
     };
   },
@@ -91,17 +90,11 @@ export default {
     
     updateCollections() {
       this.isLoading = true;
+      console.log("method called");
       collectionService.getUserCollections().then((response) => {
         this.collections = response.data;
-        this.isLoading = false;
-        this.collections.forEach(collection => {
-          MetronService.getComicById(collection.comicsInCollection[0]).then((response) => {
-          collection.image = response.data.image
-          this.imageCount++;
-        });
-       
-        })
-      });
+         });
+       this.isLoading = false;
     },
     createCollection() {
       if (this.newCollectionName.trim() !== "") {

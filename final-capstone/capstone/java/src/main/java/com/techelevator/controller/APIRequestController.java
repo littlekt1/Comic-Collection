@@ -41,7 +41,7 @@ public class APIRequestController {
     @RequestMapping(path="/get-random", method= RequestMethod.GET)
     public List<ComicSpecificIssue> random() throws JsonProcessingException {
         List<ComicSpecificIssue> randomComics = new ArrayList<>();
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 10; i++) {
             int comicId = (int)(Math.floor(Math.random() * 60000));
             randomComics.add(comicAPIRequest.getComicById(comicId));
         }

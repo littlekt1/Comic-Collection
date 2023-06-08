@@ -78,6 +78,11 @@
           <p>Total Iron Man comics: {{ ironmanCount }}</p>
           <p>Total Spider-Man comics: {{ spidermanCount }}</p>
           <p>Total Superman Comics: {{supermanCount}}</p>
+          <p>Total Flash Comics: {{flashCount}}</p>
+          <p>Total Batman Comics: {{batmanCount}}</p>
+          <p>Total Thor Comics: {{thorCount}}</p>
+          <p>Total Hulk Comics: {{hulkCount}}</p>
+
           <p>Total number of user collections: {{ totalCollections }}</p>
         </div>
       </div>
@@ -104,8 +109,6 @@ export default {
       isAuthenticated: false,
       collections: [],
       totalComics: 0,
-      marvelComics: 0,
-      spidermanComics: 0,
       totalCollections: 0,
       comics: [],
       imageCount: 0,
@@ -145,10 +148,11 @@ export default {
   computed: {
     spidermanCount() {
       let count = 0;
-      for (const comic of this.comics) {
+      for (const comic of this.$store.state.comics) {
         if (comic.characters.filter(character => character.name.toLowerCase() == "spider-man").length > 0 ) count++
-        
-      } return count
+      } 
+      this.$store.commit("SET_SPIDERMANCOUNT", count);
+      return count
     },
        supermanCount() {
       let count = 0;
@@ -161,6 +165,34 @@ export default {
       let count = 0;
       for (const comic of this.comics) {
         if (comic.characters.filter(character => character.name.toLowerCase() == "iron man").length > 0 ) count++
+        
+      } return count
+    },
+     flashCount() {
+      let count = 0;
+      for (const comic of this.comics) {
+        if (comic.characters.filter(character => character.name.toLowerCase() == "flash").length > 0 ) count++
+        
+      } return count
+    },
+     hulkCount() {
+      let count = 0;
+      for (const comic of this.comics) {
+        if (comic.characters.filter(character => character.name.toLowerCase() == "hulk").length > 0 ) count++
+        
+      } return count
+    },
+     thorCount() {
+      let count = 0;
+      for (const comic of this.comics) {
+        if (comic.characters.filter(character => character.name.toLowerCase() == "thor").length > 0 ) count++
+        
+      } return count
+    },
+     batmanCount() {
+      let count = 0;
+      for (const comic of this.comics) {
+        if (comic.characters.filter(character => character.name.toLowerCase() == "batman").length > 0 ) count++
         
       } return count
     },
@@ -191,6 +223,7 @@ export default {
           this.totalCollections = this.collections.length;
         }
       });
+      this.$store.commit("SET_COMICS", this.comics)
     },
     methods: {
       getCharacterStatsCount() {
