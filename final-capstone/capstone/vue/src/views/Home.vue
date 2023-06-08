@@ -157,7 +157,6 @@ export default {
       for (const comic of this.$store.state.comics) {
         if (comic.characters.filter(character => character.name.toLowerCase() == "spider-man").length > 0 ) count++
       } 
-      this.$store.commit("SET_SPIDERMANCOUNT", count);
       return count
     },
        supermanCount() {
