@@ -16,13 +16,18 @@
     </div>
 
     <!-- Comic Grid -->
-    <div class="comic-grid">
+    <div v-show="!isLoading" class="comic-grid">
       <div v-for="comic in results" :key="comic.id" class="comic-item">
         <router-link :to="{name: 'comic', params: {id: comic.id}}">
           <img :src="comic.image" alt="Comic Image">
         </router-link>
         <p>{{ comic.issue }}</p>
       </div>
+    </div>
+    <div v-show="isLoading">
+      <p>Now Loading...</p>
+      <img src="../assets/loading.gif" alt="">
+      <h2 id="timeout" class="hide">Please try re-typing your request and checking your spelling.</h2>
     </div>
 
     <div class="image-container">
@@ -35,11 +40,12 @@
 </template>
 
 <script>
+
 import MetronService from '../services/MetronService';
 export default {
   data() {
     return {
-      
+      isLoading: false,
       results: [
         // Array of comics objects
       ],
@@ -60,10 +66,13 @@ export default {
         );
       });
     },
+    
   },
+
 
 methods: {
   search() {
+    this.isLoading = true;
     MetronService.get(this.searchQuery).then(response => {
       let filteredResults = response.data;
 
@@ -77,6 +86,7 @@ methods: {
 
       this.results = filteredResults;
       this.sortResults();
+      this.isLoading = false;
     });
 
     console.log('Search query:', this.searchQuery);
@@ -91,6 +101,11 @@ methods: {
     } else if (this.sortOrder === 'descending') {
       this.results.sort((a, b) => new Date(b.cover_date) - new Date(a.cover_date));
     }
+  },
+  created() {
+    setTimeout(function(){
+      document.getElementById('timout').classList.remove('hide');
+    }, 7000);
   }
 }
 
@@ -109,6 +124,9 @@ methods: {
   background-position: center;
 }
 
+.hide{
+  display: none;
+}
 
 .explore-page h1 {
   margin-bottom: 20px;

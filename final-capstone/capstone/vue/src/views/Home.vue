@@ -2,9 +2,12 @@
   <div class="home">
     <h1 class="header-gradient">Home</h1>
     <p v-if="isAuthenticated">
-      You are authenticated and can see this content.
+      Welcome, public collections can be viewed through the button below!
     </p>
-    <p v-else>You must be authenticated to see this.</p>
+    <p v-else>You must be logged in to create your own collections, but public collections can be viewed anonymously at the button below.</p>
+    <router-link :to="{name: 'PublicCollections'}">
+    <button class="button">Public Collections</button>
+    </router-link>
     <div class="main-content">
       <div class="section trending-comics">
         <h2>Trending Comics</h2>
@@ -247,6 +250,17 @@ export default {
   margin-top: 15px; /* Remove the top margin */
 }
 
+.button {
+  font-family: inherit;
+  color: #AEAA46;
+  font-size: 1.2rem;
+  background-color: #605C49;
+  border-radius: 10px;
+  height: 5rem;
+  margin: 1rem;
+  padding: 20px;
+}
+
 .main-content {
   flex: 1;
   display: flex;
@@ -363,6 +377,8 @@ export default {
   color: gold; /* Set the collection name color to gold */
   text-align: center;
 }
+
+
 @media (max-width: 767px) {
   .main-content {
     flex-direction: column;

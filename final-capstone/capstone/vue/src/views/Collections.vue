@@ -57,8 +57,13 @@
         <p>No collections found.</p>
       </div>
     </div>
+    
     <div v-else class="collections">
       <h1>Please Sign In to create and view your own Collections</h1>
+    </div>
+    <div v-show="isLoading">
+      <p>Now Loading...</p>
+      <img src="../assets/loading.gif" alt="">
     </div>
     <div class="static-image right-image"></div>
   </div>
@@ -92,11 +97,12 @@ export default {
       this.isLoading = true;
       collectionService.getUserCollections().then((response) => {
         this.collections = response.data;
-        this.isLoading = false;
+        
         this.collections.forEach(collection => {
           MetronService.getComicById(collection.comicsInCollection[0]).then((response) => {
           collection.image = response.data.image
           this.imageCount++;
+          this.isLoading = false;
         });
        
         })
