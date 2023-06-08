@@ -15,6 +15,8 @@
 
         <p>Share this collection:</p>
         <input type="text" :value="collectionURL" readonly />
+          <button @click="deleteCollection">Delete Collection</button>
+
       </div>
       
       <!-- Comic Grid -->
@@ -72,6 +74,7 @@ export default {
       isLoading: false,
     };
   },
+ 
   computed: {
     collectionURL() {
       // Get the current route and build the collection URL
@@ -114,6 +117,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .image-container {
@@ -197,6 +201,7 @@ export default {
   font-family: "Bangers", sans-serif;
   font-size: 20px;
   height: 36px;
+
 }
 
 
@@ -216,7 +221,7 @@ export default {
 
 .comic-item img {
   width: 150px;
-  height: 200px;
+  max-height: 200px;
   object-fit: cover;
 }
 .collection-statistics {
