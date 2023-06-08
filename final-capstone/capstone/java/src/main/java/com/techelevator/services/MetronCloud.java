@@ -55,6 +55,7 @@ public class MetronCloud {
             ResponseEntity<String> comicResponse = restTemplate.exchange(urlComicSearch, HttpMethod.GET, httpEntity, String.class);
             CharacterData characterData = objectMapper.readValue(comicResponse.getBody(), CharacterData.class);
             return characterData.getResults();
+
         }
         return null;
     }

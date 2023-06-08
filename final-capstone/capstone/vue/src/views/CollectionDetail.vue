@@ -37,6 +37,13 @@
       <div class="collection-statistics top-right">
         <h2>Collection Statistics</h2>
         <p>Total Comics: {{ collection.comics.length }}</p>
+        <p>Total Spider-Man Comics: {{spidermanCount}}</p>
+        <p>Total Iron Man Comics: {{ironmanCount}}</p>
+        <p>Total Superman Comics: {{supermanCount}}</p>
+        <p>Total Flash Comics: {{flashCount}}</p>
+          <p>Total Batman Comics: {{batmanCount}}</p>
+          <p>Total Thor Comics: {{thorCount}}</p>
+          <p>Total Hulk Comics: {{hulkCount}}</p>
       </div>
 
       <!-- Grievous Image -->
@@ -55,6 +62,8 @@
 <script>
 import CollectionService from '../services/CollectionService.js';
 import ComicCard from '../components/ComicCard.vue';
+import MetronService from "../services/MetronService";
+
 
 export default {
   components: {
@@ -67,8 +76,9 @@ export default {
         ownerId: '',
         collectionName: '',
         comics: [],
-        public: ''
+        public: '',
       },
+      comics: [],
       newComicName: '',
       imgSrc: '',
       isLoading: false,
@@ -76,6 +86,56 @@ export default {
   },
  
   computed: {
+    spidermanCount() {
+      let count = 0;
+      for (const comic of this.comics) {
+        if (comic.characters.filter(character => character.name.toLowerCase() == "spider-man").length > 0 ) count++
+        
+      } return count
+    },
+       supermanCount() {
+      let count = 0;
+      for (const comic of this.comics) {
+        if (comic.characters.filter(character => character.name.toLowerCase() == "superman").length > 0 ) count++
+        
+      } return count
+    },
+     ironmanCount() {
+      let count = 0;
+      for (const comic of this.comics) {
+        if (comic.characters.filter(character => character.name.toLowerCase() == "iron man").length > 0 ) count++
+        
+      } return count
+    },
+    thorCount() {
+      let count = 0;
+      for (const comic of this.comics) {
+        if (comic.characters.filter(character => character.name.toLowerCase() == "thor").length > 0 ) count++
+        
+      } return count
+    },
+       hulkCount() {
+      let count = 0;
+      for (const comic of this.comics) {
+        if (comic.characters.filter(character => character.name.toLowerCase() == "hulk").length > 0 ) count++
+        
+      } return count
+    },
+     batmanCount() {
+      let count = 0;
+      for (const comic of this.comics) {
+        if (comic.characters.filter(character => character.name.toLowerCase() == "batman").length > 0 ) count++
+        
+      } return count
+    },
+    flashCount() {
+      let count = 0;
+      for (const comic of this.comics) {
+        if (comic.characters.filter(character => character.name.toLowerCase() == "flash").length > 0 ) count++
+        
+      } return count
+    },
+    
     collectionURL() {
       // Get the current route and build the collection URL
       const currentRoute = this.$route.fullPath;
@@ -95,9 +155,14 @@ export default {
         this.collection.collectionName = response.data.collectionName;
         this.collection.comics = response.data.comicsInCollection;
         this.collection.public = response.data.public;
+        this.collection.comics.forEach((id) => {
+          MetronService.getComicById(id).then(response => {
+            this.comics.push(response.data)
+
+        })
         this.isLoading = false;
       });
-    },
+    })},
     importComics() {
       // Logic to import comics
       // Add your implementation here
@@ -113,6 +178,35 @@ export default {
     addComic() {
       // Logic to add a new comic to the collection
       // Add your implementation here
+       const newComic = {
+    characters: [{ name: 'Spider-Man' }]
+       };
+       
+  this.comics.push(newComic); // Add the new comic to the 'comics' array
+
+  // Update the counts based on the new comic
+  if (newComic.characters.filter(character => character.name.toLowerCase() === 'spider-man').length > 0) {
+    this.spidermanCount++;
+  }
+  if (newComic.characters.filter(character => character.name.toLowerCase() === 'superman').length > 0) {
+    this.supermanCount++;
+  }
+  if (newComic.characters.filter(character => character.name.toLowerCase() === 'iron man').length > 0) {
+    this.ironmanCount++;
+  }
+  if (newComic.characters.filter(character => character.name.toLowerCase() === 'thor').length > 0) {
+    this.spidermanCount++;
+  }
+  if (newComic.characters.filter(character => character.name.toLowerCase() === 'hulk').length > 0) {
+    this.supermanCount++;
+  }
+  if (newComic.characters.filter(character => character.name.toLowerCase() === 'batman').length > 0) {
+    this.ironmanCount++;
+  }
+   if (newComic.characters.filter(character => character.name.toLowerCase() === 'flash').length > 0) {
+    this.ironmanCount++;
+  }
+
     }
   }
 };

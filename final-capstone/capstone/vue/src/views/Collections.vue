@@ -1,7 +1,7 @@
 <template>
   <div class="collections-container">
     <div class="static-image left-image"></div>
-    <div v-if="this.isLoading" class="loading"></div>
+  
     <div
       v-if="!!this.$store.state.token"
       v-show="!this.isLoading"
@@ -40,15 +40,7 @@
               :to="`/collections/${collection.collectionId}`"
               class="gold-link"
             >
-              <div class="collection-card">
-                <img v-if="doneLoading"
-                  :src="collection.image"
-                  alt="Collection Image"
-                />
-                <p class="collection-name larger-text">
-                  {{ collection.collectionName }}
-                </p>
-              </div>
+              <collection-card :id="collection.collectionId" />
             </router-link>
           </li>
         </ul>
@@ -70,16 +62,19 @@
 </template>
 
 <script>
+import CollectionCard from '../components/CollectionCard.vue'
 import collectionService from "../services/CollectionService.js";
-import MetronService from "../services/MetronService";
 
 export default {
+  components: {
+    CollectionCard
+  },
   data() {
     return {
       newCollectionName: "",
       isPublic: false, // Default to private
       collections: [],
-      isLoading: true,
+      isLoading: false,
       imageCount: 0
     };
   },
@@ -95,18 +90,11 @@ export default {
     
     updateCollections() {
       this.isLoading = true;
+      console.log("method called");
       collectionService.getUserCollections().then((response) => {
         this.collections = response.data;
-        
-        this.collections.forEach(collection => {
-          MetronService.getComicById(collection.comicsInCollection[0]).then((response) => {
-          collection.image = response.data.image
-          this.imageCount++;
-          this.isLoading = false;
-        });
-       
-        })
-      });
+         });
+       this.isLoading = false;
     },
     createCollection() {
       if (this.newCollectionName.trim() !== "") {
@@ -191,20 +179,6 @@ button[type="submit"] {
 
 h1 {
   margin-bottom: 1rem;
-}
-
-.collection-card {
-  text-align: center;
-}
-
-.collection-card img {
-  width: 150px; /* Adjust the width as needed */
-  height: auto; /* Maintain aspect ratio */
-  margin-bottom: 10px;
-}
-
-.collection-name {
-  font-weight: bold;
 }
 
 ul {
