@@ -38,13 +38,7 @@
                 </div>
               </div>
             </div>
-            <div v-show="!isLoading">
             <TrendingComics />
-            </div>
-            <div v-show="isLoading">
-              <p>Now Loading...</p>
-            <img src="../assets/loading.gif" alt="">
-            </div>
           </div>
         </div>
       </div>

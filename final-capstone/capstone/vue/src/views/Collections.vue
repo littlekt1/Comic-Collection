@@ -93,12 +93,11 @@ export default {
       this.isLoading = true;
       collectionService.getUserCollections().then((response) => {
         this.collections = response.data;
-        
+        this.isLoading = false;
         this.collections.forEach(collection => {
           MetronService.getComicById(collection.comicsInCollection[0]).then((response) => {
           collection.image = response.data.image
           this.imageCount++;
-          this.isLoading = false;
         });
        
         })
