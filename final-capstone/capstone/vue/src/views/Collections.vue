@@ -42,6 +42,7 @@
             >
               <collection-card :id="collection.collectionId" />
             </router-link>
+              <button @click="deleteCollection" class="delete-button">Delete Collection</button>
           </li>
         </ul>
       </div>
@@ -91,10 +92,13 @@ export default {
     updateCollections() {
       this.isLoading = true;
       console.log("method called");
-      collectionService.getUserCollections().then((response) => {
-        this.collections = response.data;
-         });
-       this.isLoading = false;
+      collectionService.getUserCollections()
+        .then((response) => {
+          this.collections = response.data;
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     createCollection() {
       if (this.newCollectionName.trim() !== "") {
@@ -104,10 +108,25 @@ export default {
           comicsInCollection: [], // Initialize an empty array for comics
         };
 
-        collectionService.createCollection(newCollection);
-        this.newCollectionName = ""; // Clear the input field after creating a collection
-        this.isPublic = false; // Reset the isPublic checkbox
+        collectionService.createCollection(newCollection)
+          .then(() => {
+            this.newCollectionName = ""; // Clear the input field after creating a collection
+            this.isPublic = false; // Reset the isPublic checkbox
+            this.updateCollections(); // Update the collections list
+          })
+          .catch(error => {
+            console.error("Failed to create collection:", error);
+          });
       }
+    },
+    deleteCollection(collectionId) {
+      collectionService.removeCollection(collectionId)
+        .then(() => {
+          this.updateCollections(); // Update the collections list
+        })
+        .catch(error => {
+          console.error("Failed to delete collection:", error);
+        });
     },
   },
 };
@@ -210,5 +229,13 @@ ul {
   .collections {
     flex-basis: 80%;
   }
+}
+.delete-button {
+  margin-top: 10px; /* Adjust the margin as needed */
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
 }
 </style>
