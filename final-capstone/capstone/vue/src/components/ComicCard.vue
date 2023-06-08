@@ -1,10 +1,13 @@
 <template>
   <div>
-
-        <img :src="imgSrc">
-
-    <p>{{comicName[0]}}</p>
-
+    <div v-show="!isLoading">
+      <img :src="imgSrc">
+      <p>{{comicName[0]}}</p>
+    </div>
+    <div v-show="isLoading">
+      <img src="../assets/collectioncover.jpg" alt="">
+      <p>Now Loading...</p>
+    </div>
   </div>
 </template>
 
@@ -19,13 +22,16 @@ export default {
         return {
             imgSrc: '',
             comicName: '',
+            isLoading: false,
         }
     },
     methods: {
         getComicInfoFromMetron(comicId) {
+            this.isLoading = true;
             metronService.getComicById(comicId).then(response => {
             this.imgSrc = response.data.image;
-            this.comicName = response.data.name
+            this.comicName = response.data.name;
+            this.isLoading = false;
         })
         },
     },

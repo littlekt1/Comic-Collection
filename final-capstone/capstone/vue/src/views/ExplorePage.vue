@@ -29,6 +29,9 @@
       <img src="../assets/loading.gif" alt="">
       <h2 id="timeout" class="hide">Please try re-typing your request and checking your spelling.</h2>
     </div>
+    <div v-show="noResults">
+      <p>No results found, please check your spelling and try again.</p>
+    </div>
 
     <div class="image-container">
       <img src="../assets/thing.png" alt="Comic Image" class="bottom-left-image">
@@ -50,6 +53,7 @@ export default {
         // Array of comics objects
       ],
       searchQuery: '',
+      noResults: false,
     };
   },
   computed: {
@@ -72,6 +76,7 @@ export default {
 
 methods: {
   search() {
+    this.noResults = false;
     this.isLoading = true;
     MetronService.get(this.searchQuery).then(response => {
       let filteredResults = response.data;
@@ -86,6 +91,9 @@ methods: {
 
       this.results = filteredResults;
       this.sortResults();
+      if(this.results.length == 0) {
+        this.noResults = true;
+      }
       this.isLoading = false;
     });
 

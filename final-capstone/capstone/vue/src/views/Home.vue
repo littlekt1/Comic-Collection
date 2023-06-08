@@ -38,8 +38,13 @@
                 </div>
               </div>
             </div>
-
+            <div v-show="!isLoading">
             <TrendingComics />
+            </div>
+            <div v-show="isLoading">
+              <p>Now Loading...</p>
+            <img src="../assets/loading.gif" alt="">
+            </div>
           </div>
         </div>
       </div>
@@ -109,12 +114,13 @@ export default {
       spidermanComics: 0,
       totalCollections: 0,
       comics: [],
-      imageCount: 0
+      imageCount: 0,
+      isLoading: false
     };
   },
 
   created() {
-    this.isAuthenticated = true;
+    this.isAuthenticated = this.$store.state.token != '';
     this.updateCollections();
   },
   mounted() {
@@ -217,8 +223,8 @@ export default {
     },
 
     getCollectionImage(collection) {
-      if (collection.comicsInCollection.length === 0) {
-        return "collectioncover.jpg";
+      if (collection.comicsInCollection.length == 0) {
+        return "../assets/collectioncover.jpg";
       }
       // Return the image URL of the first comic in the collection
       return collection.comicsInCollection[0].imageUrl;

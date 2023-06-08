@@ -1,5 +1,6 @@
 <template>
-  <div class="comic">
+  <div >
+    <div class="comic" v-show="!isLoading">
       <!-- section for the cover image -->
       <div id="cover">
         <img :src="comic.thumbnail" />
@@ -28,6 +29,11 @@
           <li v-for="character in comic.characters" :key="character.id" class="character-list-items">{{character.name}}</li>
         </ul>
       </div>
+    </div>
+    <div class="loading" v-show="isLoading">
+      <p>Now Loading...</p>
+      <img src="../assets/loading.gif" alt="">
+    </div>
   </div>
 </template>
 
@@ -47,20 +53,20 @@ export default {
         thumbnail: '',
         characters: []
       },
-      isLoading: true,
+      isLoading: false,
       collections: [],
     }
     
   },
   created() {
-    
+    this.isLoading = true;
     CollectionService.getUserCollections().then(response => {
       this.collections = response.data;
     }),
 
     this.initCheckbox(),
     metronService.getComicById(this.$route.params.id).then(response => {
-
+      
       this.comic.id = response.data.id;
       this.comic.name = response.data.name;
       this.comic.description = response.data.desc;
@@ -70,8 +76,7 @@ export default {
       this.comic.thumbnail = response.data.image;
       this.comic.characters = response.data.characters;
       this.isLoading = false;
-    }),
-    console.log(this.comic)
+    })
   },
   methods: {
     initCheckbox() {
@@ -110,6 +115,10 @@ export default {
   grid-template-columns: repeat(4, 1fr);
   justify-items: center;
   
+}
+
+.loading {
+  margin-left: 50%;
 }
 
 #cover img {
