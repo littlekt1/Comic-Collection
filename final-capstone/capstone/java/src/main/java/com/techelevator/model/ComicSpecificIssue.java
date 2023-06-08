@@ -9,11 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.techelevator.model.Series;
 
-@JsonIgnoreProperties
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "id",
-//        "publisher",
         "series",
         "number",
         "title",
@@ -29,16 +28,15 @@ import com.techelevator.model.Series;
         "desc",
         "image",
         "arcs",
-//        "credits",
         "characters",
         "teams",
         "reprints",
-//        "variants",
-        "cv_id",
+
         "resource_url",
         "modified"
 })
 @Generated("jsonschema2pojo")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ComicSpecificIssue {
 
     @JsonProperty("id")
@@ -75,8 +73,7 @@ public class ComicSpecificIssue {
     private List<Character> characters;
     @JsonProperty("teams")
     private List<Object> reprints;
-    @JsonProperty("variants")
-    private Integer cvId;
+
     @JsonProperty("resource_url")
     private String resourceUrl;
     @JsonProperty("modified")
@@ -91,8 +88,6 @@ public class ComicSpecificIssue {
     public void setId(Integer id) {
         this.id = id;
     }
-
-
 
     @JsonProperty("series")
     public Series getSeries() {
@@ -254,15 +249,7 @@ public class ComicSpecificIssue {
         this.reprints = reprints;
     }
 
-    @JsonProperty("cv_id")
-    public Integer getCvId() {
-        return cvId;
-    }
 
-    @JsonProperty("cv_id")
-    public void setCvId(Integer cvId) {
-        this.cvId = cvId;
-    }
 
     @JsonProperty("resource_url")
     public String getResourceUrl() {

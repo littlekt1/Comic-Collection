@@ -24,7 +24,7 @@ public class APIRequestController {
     }
 
     //TODO change path to match vue
-    @RequestMapping(path="/comic-image", method= RequestMethod.GET)
+    @RequestMapping(path="/comic-issue", method= RequestMethod.GET)
     public ComicSpecificIssue comic(@RequestParam int issueSearch) throws JsonMappingException, JsonProcessingException {
         return comicAPIRequest.getComicById(issueSearch);
     }
