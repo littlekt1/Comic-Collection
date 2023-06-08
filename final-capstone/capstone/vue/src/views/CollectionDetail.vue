@@ -18,12 +18,17 @@
       </div>
       
       <!-- Comic Grid -->
-      <div class="comic-grid">
+
+      <div class="comic-grid" v-show="!isLoading">
         <div v-for="comicId in collection.comics" :key="comicId" class="comic-item">
           <router-link :to="{name: 'comic', params: {id:comicId}}" class="gold-link">
             <comicCard :id="comicId"/>
           </router-link>
         </div>
+      </div>
+      <div class="loading" v-show="isLoading">
+        <p>Now Loading...</p>
+        <img src="../assets/loading.gif" alt="">
       </div>
 
       <!-- Collection Statistics -->
@@ -73,7 +78,8 @@ export default {
       },
       comics: [],
       newComicName: '',
-      imgSrc: ''
+      imgSrc: '',
+      isLoading: false,
     };
   },
   computed: {
@@ -140,6 +146,7 @@ export default {
   },
   methods: {
     getCollection(collectionId) {
+      this.isLoading = true;
       CollectionService.getCollection(collectionId).then(response => {
         this.collection.id = response.data.collectionId;
         this.collection.collectionName = response.data.collectionName;
@@ -150,6 +157,7 @@ export default {
             this.comics.push(response.data)
 
         })
+        this.isLoading = false;
       });
     })},
     importComics() {

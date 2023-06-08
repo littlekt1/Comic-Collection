@@ -40,15 +40,7 @@
               :to="`/collections/${collection.collectionId}`"
               class="gold-link"
             >
-              <div class="collection-card">
-                <img v-if="doneLoading"
-                  :src="collection.image"
-                  alt="Collection Image"
-                />
-                <p class="collection-name larger-text">
-                  {{ collection.collectionName }}
-                </p>
-              </div>
+              <collection-card :id="collection.collectionId" />
             </router-link>
           </li>
         </ul>
@@ -57,18 +49,27 @@
         <p>No collections found.</p>
       </div>
     </div>
+    
     <div v-else class="collections">
       <h1>Please Sign In to create and view your own Collections</h1>
+    </div>
+    <div v-show="isLoading">
+      <p>Now Loading...</p>
+      <img src="../assets/loading.gif" alt="">
     </div>
     <div class="static-image right-image"></div>
   </div>
 </template>
 
 <script>
+import CollectionCard from '../components/CollectionCard.vue'
 import collectionService from "../services/CollectionService.js";
-import MetronService from "../services/MetronService";
+import MetronService from "../services/MetronService.js";
 
 export default {
+  components: {
+    CollectionCard
+  },
   data() {
     return {
       newCollectionName: "",
@@ -92,11 +93,12 @@ export default {
       this.isLoading = true;
       collectionService.getUserCollections().then((response) => {
         this.collections = response.data;
-        this.isLoading = false;
+        
         this.collections.forEach(collection => {
           MetronService.getComicById(collection.comicsInCollection[0]).then((response) => {
           collection.image = response.data.image
           this.imageCount++;
+          this.isLoading = false;
         });
        
         })
@@ -185,20 +187,6 @@ button[type="submit"] {
 
 h1 {
   margin-bottom: 1rem;
-}
-
-.collection-card {
-  text-align: center;
-}
-
-.collection-card img {
-  width: 150px; /* Adjust the width as needed */
-  height: auto; /* Maintain aspect ratio */
-  margin-bottom: 10px;
-}
-
-.collection-name {
-  font-weight: bold;
 }
 
 ul {

@@ -1,20 +1,29 @@
 <template>
   <div class="collections-container">
     <div class="static-image left-image"></div>
-    <div v-if="this.isLoading" class="loading">
-
-    </div>
-    <div v-show="!this.isLoading" class="collections">
+    <div v-if="this.isLoading" class="loading"></div>
+    <div
+      v-show="!this.isLoading"
+      class="collections"
+    >
       <h1>Public Collections</h1>
 
       <div v-if="collections.length > 0">
-        <!-- <h2>Public Collections:</h2> -->
+
         <ul>
           <li v-for="collection in collections" :key="collection.collectionId">
-            <router-link :to="`/collections/${collection.collectionId}`" class="gold-link">
+            <router-link
+              :to="`/collections/${collection.collectionId}`"
+              class="gold-link"
+            >
               <div class="collection-card">
-                <img :src="collection.collectionImage" alt="Collection Image" />
-                <p class="collection-name larger-text">{{ collection.collectionName }}</p>
+                <img v-if="doneLoading"
+                  :src="collection.image"
+                  alt="Collection Image"
+                />
+                <p class="collection-name larger-text">
+                  {{ collection.collectionName }}
+                </p>
               </div>
             </router-link>
           </li>
@@ -24,72 +33,68 @@
         <p>No collections found.</p>
       </div>
     </div>
+    
+    <div v-show="isLoading">
+      <p>Now Loading...</p>
+      <img src="../assets/loading.gif" alt="">
+    </div>
     <div class="static-image right-image"></div>
   </div>
 </template>
 
 <script>
-import collectionService from '../services/CollectionService.js'
+import collectionService from "../services/CollectionService.js";
+import MetronService from "../services/MetronService";
+
 export default {
-    name: "PublicCollections",
+  name: "PublicCollections",
   data() {
     return {
-      newCollectionName: '',
-      isPublic: false, // Default to public
+      newCollectionName: "",
+      isPublic: false, // Default to private
+      collections: [],
       isLoading: true,
+      imageCount: 0
     };
   },
   created() {
     this.updateCollections();
   },
+  computed: {
+    doneLoading() {
+      return this.collections.length == this.imageCount;
+    }
+  },
   methods: {
+    
     updateCollections() {
-      collectionService.getPublicCollections().then(response => {
-      this.collections = response.data;
-      this.isLoading = false;
-    })
-    },
-    createCollection() {
       this.isLoading = true;
-      if (this.newCollectionName.trim() !== '') {
-        const newCollection = {
-          collectionName: this.newCollectionName.trim(),
-          public: this.isPublic, // Set the isPublic property based on the checkbox
-          comicsInCollection: [], // Initialize an empty array for comics
-          collectionImage: 'https://via.placeholder.com/150x200', // Initialize an empty string for collection image
-       };
-
-//We will check for this elsewhere.
-        // // Check user role and limit the number of comics based on it
-        // if (this.$store.state.userRole === 'standard') {
-        //   // Standard user can have up to 100 comics in a collection
-        //   if (newCollection.comics.length >= 100) {
-        //     alert('You have reached the maximum limit for comics in a collection.');
-        //     return;
-        //   }
-        // }
-
-        collectionService.createCollection(newCollection);
-        this.updateCollections();
-        this.newCollectionName = ''; // Clear the input field after creating a collection
-        this.isPublic = false; // Reset the isPublic checkbox
-
-
-      }
+      collectionService.getPublicCollections().then((response) => {
+        this.collections = response.data;
+        
+        this.collections.forEach(collection => {
+          MetronService.getComicById(collection.comicsInCollection[0]).then((response) => {
+          collection.image = response.data.image
+          this.imageCount++;
+          this.isLoading = false;
+        });
+       
+        })
+      });
     },
   },
 };
 </script>
 
 <style scoped>
-.name{
-  font-family: 'Bangers', cursive;
+.name {
+  font-family: "Bangers", cursive;
   font-size: 15px;
 }
 .navbtn {
-  font-family: 'Bangers', cursive;
+  font-family: "Bangers", cursive;
   font-size: 18px;
-  width:25%;
+  width: 25%;
   margin-bottom: 6px;
 }
 .static-image {
@@ -104,13 +109,13 @@ export default {
 
 .left-image {
   left: 0;
-  background-image: url('../assets/starwarspanel.jpg');
+  background-image: url("../assets/starwarspanel.jpg");
   top: 90px;
 }
 
 .right-image {
   right: 0;
-  background-image: url('../assets/batmancomicpanel.jpg');
+  background-image: url("../assets/batmancomicpanel.jpg");
   top: 90px;
 }
 
@@ -124,13 +129,13 @@ export default {
 }
 
 button[type="submit"] {
-  font-family: 'Bangers', cursive;
+  font-family: "Bangers", cursive;
   font-size: 18px;
 }
 
 .collections {
   text-align: center;
-  flex-basis: 35%;
+  flex-basis: 25%;
   padding: 10px;
   border: 2px solid gray;
   margin: 10px;
@@ -153,8 +158,8 @@ h1 {
   text-align: center;
 }
 
-.collection-image {
-  width: 200px; /* Adjust the width as needed */
+.collection-card img {
+  width: 150px; /* Adjust the width as needed */
   height: auto; /* Maintain aspect ratio */
   margin-bottom: 10px;
 }
@@ -192,7 +197,5 @@ ul {
   .collections {
     flex-basis: 80%;
   }
-
 }
-
 </style>

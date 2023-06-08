@@ -2,9 +2,12 @@
   <div class="home">
     <h1 class="header-gradient">Home</h1>
     <p v-if="isAuthenticated">
-      You are authenticated and can see this content.
+      Welcome, public collections can be viewed through the button below!
     </p>
-    <p v-else>You must be authenticated to see this.</p>
+    <p v-else>You must be logged in to create your own collections, but public collections can be viewed anonymously at the button below.</p>
+    <router-link :to="{name: 'PublicCollections'}">
+    <button class="button">Public Collections</button>
+    </router-link>
     <div class="main-content">
       <div class="section trending-comics">
         <h2>Trending Comics</h2>
@@ -35,8 +38,13 @@
                 </div>
               </div>
             </div>
-
+            <div v-show="!isLoading">
             <TrendingComics />
+            </div>
+            <div v-show="isLoading">
+              <p>Now Loading...</p>
+            <img src="../assets/loading.gif" alt="">
+            </div>
           </div>
         </div>
       </div>
@@ -109,12 +117,13 @@ export default {
       totalComics: 0,
       totalCollections: 0,
       comics: [],
-      imageCount: 0
+      imageCount: 0,
+      isLoading: false
     };
   },
 
   created() {
-    this.isAuthenticated = true;
+    this.isAuthenticated = this.$store.state.token != '';
     this.updateCollections();
   },
   mounted() {
@@ -247,8 +256,8 @@ export default {
     },
 
     getCollectionImage(collection) {
-      if (collection.comicsInCollection.length === 0) {
-        return "collectioncover.jpg";
+      if (collection.comicsInCollection.length == 0) {
+        return "../assets/collectioncover.jpg";
       }
       // Return the image URL of the first comic in the collection
       return collection.comicsInCollection[0].imageUrl;
@@ -278,6 +287,17 @@ export default {
   font-size: 90px; /* Increase the font size */
   margin-bottom: 0; /* Remove the bottom margin */
   margin-top: 15px; /* Remove the top margin */
+}
+
+.button {
+  font-family: inherit;
+  color: #AEAA46;
+  font-size: 1.2rem;
+  background-color: #605C49;
+  border-radius: 10px;
+  height: 5rem;
+  margin: 1rem;
+  padding: 20px;
 }
 
 .main-content {
@@ -396,6 +416,8 @@ export default {
   color: gold; /* Set the collection name color to gold */
   text-align: center;
 }
+
+
 @media (max-width: 767px) {
   .main-content {
     flex-direction: column;

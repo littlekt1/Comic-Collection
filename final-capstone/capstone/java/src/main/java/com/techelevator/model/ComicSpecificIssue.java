@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.techelevator.model.Series;
 
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "id",
@@ -31,6 +32,7 @@ import com.techelevator.model.Series;
         "teams",
         "reprints",
         "cv_id",
+
         "resource_url",
         "modified"
 })
@@ -69,9 +71,11 @@ public class ComicSpecificIssue {
     @JsonProperty("arcs")
     private List<Object> arcs;
     @JsonProperty("characters")
+
     private List<ComicCharacter> characters;
     @JsonProperty("teams")
     private List<Object> reprints;
+
     @JsonProperty("resource_url")
     private String resourceUrl;
     @JsonProperty("modified")
@@ -86,8 +90,6 @@ public class ComicSpecificIssue {
     public void setId(Integer id) {
         this.id = id;
     }
-
-
 
     @JsonProperty("series")
     public Series getSeries() {
@@ -248,6 +250,7 @@ public class ComicSpecificIssue {
     public void setReprints(List<Object> reprints) {
         this.reprints = reprints;
     }
+
 
     @JsonProperty("resource_url")
     public String getResourceUrl() {
