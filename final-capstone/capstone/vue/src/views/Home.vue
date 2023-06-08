@@ -54,8 +54,8 @@
                 class="gold-link"
               >
                 <div class="collection-card">
-                  <img
-                    :src="getCollectionImage(collection)"
+                  <img v-if="doneLoading"
+                    :src="collection.image"
                     alt="Collection Image"
                   />
 
@@ -106,6 +106,7 @@ export default {
       spidermanComics: 0,
       totalCollections: 0,
       comics: [],
+      imageCount: 0
     };
   },
 
@@ -159,22 +160,30 @@ export default {
         if (comic.characters.filter(character => character.name.toLowerCase() == "iron man").length > 0 ) count++
         
       } return count
+    },
+    doneLoading() {
+    return this.collections.length == this.imageCount
     }
   },
+  
 
   methods: {
     updateCollections() {
       collectionService.getUserCollections().then((response) => {
         this.collections = response.data;
+        
         this.totalComics = 0;
-        this.marvelComics = 0;
-        this.spidermanComics = 0;
         for (const collection of this.collections) {
           this.totalComics += collection.comicsInCollection.length;
-          for (const comic of collection.comicsInCollection) {
-            MetronService.getComicById(comic).then((response) => {
+          
+          for (let i = 0; i < collection.comicsInCollection.length; i++) {
+            MetronService.getComicById(collection.comicsInCollection[i]).then((response) => {
               this.comics.push(response.data);
-            });
+              if (i == 0) {
+              collection.image = response.data.image
+              this.imageCount++
+              }
+          })
           }
           this.totalCollections = this.collections.length;
         }

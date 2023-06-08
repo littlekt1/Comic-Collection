@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "axios-cache-adapter": "^2.7.3",
     "chart.js": "^4.3.0",
     "core-js": "^3.9.1",
     "vue": "^2.7.14",

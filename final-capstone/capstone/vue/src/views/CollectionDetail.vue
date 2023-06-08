@@ -19,9 +19,8 @@
       
       <!-- Comic Grid -->
       <div class="comic-grid">
-
         <div v-for="comicId in collection.comics" :key="comicId" class="comic-item">
-          <router-link :to="{name: 'comic', params: {id:comicId}}">
+          <router-link :to="{name: 'comic', params: {id:comicId}}" class="gold-link">
             <comicCard :id="comicId"/>
           </router-link>
         </div>
@@ -47,8 +46,8 @@
 </template>
 
 <script>
-import CollectionService from '../services/CollectionService.js'
-import ComicCard from '../components/ComicCard.vue'
+import CollectionService from '../services/CollectionService.js';
+import ComicCard from '../components/ComicCard.vue';
 
 export default {
   components: {
@@ -64,7 +63,7 @@ export default {
         public: ''
       },
       newComicName: '',
-      imgSrc: '',
+      imgSrc: ''
     };
   },
   computed: {
@@ -73,23 +72,20 @@ export default {
       const currentRoute = this.$route.fullPath;
       const collectionID = this.collection.id; // Replace with the actual collection ID
       return `${window.location.origin}${currentRoute}?collectionId=${collectionID}`;
-    },
+    }
   },
   created() {
     this.getCollection(this.$route.params.id);
     console.log(this.collection.comics);
   },
   methods: {
-
-
-    getCollection(collectionId)  {
+    getCollection(collectionId) {
       CollectionService.getCollection(collectionId).then(response => {
         this.collection.id = response.data.collectionId;
         this.collection.collectionName = response.data.collectionName;
         this.collection.comics = response.data.comicsInCollection;
         this.collection.public = response.data.public;
-
-      })
+      });
     },
     importComics() {
       // Logic to import comics
@@ -103,7 +99,11 @@ export default {
       // You can perform any additional actions based on the checkbox state change here
       console.log(comic.name, 'is now', comic.inCollection ? 'in the collection' : 'not in the collection');
     },
-  },
+    addComic() {
+      // Logic to add a new comic to the collection
+      // Add your implementation here
+    }
+  }
 };
 </script>
 
@@ -115,6 +115,10 @@ export default {
   right: 0;
   display: flex;
   justify-content: flex-start;
+}
+.gold-link {
+  color: gold;
+  text-decoration: none;
 }
 
 .content-container {
