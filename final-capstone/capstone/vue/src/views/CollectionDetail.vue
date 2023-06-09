@@ -155,7 +155,7 @@ export default {
         this.collection.comics.forEach((id) => {
           MetronService.getComicById(id).then(response => {
             this.comics.push(response.data)
-
+            this.isLoading = false;
         })
         this.isLoading = false;
       });
