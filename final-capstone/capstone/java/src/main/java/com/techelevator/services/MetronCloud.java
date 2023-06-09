@@ -63,6 +63,8 @@ public class MetronCloud {
 
 
         MarvelComicData comicData = objectMapper.readValue(response.getBody(), MarvelComicData.class);
+
+
 //        List<MarvelComicData> results = comicData.getData();
 
 //        ComicData comicData = objectMapper.readValue(response.getBody(), ComicData.class);
@@ -152,7 +154,7 @@ public class MetronCloud {
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        headers.setBasicAuth(this.username, this.password);
+//        headers.setBasicAuth(this.username, this.password);
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         ResponseEntity<String> response = restTemplate.exchange(supermanURL, HttpMethod.GET, httpEntity, String.class);
