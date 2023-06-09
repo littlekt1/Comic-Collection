@@ -6,7 +6,9 @@
         <vue-carousel-slide v-for="(slide, index) in comicSlides" :key="index">
           <div class="comic-row">
             <div v-for="(comic, comicIndex) in slide" :key="comicIndex" class="comic-item">
+              <router-link :to="{name: 'comic', params: {id: comic.id}}">
                <img :src="comic.image" :alt="'Comic ' + (comicIndex + 1)" />
+              </router-link>
               <p>{{ comic.description }}</p>
             </div>
           </div>
@@ -32,67 +34,78 @@ export default {
       comics: [
         {
           image: 'comic0.jpg',
-          description: 'The Avengers (1963) Add Comic Button',
+          description: 'The Avengers (1963)',
+          id: 17900,
         },
         {
           image: 'comic1.jpg',
-          description: 'Power Girl Special (2023) Add Comic Button',
+          description: 'Power Girl Special (2023)',
+          id: 64474
         },
         {
           image: 'comic2.jpg',
-          description: 'Star Wars (1977) Add Comic Button',
+          description: 'Star Wars (1977)',
+          id: 0,
         },
         {
           image: 'comic3.jpg',
-          description: 'Strange Tales (1951) Add Comic Button',
+          description: 'Strange Tales (1951)',
+          id: 23784,
         },
         {
           image: 'comic4.jpg',
-          description: 'The Amazing Spider-Man (1963) Add Comic Button',
+          description: 'The Amazing Spider-Man (1963)',
+          id: 7460
         },
         {
           image: 'comic5.jpg',
-          description: 'The Amazing Spider-Man (2022) Add Comic Button',
+          description: 'The Amazing Spider-Man (2022)',
         },
         {
           image: 'comic6.jpg',
-          description: 'Peter Parker: The Spectacular Spider-Man (1976) Add Comic Butto',
+          description: 'Peter Parker: The Spectacular Spider-Man (1976)',
         },
         {
           image: 'comic7.jpg',
-          description: 'The Uncanny X-Men (1978) Add Comic Button',
+          description: 'The Uncanny X-Men (1978)',
+          id: 17757,
         },
         {
           image: 'comic8.jpg',
-          description: 'Gargoyles (2022) Add Comic Button',
+          description: 'Gargoyles (2022)',
         },
         {
           image: 'comic9.jpg',
-          description: 'Action Comics (1938) Add Comic Button',
+          description: 'Action Comics (1938)',
+          id: 34837,
         },
         {
           image: 'comic10.jpg',
-          description: 'The X-Men (1963) Add Comic Button',
+          description: 'The X-Men (1963)',
+          id: 27711,
         },
         {
           image: 'comic11.jpg',
           description: 'Venom (2018) Add Comic Button',
+          id: 31954,
         },
         {
           image: 'comic12.jpg',
-          description: 'Something Is Killing The Children (2019) Add Comic Button',
+          description: 'Something Is Killing The Children (2019)',
+          id: 5235,
         },
         {
           image: 'comic13.jpg',
-          description: 'Doctor Strange (1968) Add Comic Button',
+          description: 'Doctor Strange (1968)',
+          id: 17638,
         },
         {
           image: 'comic14.jpg',
-          description: 'Marvels Greatest Comics (1969) Add Comic Button',
+          description: 'Marvels Greatest Comics (1969)',
         },
         {
           image: 'comic15.jpg',
-          description: 'Grimm Fairy Tales (2016) Add Comic Button',
+          description: 'Grimm Fairy Tales (2016)',
         },
        ],
      
