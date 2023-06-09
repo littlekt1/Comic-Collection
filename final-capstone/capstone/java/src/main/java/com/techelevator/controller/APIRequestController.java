@@ -26,6 +26,12 @@ public class APIRequestController {
     @Autowired
     CollectionDao collectionDao; // Add the autowired CollectionDao
 
+    @RequestMapping(path="/get-counts", method= RequestMethod.GET)
+    public void getCount() throws JsonProcessingException {
+        comicAPIRequest.getCounts();
+    }
+
+
     @RequestMapping(path="/comic-character", method= RequestMethod.GET)
     public List<MarvelComicData> comics(@RequestParam String comicSearch) throws JsonMappingException, JsonProcessingException {
         return comicAPIRequest.getComicResults(comicSearch);
