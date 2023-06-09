@@ -5,7 +5,7 @@
 
     <!-- Search Bar -->
     <div class="search-bar">
-      <input type="text" v-model="searchQuery" placeholder="Search by comic name, author, or characters">
+      <input type="text" v-model="searchQuery" placeholder="Search by comic name, author, or characters" @keyup.enter="search">
       <button @click="search">Search</button>
     </div>
 
@@ -22,6 +22,7 @@
           <img :src="comic.image" alt="Comic Image">
         </router-link>
         <p>{{ comic.issue }}</p>
+          <input type="checkbox" v-model="selectedComics" :value="comic.id" v-show="bulkAddMode">
       </div>
     </div>
     <div v-show="isLoading">
@@ -114,7 +115,11 @@ methods: {
     setTimeout(function(){
       document.getElementById('timout').classList.remove('hide');
     }, 7000);
-  }
+  },
+  toggleBulkAddMode() {
+      this.bulkAddMode = !this.bulkAddMode;
+      this.selectedComics = [];
+    },
 }
 
 };

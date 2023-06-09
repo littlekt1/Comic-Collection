@@ -15,7 +15,6 @@
 
         <p>Share this collection:</p>
         <input type="text" :value="collectionURL" readonly />
-          <button @click="deleteCollection">Delete Collection</button>
 
       </div>
       

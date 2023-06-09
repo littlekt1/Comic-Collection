@@ -1,3 +1,4 @@
+<!--
 <template>
   <div class="bulk-add-comics">
     <h1>Bulk Add Comics</h1>

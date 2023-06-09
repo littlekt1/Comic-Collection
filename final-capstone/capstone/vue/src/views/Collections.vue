@@ -42,7 +42,7 @@
             >
               <collection-card :id="collection.collectionId" />
             </router-link>
-              <button @click="deleteCollection" class="delete-button">Delete Collection</button>
+              <button @click="deleteCollection(collection.collectionId)" class="delete-button">Delete Collection</button>
           </li>
         </ul>
       </div>
@@ -230,12 +230,15 @@ ul {
     flex-basis: 80%;
   }
 }
+
 .delete-button {
   margin-top: 10px; /* Adjust the margin as needed */
+  margin-bottom: 25px;
   background-color: red;
   color: white;
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
 }
+
 </style>
